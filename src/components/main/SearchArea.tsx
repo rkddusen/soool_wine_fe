@@ -1,7 +1,13 @@
+import SearchBar from "../common/SearchBar";
+
 const SearchArea = () => {
   return (
     <div className="relative w-full overflow-hidden pb-[max(200px,33%)] sm:pb-[min(300px,33%)] bg-light-main rounded-15">
-      {/* search */}
+      <div className="absolute z-10 flex flex-row items-center w-full px-10 center-absolute max-w-500 h-50 md:h-60">
+        <div className="w-full h-full border-1 rounded-30 border-main">
+          <SearchBar />
+        </div>
+      </div>
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="absolute top-0 left-0 w-1/2 h-full">
           <div className='absolute -top-100 right-100 md:-top-80 md:right-180 rotate-[-21deg] min-w-120 w-1/2 max-w-180 md:pb-[min(630px,200%)] pb-[max(480px,200%)] bg-[url("/src/assets/wine1.png")] bg-contain bg-no-repeat bg-center z-1'></div>
