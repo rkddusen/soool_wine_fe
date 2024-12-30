@@ -1,5 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { RandomWineApiResponse, WineryApiResponse } from "../models/Api";
+import {
+  RandomWineApiResponse,
+  WineApiResponse,
+  WineryApiResponse,
+} from "../models/Api";
 
 const instance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -30,6 +34,25 @@ export const getWinery = async (): Promise<
     return response;
   } catch (error) {
     console.error("Error api getWinery: ", error);
+    throw error;
+  }
+};
+
+export const getWine = async (
+  pageIndex: number,
+  search: string | null
+): Promise<AxiosResponse<WineApiResponse>> => {
+  try {
+    let url = `/wines?page=${pageIndex - 1}`;
+    if (search !== null && search !== "") {
+      url += `&search=${search}`;
+    }
+
+    const response: AxiosResponse<WineApiResponse> =
+      await instance.get<WineApiResponse>(url);
+    return response;
+  } catch (error) {
+    console.error("Error api getWine: ", error);
     throw error;
   }
 };
