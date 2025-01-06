@@ -8,24 +8,6 @@ interface SearchFilterComponentProps {
 
 const SearchFilter = ({ filterInfo }: SearchFilterComponentProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  // const [typeCheck, setTypeCheck] = useState<number[]>(filterInfo.type || []);
-  // const [tasteCheck, setTasteCheck] = useState<Taste>(
-  //   filterInfo.taste || Array.from({ length: 4 }, () => [])
-  // );
-  // const [countryCheck, setCountryCheck] = useState<number[]>(filterInfo.country || []);
-
-  // const getParamValues = (key: string): number[] => {
-  //   const value = searchParams.get(key);
-  //   return value ? value.split(",").map(Number) : [];
-  // };
-  // const getTasteValues = (): number[][] => {
-  //   return ["sweetness", "acidity", "body", "tannin"].map(getParamValues);
-  // };
-  // useEffect(() => {
-  //   setTypeCheck(getParamValues("type"));
-  //   setTasteCheck(getTasteValues());
-  //   setCountryCheck(getParamValues("country"));
-  // }, [searchParams]);
 
   const handleCheck = (key: keyof Filter, value: number): void => {
     const keyParams = filterInfo[key] || [];

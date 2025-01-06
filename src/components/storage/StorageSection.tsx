@@ -9,6 +9,11 @@ import { useSearchParams } from "react-router-dom";
 import SearchFilter from "./SearchFilter";
 import { Filter } from "../../models/Filter";
 import NoResultsFound from "/src/assets/noResultsFound.svg?react";
+import {
+  getFilterFromQueryParams,
+  setQueryParamsFromFilter,
+} from "../../utils/queryParams";
+import { validateFilter } from "../../utils/validateFilter";
 
 const initFilter: Filter = {
   type: null,
@@ -56,84 +61,21 @@ const StorageSection = () => {
       setLoading(false);
     }
   };
-
-  const valid = (
-    filter: Filter,
-    key: keyof Filter,
-    allowedValue: number[]
-  ): boolean => {
-    if (filter[key]) {
-      const _vaildValue = filter[key].filter((v) => allowedValue.includes(v));
-      if (filter[key].length === _vaildValue.length) {
-        return true;
-      } else {
-        filter[key] = _vaildValue;
-        return false;
-      }
-    }
-    return true;
-  };
-  const vaildGetData = (page: number, filter: Filter): void => {
-    let isVailded: boolean = true;
-    isVailded = valid(filter, "type", [0, 1, 2, 3, 4]) && isVailded;
-    isVailded = valid(filter, "sweetness", [1, 2, 3, 4, 5]) && isVailded;
-    isVailded = valid(filter, "acidity", [1, 2, 3, 4, 5]) && isVailded;
-    isVailded = valid(filter, "body", [1, 2, 3, 4, 5]) && isVailded;
-    isVailded = valid(filter, "tannin", [1, 2, 3, 4, 5]) && isVailded;
-    isVailded =
-      valid(
-        filter,
-        "country",
-        Array.from({ length: Country.size }, (_, i) => i)
-      ) && isVailded;
-
-    if (isVailded) {
+  const handleFilterChange = (page: number, filter: Filter): void => {
+    if (validateFilter(filter)) {
       getWineData(page, searchParams.get("search"), filter);
       setFilterInfo(filter);
     } else {
-      filter.type?.length
-        ? searchParams.set("type", filter.type.join(","))
-        : searchParams.delete("type");
-      filter.sweetness?.length
-        ? searchParams.set("sweetness", filter.sweetness.join(","))
-        : searchParams.delete("sweetness");
-      filter.acidity?.length
-        ? searchParams.set("acidity", filter.acidity.join(","))
-        : searchParams.delete("acidity");
-      filter.body?.length
-        ? searchParams.set("body", filter.body.join(","))
-        : searchParams.delete("body");
-      filter.tannin?.length
-        ? searchParams.set("tannin", filter.tannin.join(","))
-        : searchParams.delete("tannin");
-      filter.country?.length
-        ? searchParams.set("country", filter.country.join(","))
-        : searchParams.delete("country");
-
-      setSearchParams(searchParams);
+      setQueryParamsFromFilter(searchParams, filter);
     }
-  };
-  const getWineDataFromQuery = (): Filter => {
-    const getParamValues = (key: string): number[] => {
-      const value = searchParams.get(key);
-      return value ? value.split(",").map(Number) : [];
-    };
-    return {
-      type: getParamValues("type"),
-      sweetness: getParamValues("sweetness"),
-      acidity: getParamValues("acidity"),
-      body: getParamValues("body"),
-      tannin: getParamValues("tannin"),
-      country: getParamValues("country"),
-    };
   };
 
   useEffect(() => {
     setWineList([]);
     setPage(1);
     setSearchKeyword(searchParams.get("search"));
-    const filter: Filter = getWineDataFromQuery();
-    vaildGetData(page, filter);
+    const filter = getFilterFromQueryParams(searchParams);
+    handleFilterChange(1, filter);
   }, [searchParams]);
 
   useEffect(() => {
@@ -143,6 +85,7 @@ const StorageSection = () => {
   const handleViewMore = (): void => {
     if (page + 1 <= totalPages) {
       setPage(page + 1);
+      getWineData(page + 1, searchParams.get("search"), filterInfo);
     }
   };
 
@@ -319,7 +262,6 @@ const StorageSection = () => {
         <div className="w-full pt-10">
           <div className="flex flex-row items-center justify-between w-full px-10 mx-auto h-60">
             <span className="text-14 text-78-gray">{totalElements} Wines</span>
-            {/* <StorageSorting sorted={sorted} setSorted={setSorted} /> */}
           </div>
         </div>
         <div className="flex flex-wrap justify-center w-full gap-40">
