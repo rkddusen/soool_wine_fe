@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { WineType, Country, WineWithWinery } from "../../models/Wine";
 import { Link } from "react-router-dom";
+import { Filter } from "../../models/Filter";
 
 interface WineListBoxComponentProps {
   wine: WineWithWinery;
+  filterInfo: Filter;
 }
 
-const WineListBox = ({ wine }: WineListBoxComponentProps) => {
+const WineListBox = ({ wine, filterInfo }: WineListBoxComponentProps) => {
   const countryInfo = Country.get(wine.country);
   const wineType = WineType.get(wine.type);
   const [isHover, setIsHover] = useState<boolean>(false);
@@ -24,7 +26,7 @@ const WineListBox = ({ wine }: WineListBoxComponentProps) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Link to={`/wine/${wine.id}`}>
+      <Link to={`/wine/${wine.id}`} state={{ filterInfo: filterInfo }}>
         <div className="flex w-full h-full p-20">
           <div className="w-[30%] h-full flex items-center justify-center overflow-x-hidden">
             <div className="h-[90%]">
