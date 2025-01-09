@@ -1,0 +1,75 @@
+.place-box {
+  padding: 15px;
+  border-radius: 15px;
+  background-color: white;
+  max-width: 250px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.15);
+}
+.place-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  width: 100%;
+}
+.place-title > div {
+  width: calc(100% - 20px);
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+.place-close {
+  width: 20px;
+  height: 20px;
+  padding: 1px;
+  fill: none;
+  stroke: #000000;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+.place-title > svg:hover {
+  cursor: pointer;
+  stroke: #787878;
+}
+
+.place-name {
+  display: block;
+  font-size: 16px;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.place-name:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+.place-category {
+  font-size: 12px;
+  color: #787878;
+  width: 100%;
+  margin-bottom: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 20px;
+}
+.place-address {
+  margin-top: 10px;
+  font-size: 14px;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.place-phone {
+  margin-top: 15px;
+  font-size: 12px;
+  color: #787878;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
