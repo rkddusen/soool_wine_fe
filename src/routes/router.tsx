@@ -4,6 +4,7 @@ import MainPage from "../pages/MainPage";
 import StoragePage from "../pages/StoragePage";
 import PlacePage from "../pages/PlacePage";
 import LoginPage from "../pages/LoginPage";
+import SignUpPage from "../pages/SignUpPage";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/signup",
+    element: <SignUpPage />,
   },
 ]);
 
