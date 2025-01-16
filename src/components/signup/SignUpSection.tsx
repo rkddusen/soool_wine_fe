@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import SooolLogo from "/src/assets/soool_logo.svg?react";
 import { useEffect, useState } from "react";
+import SignUpPassword from "./SignUpPassword";
+import SignUpId from "./SignUpId";
 
 const inputNames = ["id", "password", "email", "address", "key"] as const;
 type InputName = (typeof inputNames)[number];
@@ -13,7 +15,7 @@ const SignUpSection = () => {
     address: "",
     key: "",
   });
-  const [level, setLevel] = useState<number>(1);
+  const [level, setLevel] = useState<number>(2);
   const [fail, setFail] = useState<number>(0);
   const navigate = useNavigate();
 
@@ -22,6 +24,16 @@ const SignUpSection = () => {
       setLevel(1);
     }
   }, [level]);
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    name: InputName
+  ): void => {
+    setInputValues((prev) => ({
+      ...prev,
+      [name]: event.target.value,
+    }));
+  };
 
   return (
     <div className="max-w-full">
@@ -89,8 +101,18 @@ const SignUpSection = () => {
                   ))}
                 </div>
               </div>
-              {level === 1 && null}
-              {level === 2 && null}
+              {level === 1 && (
+                <SignUpId
+                  inputValue={{ id: inputValues["id"] }}
+                  handleInputChange={handleInputChange}
+                />
+              )}
+              {level === 2 && (
+                <SignUpPassword
+                  inputValue={{ password: inputValues["password"] }}
+                  handleInputChange={handleInputChange}
+                />
+              )}
               {level === 3 && null}
               {level === 4 && null}
             </div>
