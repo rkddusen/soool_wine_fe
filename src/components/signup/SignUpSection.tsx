@@ -3,6 +3,7 @@ import SooolLogo from "/src/assets/soool_logo.svg?react";
 import { useEffect, useState } from "react";
 import SignUpPassword from "./SignUpPassword";
 import SignUpId from "./SignUpId";
+import SignUpEmail from "./SignUpEmail";
 
 const inputNames = ["id", "password", "email", "address", "key"] as const;
 type InputName = (typeof inputNames)[number];
@@ -15,7 +16,7 @@ const SignUpSection = () => {
     address: "",
     key: "",
   });
-  const [level, setLevel] = useState<number>(2);
+  const [level, setLevel] = useState<number>(3);
   const [fail, setFail] = useState<number>(0);
   const navigate = useNavigate();
 
@@ -32,6 +33,19 @@ const SignUpSection = () => {
     setInputValues((prev) => ({
       ...prev,
       [name]: event.target.value,
+    }));
+  };
+
+  const handleResetInput = (name: InputName): void => {
+    setInputValues((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+  const handleSetAddress = (value: string): void => {
+    setInputValues((prev) => ({
+      ...prev,
+      ["address"]: value,
     }));
   };
 
@@ -113,7 +127,17 @@ const SignUpSection = () => {
                   handleInputChange={handleInputChange}
                 />
               )}
-              {level === 3 && null}
+              {level === 3 && (
+                <SignUpEmail
+                  inputValue={{
+                    email: inputValues["email"],
+                    address: inputValues["address"],
+                  }}
+                  handleInputChange={handleInputChange}
+                  handleResetInput={handleResetInput}
+                  handleSetAddress={handleSetAddress}
+                />
+              )}
               {level === 4 && null}
             </div>
           </div>
