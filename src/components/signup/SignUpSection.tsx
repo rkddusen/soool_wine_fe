@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SignUpPassword from "./SignUpPassword";
 import SignUpId from "./SignUpId";
 import SignUpEmail from "./SignUpEmail";
+import SignUpCode from "./SignUpCode";
 
 const inputNames = ["id", "password", "email", "address", "key"] as const;
 type InputName = (typeof inputNames)[number];
@@ -16,7 +17,7 @@ const SignUpSection = () => {
     address: "",
     key: "",
   });
-  const [level, setLevel] = useState<number>(3);
+  const [level, setLevel] = useState<number>(4);
   const [fail, setFail] = useState<number>(0);
   const navigate = useNavigate();
 
@@ -138,7 +139,12 @@ const SignUpSection = () => {
                   handleSetAddress={handleSetAddress}
                 />
               )}
-              {level === 4 && null}
+              {level === 4 && (
+                <SignUpCode
+                  inputValue={{ key: inputValues["key"] }}
+                  handleInputChange={handleInputChange}
+                />
+              )}
             </div>
           </div>
         </div>
