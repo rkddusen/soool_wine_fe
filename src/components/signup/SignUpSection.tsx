@@ -6,7 +6,7 @@ import SignUpId from "./SignUpId";
 import SignUpEmail from "./SignUpEmail";
 import SignUpCode from "./SignUpCode";
 
-const inputNames = ["id", "password", "email", "address", "key"] as const;
+const inputNames = ["id", "password", "email", "address", "code"] as const;
 type InputName = (typeof inputNames)[number];
 
 const SignUpSection = () => {
@@ -15,10 +15,9 @@ const SignUpSection = () => {
     password: "",
     email: "",
     address: "",
-    key: "",
+    code: "",
   });
   const [level, setLevel] = useState<number>(4);
-  const [fail, setFail] = useState<number>(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -141,7 +140,7 @@ const SignUpSection = () => {
               )}
               {level === 4 && (
                 <SignUpCode
-                  inputValue={{ key: inputValues["key"] }}
+                  inputValue={{ code: inputValues["code"] }}
                   handleInputChange={handleInputChange}
                 />
               )}

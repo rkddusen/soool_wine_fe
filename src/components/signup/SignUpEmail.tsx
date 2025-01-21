@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { SignUpError } from "../../models/SignUpError";
+import { validEmail } from "../../utils/signUpValidators";
 
 const inputNames = ["email", "address"] as const;
 type InputName = (typeof inputNames)[number];
@@ -35,6 +37,7 @@ const SignUpEmail = ({
     "icloud.com",
     "직접 입력",
   ];
+  const [error, setError] = useState<SignUpError | null>(null);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent): void => {
@@ -48,12 +51,14 @@ const SignUpEmail = ({
 
   const handleEmailOnFocus = (): void => {
     setEmailFocus(true);
+    setError(null);
   };
   const handleEmailOnBlur = (): void => {
     setEmailFocus(false);
   };
   const handleAddressOnFocus = (): void => {
     setAddressFocus(true);
+    setError(null);
   };
   const handleAddressOnBlur = (): void => {
     setAddressFocus(false);
@@ -67,10 +72,21 @@ const SignUpEmail = ({
     } else {
       handleResetInput("address");
     }
+
+    setError(null);
   };
   const handleResetMail = (): void => {
     setSelect(-1);
     handleResetInput("address");
+  };
+
+  const nextLevel = () => {
+    const _error = validEmail(inputValue["email"], inputValue["address"]);
+    if (_error) {
+      setError(_error);
+    } else {
+      // 다음단계
+    }
   };
 
   return (
@@ -185,9 +201,15 @@ const SignUpEmail = ({
               </div>
             )}
           </div>
+          {error && (
+            <p className="mt-10 text-red-500 text-14">{error.message}</p>
+          )}
         </div>
       </div>
-      <div className="flex flex-row items-center justify-center w-full h-50 rounded-15 bg-49-gray hover:cursor-pointer">
+      <div
+        onClick={nextLevel}
+        className="flex flex-row items-center justify-center w-full h-50 rounded-15 bg-49-gray hover:cursor-pointer"
+      >
         <span className="text-white text-16">인증 코드 전송하기</span>
       </div>
     </>

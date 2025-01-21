@@ -1,4 +1,6 @@
 import { useRef, useState } from "react";
+import { SignUpError } from "../../models/SignUpError";
+import { validId } from "../../utils/signUpValidators";
 
 const inputNames = ["id"] as const;
 type InputName = (typeof inputNames)[number];
@@ -17,12 +19,23 @@ const SignUpId = ({
 }: SignUpIdComponentProps) => {
   const [idFocus, setIdFocus] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState<SignUpError | null>(null);
 
   const handleOnFocus = (): void => {
     setIdFocus(true);
+    setError(null);
   };
   const handleOnBlur = (): void => {
     setIdFocus(false);
+  };
+
+  const nextLevel = () => {
+    const _error = validId(inputValue["id"]);
+    if (_error) {
+      setError(_error);
+    } else {
+      // 다음단계
+    }
   };
 
   return (
@@ -70,9 +83,15 @@ const SignUpId = ({
               className="w-full h-full mx-10 border-none outline-none"
             />
           </div>
+          {error && (
+            <p className="mt-10 text-red-500 text-14">{error.message}</p>
+          )}
         </div>
       </div>
-      <div className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray hover:cursor-pointer">
+      <div
+        onClick={nextLevel}
+        className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray hover:cursor-pointer"
+      >
         <span className="text-white text-16">다음 단계</span>
       </div>
     </>

@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { validCode } from "../../utils/signUpValidators";
+import { SignUpError } from "../../models/SignUpError";
 
-const inputNames = ["key"] as const;
+const inputNames = ["code"] as const;
 type InputName = (typeof inputNames)[number];
 
 interface SignUpCodeComponentProps {
@@ -19,6 +21,7 @@ const SignUpCode = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const [seconds, setSeconds] = useState(180);
   const intervalIdRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [error, setError] = useState<SignUpError | null>(null);
 
   const startTimer = useCallback(() => {
     if (intervalIdRef.current) {
@@ -55,6 +58,7 @@ const SignUpCode = ({
 
   const handleOnFocus = (): void => {
     setKeyFocus(true);
+    setError(null);
   };
   const handleOnBlur = (): void => {
     setKeyFocus(false);
@@ -63,6 +67,15 @@ const SignUpCode = ({
   const reSendEmailCode = (): void => {
     setSeconds(180);
     startTimer();
+  };
+
+  const nextLevel = () => {
+    const _error = validCode(inputValue["code"]);
+    if (_error) {
+      setError(_error);
+    } else {
+      // 다음단계
+    }
   };
 
   return (
@@ -81,8 +94,8 @@ const SignUpCode = ({
             <input
               ref={inputRef}
               type="text"
-              value={inputValue["key"]}
-              onChange={(e) => handleInputChange(e, "key")}
+              value={inputValue["code"]}
+              onChange={(e) => handleInputChange(e, "code")}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               placeholder="인증 코드"
@@ -93,9 +106,15 @@ const SignUpCode = ({
               {String(seconds % 60).padStart(2, "0")}
             </span>
           </div>
+          {error && (
+            <p className="mt-10 text-red-500 text-14">{error.message}</p>
+          )}
         </div>
       </div>
-      <div className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray hover:cursor-pointer">
+      <div
+        onClick={nextLevel}
+        className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray hover:cursor-pointer"
+      >
         <span className="text-white text-16">회원가입하기</span>
       </div>
       <p

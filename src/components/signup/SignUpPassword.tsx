@@ -1,4 +1,6 @@
 import { useRef, useState } from "react";
+import { validPassword } from "../../utils/signUpValidators";
+import { SignUpError } from "../../models/SignUpError";
 
 const inputNames = ["password"] as const;
 type InputName = (typeof inputNames)[number];
@@ -18,9 +20,11 @@ const SignUpPassword = ({
   const [passwordFocus, setPasswordFocus] = useState<boolean>(false);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [seePassword, setSeePassword] = useState<boolean>(false);
+  const [error, setError] = useState<SignUpError | null>(null);
 
   const handleOnFocus = (): void => {
     setPasswordFocus(true);
+    setError(null);
   };
   const handleOnBlur = (): void => {
     setPasswordFocus(false);
@@ -30,13 +34,22 @@ const SignUpPassword = ({
     setSeePassword((prev) => !prev);
   };
 
+  const nextLevel = () => {
+    const _error = validPassword(inputValue["password"]);
+    if (_error) {
+      setError(_error);
+    } else {
+      // 다음단계
+    }
+  };
+
   return (
     <>
       <div className="w-full mb-15">
         <div className="mb-15">
           <p className="mb-10 font-bold text-20">비밀번호를 입력해주세요!</p>
           <p className="mb-10 text-14 text-78-gray">
-            8~16자의 영문, 숫자, 특수문자만 가능합니다.
+            8~16자의 영문, 숫자, 특수문자를 조합하여 사용 가능합니다.
           </p>
           <div
             className={`flex items-center w-full px-15 h-50 ${
@@ -133,9 +146,15 @@ const SignUpPassword = ({
               </svg>
             )}
           </div>
+          {error && (
+            <p className="mt-10 text-red-500 text-14">{error.message}</p>
+          )}
         </div>
       </div>
-      <div className="flex flex-row items-center justify-center w-full h-50 rounded-15 bg-49-gray hover:cursor-pointer">
+      <div
+        onClick={nextLevel}
+        className="flex flex-row items-center justify-center w-full h-50 rounded-15 bg-49-gray hover:cursor-pointer"
+      >
         <span className="text-white text-16">다음 단계</span>
       </div>
     </>
