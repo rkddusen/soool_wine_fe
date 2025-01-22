@@ -4,6 +4,7 @@ import SignUpPassword from "./SignUpPassword";
 import SignUpId from "./SignUpId";
 import SignUpEmail from "./SignUpEmail";
 import SignUpCode from "./SignUpCode";
+import { useNavigate } from "react-router-dom";
 
 const inputNames = ["id", "password", "email", "address", "code"] as const;
 type InputName = (typeof inputNames)[number];
@@ -17,6 +18,7 @@ const SignUpSection = () => {
     code: "",
   });
   const [level, setLevel] = useState<number>(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (level < 1 || level > 5) {
@@ -33,13 +35,6 @@ const SignUpSection = () => {
       [name]: event.target.value,
     }));
   };
-
-  const handleResetInput = (name: InputName): void => {
-    setInputValues((prev) => ({
-      ...prev,
-      [name]: "",
-    }));
-  };
   const handleSetAddress = (value: string): void => {
     setInputValues((prev) => ({
       ...prev,
@@ -47,11 +42,39 @@ const SignUpSection = () => {
     }));
   };
 
+  const handleResetInput = (name: InputName): void => {
+    setInputValues((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  const handlePrevLevel = (): void => {
+    if (level > 1) {
+      if (level === 4) {
+        handleResetInput("code");
+        handleResetInput("address");
+      } else if (level === 3) {
+        handleResetInput("address");
+        handleResetInput("email");
+        handleResetInput("password");
+      } else {
+        handleResetInput("password");
+      }
+      setLevel((prev) => prev - 1);
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <div className="max-w-full">
       <div className="h-full p-10 sm:p-50">
         <div className="relative flex items-center justify-center w-full bg-white sm:w-500 md:w-600 md:h-500 rounded-15">
-          <div className="absolute top-15 left-15 md:top-25 md:left-25 hover:cursor-pointer">
+          <div
+            onClick={handlePrevLevel}
+            className="absolute top-15 left-15 md:top-25 md:left-25 hover:cursor-pointer"
+          >
             <svg
               className="w-24 h-24 md:w-26 md:h-26"
               viewBox="0 0 24 24"
