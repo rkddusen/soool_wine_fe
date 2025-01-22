@@ -54,7 +54,10 @@ const SignUpCode = ({
 
   useEffect(() => {
     if (seconds === 0) {
-      // 시간 초과
+      setError({
+        code: "4002",
+        message: "유효시간이 지났습니다. '인증 코드 재전송'을 눌러주세요.",
+      });
     }
   }, [seconds]);
 
@@ -72,11 +75,13 @@ const SignUpCode = ({
   };
 
   const nextLevel = () => {
-    const _error = validCode(inputValue["code"]);
-    if (_error) {
-      setError(_error);
-    } else {
-      setLevel(5);
+    if (seconds > 0 && inputValue["code"].length > 0) {
+      const _error = validCode(inputValue["code"]);
+      if (_error) {
+        setError(_error);
+      } else {
+        setLevel(5);
+      }
     }
   };
 
@@ -115,7 +120,11 @@ const SignUpCode = ({
       </div>
       <div
         onClick={nextLevel}
-        className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray hover:cursor-pointer"
+        className={`${
+          seconds > 0 && inputValue["code"].length > 0
+            ? "bg-49-gray cursor-pointer"
+            : "bg-e0-gray cursor-default"
+        } flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray`}
       >
         <span className="text-white text-16">회원가입하기</span>
       </div>
