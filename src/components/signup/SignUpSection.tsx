@@ -126,6 +126,7 @@ const SignUpSection = () => {
                 <div className="relative flex justify-between w-full z-2">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <div
+                      key={i}
                       className={`flex items-center justify-center w-20 h-20 ${
                         level >= i + 1
                           ? "bg-49-gray text-white"
