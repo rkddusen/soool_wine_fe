@@ -13,6 +13,7 @@ interface SignUpEmailComponentProps {
   ) => void;
   handleResetInput: (name: InputName) => void;
   handleSetAddress: (value: string) => void;
+  setLevel: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SignUpEmail = ({
@@ -20,6 +21,7 @@ const SignUpEmail = ({
   handleInputChange,
   handleResetInput,
   handleSetAddress,
+  setLevel,
 }: SignUpEmailComponentProps) => {
   const [emailFocus, setEmailFocus] = useState<boolean>(false);
   const [addressFocus, setAddressFocus] = useState<boolean>(false);
@@ -85,7 +87,7 @@ const SignUpEmail = ({
     if (_error) {
       setError(_error);
     } else {
-      // 다음단계
+      setLevel(4);
     }
   };
 

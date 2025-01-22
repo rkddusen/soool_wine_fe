@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import SooolLogo from "/src/assets/soool_logo.svg?react";
 import { useEffect, useState } from "react";
 import SignUpPassword from "./SignUpPassword";
@@ -17,8 +16,7 @@ const SignUpSection = () => {
     address: "",
     code: "",
   });
-  const [level, setLevel] = useState<number>(4);
-  const navigate = useNavigate();
+  const [level, setLevel] = useState<number>(1);
 
   useEffect(() => {
     if (level < 1 || level > 5) {
@@ -119,12 +117,14 @@ const SignUpSection = () => {
                 <SignUpId
                   inputValue={{ id: inputValues["id"] }}
                   handleInputChange={handleInputChange}
+                  setLevel={setLevel}
                 />
               )}
               {level === 2 && (
                 <SignUpPassword
                   inputValue={{ password: inputValues["password"] }}
                   handleInputChange={handleInputChange}
+                  setLevel={setLevel}
                 />
               )}
               {level === 3 && (
@@ -136,14 +136,17 @@ const SignUpSection = () => {
                   handleInputChange={handleInputChange}
                   handleResetInput={handleResetInput}
                   handleSetAddress={handleSetAddress}
+                  setLevel={setLevel}
                 />
               )}
               {level === 4 && (
                 <SignUpCode
                   inputValue={{ code: inputValues["code"] }}
                   handleInputChange={handleInputChange}
+                  setLevel={setLevel}
                 />
               )}
+              {level === 5 && null}
             </div>
           </div>
         </div>

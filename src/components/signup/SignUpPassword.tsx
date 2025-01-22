@@ -11,11 +11,13 @@ interface SignUpPasswordComponentProps {
     event: React.ChangeEvent<HTMLInputElement>,
     name: InputName
   ) => void;
+  setLevel: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SignUpPassword = ({
   inputValue,
   handleInputChange,
+  setLevel,
 }: SignUpPasswordComponentProps) => {
   const [passwordFocus, setPasswordFocus] = useState<boolean>(false);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -39,7 +41,7 @@ const SignUpPassword = ({
     if (_error) {
       setError(_error);
     } else {
-      // 다음단계
+      setLevel(3);
     }
   };
 

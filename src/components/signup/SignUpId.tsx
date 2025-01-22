@@ -11,11 +11,13 @@ interface SignUpIdComponentProps {
     event: React.ChangeEvent<HTMLInputElement>,
     name: InputName
   ) => void;
+  setLevel: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SignUpId = ({
   inputValue,
   handleInputChange,
+  setLevel,
 }: SignUpIdComponentProps) => {
   const [idFocus, setIdFocus] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -34,7 +36,7 @@ const SignUpId = ({
     if (_error) {
       setError(_error);
     } else {
-      // 다음단계
+      setLevel(2);
     }
   };
 
