@@ -5,6 +5,12 @@ import SignUpId from "./SignUpId";
 import SignUpEmail from "./SignUpEmail";
 import SignUpCode from "./SignUpCode";
 import { useNavigate } from "react-router-dom";
+import {
+  validCode,
+  validEmail,
+  validId,
+  validPassword,
+} from "../../utils/signUpValidators";
 
 const inputNames = ["id", "password", "email", "address", "code"] as const;
 type InputName = (typeof inputNames)[number];
@@ -23,6 +29,19 @@ const SignUpSection = () => {
   useEffect(() => {
     if (level < 1 || level > 5) {
       setLevel(1);
+    } else {
+      if (level > 1 && validId(inputValues["id"])) {
+        setLevel(1);
+      } else if (level > 2 && validPassword(inputValues["password"])) {
+        setLevel(2);
+      } else if (
+        level > 3 &&
+        validEmail(inputValues["email"], inputValues["address"])
+      ) {
+        setLevel(3);
+      } else if (level > 4 && validCode(inputValues["code"])) {
+        setLevel(4);
+      }
     }
   }, [level]);
 
