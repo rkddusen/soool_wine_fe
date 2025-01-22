@@ -11,6 +11,7 @@ import {
   validId,
   validPassword,
 } from "../../utils/signUpValidators";
+import SignUpComplete from "./SignUpComplete";
 
 const inputNames = ["id", "password", "email", "address", "code"] as const;
 type InputName = (typeof inputNames)[number];
@@ -69,7 +70,9 @@ const SignUpSection = () => {
   };
 
   const handlePrevLevel = (): void => {
-    if (level > 1) {
+    if (level === 1) {
+      navigate(-1);
+    } else if (level > 1 && level < 5) {
       if (level === 4) {
         handleResetInput("code");
         handleResetInput("address");
@@ -81,8 +84,6 @@ const SignUpSection = () => {
         handleResetInput("password");
       }
       setLevel((prev) => prev - 1);
-    } else {
-      navigate(-1);
     }
   };
 
@@ -92,7 +93,9 @@ const SignUpSection = () => {
         <div className="relative flex items-center justify-center w-full bg-white sm:w-500 md:w-600 md:h-500 rounded-15">
           <div
             onClick={handlePrevLevel}
-            className="absolute top-15 left-15 md:top-25 md:left-25 hover:cursor-pointer"
+            className={`absolute top-15 left-15 md:top-25 md:left-25 hover:cursor-pointer ${
+              level === 5 ? "hidden" : "block"
+            }`}
           >
             <svg
               className="w-24 h-24 md:w-26 md:h-26"
@@ -189,7 +192,7 @@ const SignUpSection = () => {
                   setLevel={setLevel}
                 />
               )}
-              {level === 5 && null}
+              {level === 5 && <SignUpComplete userId={inputValues["id"]} />}
             </div>
           </div>
         </div>
