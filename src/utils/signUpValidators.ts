@@ -54,12 +54,3 @@ export const validEmail = (
   }
   return null;
 };
-export const validCode = (data: string): SignUpError | null => {
-  // 인증 코드
-  const code = "abc123";
-  if (data !== code) {
-    return { code: "4001", message: "잘못된 인증 코드입니다." };
-  } else {
-    return null;
-  }
-};

@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { SignUpError } from "../../models/SignUpError";
 import { validEmail } from "../../utils/signUpValidators";
+import { AxiosResponse } from "axios";
+import { postEmailForCode } from "../../utils/api";
+import Loading from "/src/assets/loading.svg?react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const inputNames = ["email", "address"] as const;
 type InputName = (typeof inputNames)[number];
@@ -40,6 +44,9 @@ const SignUpEmail = ({
     "직접 입력",
   ];
   const [error, setError] = useState<SignUpError | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [prevent, setPrevent] = useState<boolean>(false);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent): void => {
@@ -82,12 +89,41 @@ const SignUpEmail = ({
     handleResetInput("address");
   };
 
+  const callPostEmailForCode = async (value: string): Promise<string> => {
+    const response: AxiosResponse<string> = await postEmailForCode(value);
+    return response.data;
+  };
+
+  const mutation = useMutation<string, Error, string>({
+    mutationFn: callPostEmailForCode,
+    onMutate: () => {
+      setLoading(true);
+      setPrevent(true);
+    },
+    onSuccess: (data: string) => {
+      console.log("Email code sent successfully:", data);
+      queryClient.setQueryData(["emailToken"], data);
+      queryClient.setQueryData(
+        ["email"],
+        inputValue["email"] + "@" + inputValue["address"]
+      );
+      setLevel(4);
+    },
+    onError: (error: Error) => {
+      console.log("Error sending email code:", error);
+    },
+    onSettled: () => {
+      setLoading(false);
+      setPrevent(false);
+    },
+  });
+
   const nextLevel = () => {
     const _error = validEmail(inputValue["email"], inputValue["address"]);
     if (_error) {
       setError(_error);
     } else {
-      setLevel(4);
+      mutation.mutate(inputValue["email"] + "@" + inputValue["address"]);
     }
   };
 
@@ -96,7 +132,11 @@ const SignUpEmail = ({
       <div className="w-full mb-15">
         <div className="mb-15">
           <p className="mb-10 font-bold text-20">이메일을 입력해주세요!</p>
-          <div className={`flex items-center gap-5`}>
+          <div
+            className={`flex items-center gap-5 ${
+              prevent && "pointer-events-none"
+            }`}
+          >
             <div
               className={`w-full px-15 h-50 ${
                 emailFocus ? "border-black border-1.5" : "border-78-gray border"
@@ -209,10 +249,14 @@ const SignUpEmail = ({
         </div>
       </div>
       <div
-        onClick={nextLevel}
+        onClick={loading ? undefined : nextLevel}
         className="flex flex-row items-center justify-center w-full h-50 rounded-15 bg-49-gray hover:cursor-pointer"
       >
-        <span className="text-white text-16">인증 코드 전송하기</span>
+        {loading ? (
+          <Loading />
+        ) : (
+          <span className="text-white text-16">인증 코드 전송하기</span>
+        )}
       </div>
     </>
   );

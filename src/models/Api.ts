@@ -14,3 +14,7 @@ export interface WineApiResponse {
   totalPages: number;
   [key: string]: any;
 }
+
+export interface EmailApiResponse {
+  content: string;
+}

@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import {
+  EmailApiResponse,
   RandomWineApiResponse,
   WineApiResponse,
   WineryApiResponse,
@@ -94,6 +95,44 @@ export const getWine = async (
     return response;
   } catch (error) {
     console.error("Error api getWine: ", error);
+    throw error;
+  }
+};
+
+export const postEmailForCode = async (value: string) => {
+  try {
+    const response: AxiosResponse<string> = await instance.post<string>(
+      `/email/sendCode`,
+      value,
+      {
+        headers: { "Content-Type": "text/plain" },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error api postEmailForCode: ", error);
+    throw error;
+  }
+};
+
+export const postCode = async (
+  token: string | undefined,
+  email: string | undefined,
+  code: string
+) => {
+  try {
+    console.log(token, email, code);
+    const response: AxiosResponse<EmailApiResponse> =
+      await instance.post<EmailApiResponse>(
+        `/email/verify`,
+        { token: token, email: email, code: code },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    return response;
+  } catch (error) {
+    console.error("Error api postCode: ", error);
     throw error;
   }
 };

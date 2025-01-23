@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { validCode } from "../../utils/signUpValidators";
 import { SignUpError } from "../../models/SignUpError";
+import { EmailApiResponse } from "../../models/Api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Loading from "/src/assets/loading.svg?react";
+import { AxiosResponse } from "axios";
+import { postCode } from "../../utils/api";
 
 const inputNames = ["code"] as const;
 type InputName = (typeof inputNames)[number];
@@ -24,6 +28,11 @@ const SignUpCode = ({
   const [seconds, setSeconds] = useState(180);
   const intervalIdRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [error, setError] = useState<SignUpError | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [prevent, setPrevent] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+  const emailToken = queryClient.getQueryData<string>(["emailToken"]);
+  const email = queryClient.getQueryData<string>(["email"]);
 
   const startTimer = useCallback(() => {
     if (intervalIdRef.current) {
@@ -74,14 +83,36 @@ const SignUpCode = ({
     startTimer();
   };
 
+  const callPostCode = async (value: string): Promise<EmailApiResponse> => {
+    const response: AxiosResponse<EmailApiResponse> = await postCode(
+      emailToken,
+      email,
+      value
+    );
+    return response.data;
+  };
+  const mutation = useMutation<EmailApiResponse, Error, string>({
+    mutationFn: callPostCode,
+    onMutate: () => {
+      setLoading(true);
+      setPrevent(true);
+    },
+    onSuccess: (data: EmailApiResponse) => {
+      console.log("Email code sent successfully:", data);
+      setLevel(5);
+    },
+    onError: (error: Error) => {
+      console.log("Error sending email code:", error);
+    },
+    onSettled: () => {
+      setLoading(false);
+      setPrevent(false);
+    },
+  });
+
   const nextLevel = () => {
     if (seconds > 0 && inputValue["code"].length > 0) {
-      const _error = validCode(inputValue["code"]);
-      if (_error) {
-        setError(_error);
-      } else {
-        setLevel(5);
-      }
+      mutation.mutate(inputValue["code"]);
     }
   };
 
@@ -96,7 +127,7 @@ const SignUpCode = ({
           <div
             className={`flex items-center w-full px-15 mt-10 h-50 ${
               keyFocus ? "border-black border-1.5" : "border-78-gray border"
-            } rounded-5`}
+            } ${prevent && "pointer-events-none"} rounded-5`}
           >
             <input
               ref={inputRef}
@@ -119,14 +150,18 @@ const SignUpCode = ({
         </div>
       </div>
       <div
-        onClick={nextLevel}
+        onClick={loading ? undefined : nextLevel}
         className={`${
           seconds > 0 && inputValue["code"].length > 0
             ? "bg-49-gray cursor-pointer"
             : "bg-e0-gray cursor-default"
         } flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray`}
       >
-        <span className="text-white text-16">회원가입하기</span>
+        {loading ? (
+          <Loading />
+        ) : (
+          <span className="text-white text-16">회원가입하기</span>
+        )}
       </div>
       <p
         onClick={reSendEmailCode}
