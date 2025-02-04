@@ -118,16 +118,15 @@ export const postEmailForCode = async (value: string) => {
 export const postCode = async (
   token: string | undefined,
   email: string | undefined,
-  code: string
+  code: number
 ) => {
   try {
-    console.log(token, email, code);
     const response: AxiosResponse<EmailApiResponse> =
       await instance.post<EmailApiResponse>(
         `/email/verify`,
         { token: token, email: email, code: code },
         {
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
         }
       );
     return response;

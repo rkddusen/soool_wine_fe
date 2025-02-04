@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Loading from "/src/assets/loading.svg?react";
 import { AxiosResponse } from "axios";
 import { postCode } from "../../utils/api";
+import { validCode } from "../../utils/signUpValidators";
 
 const inputNames = ["code"] as const;
 type InputName = (typeof inputNames)[number];
@@ -83,7 +84,7 @@ const SignUpCode = ({
     startTimer();
   };
 
-  const callPostCode = async (value: string): Promise<EmailApiResponse> => {
+  const callPostCode = async (value: number): Promise<EmailApiResponse> => {
     const response: AxiosResponse<EmailApiResponse> = await postCode(
       emailToken,
       email,
@@ -91,7 +92,7 @@ const SignUpCode = ({
     );
     return response.data;
   };
-  const mutation = useMutation<EmailApiResponse, Error, string>({
+  const mutation = useMutation<EmailApiResponse, Error, number>({
     mutationFn: callPostCode,
     onMutate: () => {
       setLoading(true);
@@ -99,6 +100,7 @@ const SignUpCode = ({
     },
     onSuccess: (data: EmailApiResponse) => {
       console.log("Email code sent successfully:", data);
+      queryClient.setQueryData(["isSignUpSuccess"], true);
       setLevel(5);
     },
     onError: (error: Error) => {
@@ -111,8 +113,13 @@ const SignUpCode = ({
   });
 
   const nextLevel = () => {
-    if (seconds > 0 && inputValue["code"].length > 0) {
-      mutation.mutate(inputValue["code"]);
+    if (seconds > 0) {
+      const _error = validCode(inputValue["code"]);
+      if (_error) {
+        setError(_error);
+      } else {
+        mutation.mutate(Number(inputValue["code"]));
+      }
     }
   };
 
