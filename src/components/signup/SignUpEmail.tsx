@@ -5,17 +5,15 @@ import { AxiosResponse } from "axios";
 import { postEmailForCode } from "../../utils/api";
 import Loading from "/src/assets/loading.svg?react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-const inputNames = ["email", "address"] as const;
-type InputName = (typeof inputNames)[number];
+import { SignUp } from "../../models/\bUser";
 
 interface SignUpEmailComponentProps {
-  inputValue: Record<InputName, string>;
+  inputValue: { email: string; address: string };
   handleInputChange: (
     event: React.ChangeEvent<HTMLInputElement>,
-    name: InputName
+    name: keyof SignUp
   ) => void;
-  handleResetInput: (name: InputName) => void;
+  handleResetInput: (name: keyof SignUp) => void;
   handleSetAddress: (value: string) => void;
   setLevel: React.Dispatch<React.SetStateAction<number>>;
 }

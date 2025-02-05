@@ -122,13 +122,11 @@ export const postCode = async (
 ) => {
   try {
     const response: AxiosResponse<EmailApiResponse> =
-      await instance.post<EmailApiResponse>(
-        `/email/verify`,
-        { token: token, email: email, code: code },
-        {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        }
-      );
+      await instance.post<EmailApiResponse>(`/email/verify`, {
+        token: token,
+        email: email,
+        code: code,
+      });
     return response;
   } catch (error) {
     console.error("Error api postCode: ", error);

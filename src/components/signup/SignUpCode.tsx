@@ -5,16 +5,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Loading from "/src/assets/loading.svg?react";
 import { AxiosResponse } from "axios";
 import { postCode } from "../../utils/api";
-import { validCode } from "../../utils/signUpValidators";
-
-const inputNames = ["code"] as const;
-type InputName = (typeof inputNames)[number];
+// import { validCode } from "../../utils/signUpValidators";
+import { SignUp } from "../../models/\bUser";
 
 interface SignUpCodeComponentProps {
-  inputValue: Record<InputName, string>;
+  inputValue: { code: number | "" };
   handleInputChange: (
     event: React.ChangeEvent<HTMLInputElement>,
-    name: InputName
+    name: keyof SignUp
   ) => void;
   setLevel: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -71,6 +69,11 @@ const SignUpCode = ({
     }
   }, [seconds]);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (["e", "E", "+", "-"].includes(e.key)) {
+      e.preventDefault();
+    }
+  };
   const handleOnFocus = (): void => {
     setKeyFocus(true);
     setError(null);
@@ -113,13 +116,8 @@ const SignUpCode = ({
   });
 
   const nextLevel = () => {
-    if (seconds > 0) {
-      const _error = validCode(inputValue["code"]);
-      if (_error) {
-        setError(_error);
-      } else {
-        mutation.mutate(Number(inputValue["code"]));
-      }
+    if (seconds > 0 && inputValue["code"]) {
+      mutation.mutate(inputValue["code"]!);
     }
   };
 
@@ -138,8 +136,10 @@ const SignUpCode = ({
           >
             <input
               ref={inputRef}
-              type="text"
+              type="number"
+              pattern="\d*"
               value={inputValue["code"]}
+              onKeyDown={handleKeyDown}
               onChange={(e) => handleInputChange(e, "code")}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
@@ -159,7 +159,7 @@ const SignUpCode = ({
       <div
         onClick={loading ? undefined : nextLevel}
         className={`${
-          seconds > 0 && inputValue["code"].length > 0
+          seconds > 0 && inputValue["code"]
             ? "bg-49-gray cursor-pointer"
             : "bg-e0-gray cursor-default"
         } flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray`}

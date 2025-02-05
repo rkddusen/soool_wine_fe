@@ -1,15 +1,13 @@
 import { useRef, useState } from "react";
 import { validPassword } from "../../utils/signUpValidators";
 import { SignUpError } from "../../models/SignUpError";
-
-const inputNames = ["password"] as const;
-type InputName = (typeof inputNames)[number];
+import { SignUp } from "../../models/\bUser";
 
 interface SignUpPasswordComponentProps {
-  inputValue: Record<InputName, string>;
+  inputValue: { password: string };
   handleInputChange: (
     event: React.ChangeEvent<HTMLInputElement>,
-    name: InputName
+    name: keyof SignUp
   ) => void;
   setLevel: React.Dispatch<React.SetStateAction<number>>;
 }

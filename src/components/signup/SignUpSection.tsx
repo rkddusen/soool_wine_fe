@@ -12,12 +12,10 @@ import {
 } from "../../utils/signUpValidators";
 import SignUpComplete from "./SignUpComplete";
 import { useQueryClient } from "@tanstack/react-query";
-
-const inputNames = ["id", "password", "email", "address", "code"] as const;
-type InputName = (typeof inputNames)[number];
+import { SignUp } from "../../models/\bUser";
 
 const SignUpSection = () => {
-  const [inputValues, setInputValues] = useState<Record<InputName, string>>({
+  const [inputValues, setInputValues] = useState<SignUp>({
     id: "",
     password: "",
     email: "",
@@ -54,11 +52,12 @@ const SignUpSection = () => {
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    name: InputName
+    name: keyof SignUp
   ): void => {
+    const { value, type } = event.target;
     setInputValues((prev) => ({
       ...prev,
-      [name]: event.target.value,
+      [name]: type === "number" ? (value === "" ? "" : Number(value)) : value,
     }));
   };
   const handleSetAddress = (value: string): void => {
@@ -68,7 +67,7 @@ const SignUpSection = () => {
     }));
   };
 
-  const handleResetInput = (name: InputName): void => {
+  const handleResetInput = (name: keyof SignUp): void => {
     setInputValues((prev) => ({
       ...prev,
       [name]: "",

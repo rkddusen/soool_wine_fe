@@ -55,13 +55,10 @@ export const validEmail = (
   return null;
 };
 
-export const validCode = (data: string): SignUpError | null => {
-  if (data.length === 0) {
-    return { code: "4002", message: "코드를 입력해주세요." };
-  }
-  let _data = Number(data);
-  if (typeof _data !== "number") {
-    return { code: "4003", message: "코드가 잘못됐습니다." };
-  }
-  return null;
-};
+// export const validCode = (data: number): SignUpError | null => {
+//   console.log(typeof data);
+//   if (typeof data !== "number") {
+//     return { code: "4003", message: "코드가 잘못됐습니다." };
+//   }
+//   return null;
+// };
