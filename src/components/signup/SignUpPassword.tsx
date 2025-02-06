@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { validPassword } from "../../utils/signUpValidators";
 import { SignUpError } from "../../models/SignUpError";
-import { SignUp } from "../../models/\bUser";
+import { SignUp } from "../../models/User";
 
 interface SignUpPasswordComponentProps {
   inputValue: { password: string };

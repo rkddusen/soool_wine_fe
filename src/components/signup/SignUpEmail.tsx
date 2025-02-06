@@ -5,7 +5,7 @@ import { AxiosResponse } from "axios";
 import { postEmailForCode } from "../../utils/api";
 import Loading from "/src/assets/loading.svg?react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { SignUp } from "../../models/\bUser";
+import { SignUp } from "../../models/User";
 
 interface SignUpEmailComponentProps {
   inputValue: { email: string; address: string };

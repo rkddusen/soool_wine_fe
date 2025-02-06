@@ -12,7 +12,7 @@ import {
 } from "../../utils/signUpValidators";
 import SignUpComplete from "./SignUpComplete";
 import { useQueryClient } from "@tanstack/react-query";
-import { SignUp } from "../../models/\bUser";
+import { SignUp } from "../../models/User";
 
 const SignUpSection = () => {
   const [inputValues, setInputValues] = useState<SignUp>({

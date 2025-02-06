@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { SignUpError } from "../../models/SignUpError";
 import { validId } from "../../utils/signUpValidators";
-import { SignUp } from "../../models/\bUser";
+import { SignUp } from "../../models/User";
 
 interface SignUpIdComponentProps {
   inputValue: { id: string };

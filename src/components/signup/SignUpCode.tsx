@@ -6,7 +6,7 @@ import Loading from "/src/assets/loading.svg?react";
 import { AxiosResponse } from "axios";
 import { postCode } from "../../utils/api";
 // import { validCode } from "../../utils/signUpValidators";
-import { SignUp } from "../../models/\bUser";
+import { SignUp } from "../../models/User";
 
 interface SignUpCodeComponentProps {
   inputValue: { code: number | "" };
