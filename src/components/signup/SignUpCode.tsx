@@ -103,7 +103,7 @@ const SignUpCode = ({
     },
     onSuccess: (data: EmailApiResponse) => {
       console.log("Email code sent successfully:", data);
-      queryClient.setQueryData(["isSignUpSuccess"], true);
+      queryClient.setQueryData(["isVerifySuccess"], true);
       setLevel(5);
     },
     onError: (error: Error) => {
@@ -167,7 +167,7 @@ const SignUpCode = ({
         {loading ? (
           <Loading />
         ) : (
-          <span className="text-white text-16">회원가입하기</span>
+          <span className="text-white text-16">인증하기</span>
         )}
       </div>
       <p

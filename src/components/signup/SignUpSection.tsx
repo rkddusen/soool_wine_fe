@@ -10,7 +10,7 @@ import {
   validId,
   validPassword,
 } from "../../utils/signUpValidators";
-import SignUpComplete from "./SignUpComplete";
+import SignUpFinal from "./SignUpFinal";
 import { useQueryClient } from "@tanstack/react-query";
 import { SignUp } from "../../models/User";
 
@@ -27,7 +27,7 @@ const SignUpSection = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (level < 1 || level > 5) {
+    if (level < 1 || level > 6) {
       setLevel(1);
     } else {
       if (level > 1 && validId(inputValues["id"])) {
@@ -43,8 +43,13 @@ const SignUpSection = () => {
         setLevel(3);
       }
       if (level > 4) {
+        if (!queryClient.getQueryData<boolean>(["isVerifySuccess"])) {
+          setLevel(3);
+        }
+      }
+      if (level > 6) {
         if (!queryClient.getQueryData<boolean>(["isSignUpSuccess"])) {
-          setLevel(4);
+          setLevel(5);
         }
       }
     }
@@ -197,7 +202,9 @@ const SignUpSection = () => {
                   setLevel={setLevel}
                 />
               )}
-              {level === 5 && <SignUpComplete userId={inputValues["id"]} />}
+              {level === 5 && (
+                <SignUpFinal user={inputValues} setLevel={setLevel} />
+              )}
             </div>
           </div>
         </div>

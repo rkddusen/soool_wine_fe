@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import {
+  ApiResponse,
   EmailApiResponse,
   RandomWineApiResponse,
   WineApiResponse,
@@ -130,6 +131,25 @@ export const postCode = async (
     return response;
   } catch (error) {
     console.error("Error api postCode: ", error);
+    throw error;
+  }
+};
+
+export const postUsers = async (
+  id: string,
+  password: string,
+  email: string
+) => {
+  try {
+    const response: AxiosResponse<ApiResponse> =
+      await instance.post<ApiResponse>(`/users`, {
+        id: id,
+        password: password,
+        email: email,
+      });
+    return response;
+  } catch (error) {
+    console.error("Error api postUsers: ", error);
     throw error;
   }
 };

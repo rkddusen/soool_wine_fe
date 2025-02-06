@@ -18,3 +18,8 @@ export interface WineApiResponse {
 export interface EmailApiResponse {
   content: string;
 }
+
+export interface ApiResponse {
+  status: number;
+  message: string;
+}
