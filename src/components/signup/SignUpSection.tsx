@@ -13,6 +13,7 @@ import {
 import SignUpFinal from "./SignUpFinal";
 import { useQueryClient } from "@tanstack/react-query";
 import { SignUp } from "../../models/User";
+import SignUpComplete from "./SignUpComplete";
 
 const SignUpSection = () => {
   const [inputValues, setInputValues] = useState<SignUp>({
@@ -47,7 +48,7 @@ const SignUpSection = () => {
           setLevel(3);
         }
       }
-      if (level > 6) {
+      if (level > 5) {
         if (!queryClient.getQueryData<boolean>(["isSignUpSuccess"])) {
           setLevel(5);
         }
@@ -130,10 +131,10 @@ const SignUpSection = () => {
               <div className="relative w-full my-30">
                 <div className="absolute z-1 top-6 bottom-6 left-10 right-10">
                   <div
-                    className={`w-[${
-                      25 * (level - 1)
-                    }%] h-full rounded-full bg-49-gray transition-all duration-500`}
-                    style={{ width: `${25 * (level - 1)}%` }}
+                    className={` h-full rounded-full bg-49-gray transition-all duration-500`}
+                    style={{
+                      width: `${level === 6 ? 100 : 25 * (level - 1)}%`,
+                    }}
                   ></div>
                 </div>
                 <div className="relative flex justify-between w-full z-2">
@@ -205,6 +206,7 @@ const SignUpSection = () => {
               {level === 5 && (
                 <SignUpFinal user={inputValues} setLevel={setLevel} />
               )}
+              {level === 6 && <SignUpComplete />}
             </div>
           </div>
         </div>
