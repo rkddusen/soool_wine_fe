@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ApiResponse } from "../../models/Api";
 import { postUsers } from "../../utils/api";
-import { AxiosResponse } from "axios";
 import { SignUp } from "../../models/User";
 import Loading from "/src/assets/loading.svg?react";
 import { SignUpError } from "../../models/SignUpError";
@@ -16,21 +14,19 @@ const SignUpFinal = ({ user, setLevel }: SignUpFinalComponentProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
-  const callPostCode = async (): Promise<ApiResponse> => {
-    const response: AxiosResponse<ApiResponse> = await postUsers(
+  const callPostCode = async (): Promise<void> => {
+    await postUsers(
       user["id"],
       user["password"],
       user["email"] + "@" + user["address"]
     );
-    return response.data;
   };
-  const mutation = useMutation<ApiResponse, Error>({
+  const mutation = useMutation<void, Error>({
     mutationFn: callPostCode,
     onMutate: () => {
       setLoading(true);
     },
-    onSuccess: (data: ApiResponse) => {
-      console.log("user post successfully:", data);
+    onSuccess: () => {
       queryClient.setQueryData(["isSignUpSuccess"], true);
       setLevel(6);
     },

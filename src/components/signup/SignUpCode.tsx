@@ -1,11 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SignUpError } from "../../models/SignUpError";
-import { EmailApiResponse } from "../../models/Api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Loading from "/src/assets/loading.svg?react";
-import { AxiosResponse } from "axios";
 import { postCode } from "../../utils/api";
-// import { validCode } from "../../utils/signUpValidators";
 import { SignUp } from "../../models/User";
 
 interface SignUpCodeComponentProps {
@@ -87,22 +84,16 @@ const SignUpCode = ({
     startTimer();
   };
 
-  const callPostCode = async (value: number): Promise<EmailApiResponse> => {
-    const response: AxiosResponse<EmailApiResponse> = await postCode(
-      emailToken,
-      email,
-      value
-    );
-    return response.data;
+  const callPostCode = async (value: number): Promise<void> => {
+    await postCode(emailToken, email, value);
   };
-  const mutation = useMutation<EmailApiResponse, Error, number>({
+  const mutation = useMutation<void, Error, number>({
     mutationFn: callPostCode,
     onMutate: () => {
       setLoading(true);
       setPrevent(true);
     },
-    onSuccess: (data: EmailApiResponse) => {
-      console.log("Email code sent successfully:", data);
+    onSuccess: () => {
       queryClient.setQueryData(["isVerifySuccess"], true);
       setLevel(5);
     },

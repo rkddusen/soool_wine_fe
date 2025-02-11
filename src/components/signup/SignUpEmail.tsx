@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { SignUpError } from "../../models/SignUpError";
 import { validEmail } from "../../utils/signUpValidators";
-import { AxiosResponse } from "axios";
-import { postEmailForCode } from "../../utils/api";
+import { postSendCode } from "../../utils/api";
 import Loading from "/src/assets/loading.svg?react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SignUp } from "../../models/User";
+import { EmailVerificationTokenResponse } from "../../models/Api";
 
 interface SignUpEmailComponentProps {
   inputValue: { email: string; address: string };
@@ -88,8 +88,9 @@ const SignUpEmail = ({
   };
 
   const callPostEmailForCode = async (value: string): Promise<string> => {
-    const response: AxiosResponse<string> = await postEmailForCode(value);
-    return response.data;
+    const response: EmailVerificationTokenResponse = await postSendCode(value);
+    console.log(response);
+    return response.token;
   };
 
   const mutation = useMutation<string, Error, string>({

@@ -1,10 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import {
-  ApiResponse,
-  EmailApiResponse,
   RandomWineApiResponse,
   WineApiResponse,
   WineryApiResponse,
+  EmailVerificationTokenResponse,
 } from "../models/Api";
 import { Filter } from "../models/Filter";
 import { Country } from "../models/Wine";
@@ -100,16 +99,15 @@ export const getWine = async (
   }
 };
 
-export const postEmailForCode = async (value: string) => {
+export const postSendCode = async (
+  value: string
+): Promise<EmailVerificationTokenResponse> => {
   try {
-    const response: AxiosResponse<string> = await instance.post<string>(
-      `/email/sendCode`,
-      value,
-      {
-        headers: { "Content-Type": "text/plain" },
-      }
-    );
-    return response;
+    const response: AxiosResponse<EmailVerificationTokenResponse> =
+      await instance.post<EmailVerificationTokenResponse>(`/email/sendCode`, {
+        email: value,
+      });
+    return response.data;
   } catch (error) {
     console.error("Error api postEmailForCode: ", error);
     throw error;
@@ -120,15 +118,13 @@ export const postCode = async (
   token: string | undefined,
   email: string | undefined,
   code: number
-) => {
+): Promise<void> => {
   try {
-    const response: AxiosResponse<EmailApiResponse> =
-      await instance.post<EmailApiResponse>(`/email/verify`, {
-        token: token,
-        email: email,
-        code: code,
-      });
-    return response;
+    await instance.post<void>(`/email/verify`, {
+      token: token,
+      email: email,
+      code: code,
+    });
   } catch (error) {
     console.error("Error api postCode: ", error);
     throw error;
@@ -139,15 +135,13 @@ export const postUsers = async (
   id: string,
   password: string,
   email: string
-) => {
+): Promise<void> => {
   try {
-    const response: AxiosResponse<ApiResponse> =
-      await instance.post<ApiResponse>(`/users`, {
-        id: id,
-        password: password,
-        email: email,
-      });
-    return response;
+    await instance.post<void>(`/users`, {
+      id: id,
+      password: password,
+      email: email,
+    });
   } catch (error) {
     console.error("Error api postUsers: ", error);
     throw error;

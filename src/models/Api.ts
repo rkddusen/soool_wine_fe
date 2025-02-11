@@ -15,11 +15,6 @@ export interface WineApiResponse {
   [key: string]: any;
 }
 
-export interface EmailApiResponse {
-  content: string;
-}
-
-export interface ApiResponse {
-  status: number;
-  message: string;
+export interface EmailVerificationTokenResponse {
+  token: string;
 }
