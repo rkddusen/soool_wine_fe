@@ -119,7 +119,6 @@ export const postSendCode = async (
       });
     return response.data;
   } catch (error) {
-    console.error("Error api postEmailForCode: ", error);
     throw error;
   }
 };

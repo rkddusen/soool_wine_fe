@@ -42,10 +42,6 @@ export const validEmail = (
   if (!addressRegex.test(data2)) {
     return { code: "3002", message: "이메일 주소를 올바르게 입력해주세요." };
   }
-  const ex = ["aaa@naver.com", "aaa@gmail.com"];
-  if (ex.includes(data1 + "@" + data2)) {
-    return { code: "3002", message: "이미 등록된 이메일입니다." };
-  }
   return null;
 };
 

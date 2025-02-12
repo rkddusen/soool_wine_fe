@@ -6,6 +6,7 @@ import Loading from "/src/assets/loading.svg?react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SignUp } from "../../models/User";
 import { EmailVerificationTokenResponse } from "../../models/Api";
+import { AxiosError } from "axios";
 
 interface SignUpEmailComponentProps {
   inputValue: { email: string; address: string };
@@ -89,11 +90,10 @@ const SignUpEmail = ({
 
   const callPostEmailForCode = async (value: string): Promise<string> => {
     const response: EmailVerificationTokenResponse = await postSendCode(value);
-    console.log(response);
     return response.token;
   };
 
-  const mutation = useMutation<string, Error, string>({
+  const mutation = useMutation<string, AxiosError, string>({
     mutationFn: callPostEmailForCode,
     onMutate: () => {
       setLoading(true);
@@ -108,8 +108,19 @@ const SignUpEmail = ({
       );
       setLevel(4);
     },
-    onError: (error: Error) => {
-      console.log("Error sending email code:", error);
+    onError: (error: AxiosError) => {
+      if (error.status === 409) {
+        setError({
+          code: "3003",
+          message: "이미 등록된 이메일입니다.",
+        });
+      } else {
+        console.log("Error sending email code:", error);
+        setError({
+          code: "3004",
+          message: "문제가 발생했습니다. 다시 시도해주세요.",
+        });
+      }
     },
     onSettled: () => {
       setLoading(false);
