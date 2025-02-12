@@ -2,6 +2,9 @@ import { useRef, useState } from "react";
 import { SignUpError } from "../../models/SignUpError";
 import { validId } from "../../utils/signUpValidators";
 import { SignUp } from "../../models/User";
+import { useMutation } from "@tanstack/react-query";
+import { getIdExists } from "../../utils/api";
+import Loading from "/src/assets/loading.svg?react";
 
 interface SignUpIdComponentProps {
   inputValue: { id: string };
@@ -20,6 +23,7 @@ const SignUpId = ({
   const [idFocus, setIdFocus] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<SignUpError | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleOnFocus = (): void => {
     setIdFocus(true);
@@ -29,12 +33,45 @@ const SignUpId = ({
     setIdFocus(false);
   };
 
+  const callGetIsIdExists = async (id: string): Promise<boolean> => {
+    const response: boolean = await getIdExists(id);
+    console.log(response);
+    return response;
+  };
+
+  const mutation = useMutation<boolean, Error, string>({
+    mutationFn: callGetIsIdExists,
+    onMutate: () => {
+      setLoading(true);
+    },
+    onSuccess: (exists: boolean) => {
+      if (!exists) {
+        setLevel(2);
+      } else {
+        setError({
+          code: "1003",
+          message: "이미 존재하는 아이디입니다.",
+        });
+      }
+    },
+    onError: (error: Error) => {
+      console.log("Error get id exists:", error);
+      setError({
+        code: "1004",
+        message: "문제가 발생했습니다. 다시 시도해주세요.",
+      });
+    },
+    onSettled: () => {
+      setLoading(false);
+    },
+  });
+
   const nextLevel = () => {
     const _error = validId(inputValue["id"]);
     if (_error) {
       setError(_error);
     } else {
-      setLevel(2);
+      mutation.mutate(inputValue["id"]);
     }
   };
 
@@ -89,10 +126,14 @@ const SignUpId = ({
         </div>
       </div>
       <div
-        onClick={nextLevel}
+        onClick={loading ? undefined : nextLevel}
         className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray hover:cursor-pointer"
       >
-        <span className="text-white text-16">다음 단계</span>
+        {loading ? (
+          <Loading />
+        ) : (
+          <span className="text-white text-16">다음 단계</span>
+        )}
       </div>
     </>
   );

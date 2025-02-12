@@ -99,6 +99,16 @@ export const getWine = async (
   }
 };
 
+export const getIdExists = async (id: string): Promise<boolean> => {
+  try {
+    const response = await instance.get<boolean>(`/users/id-exists?id=${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error api getIdExists: ", error);
+    throw error;
+  }
+};
+
 export const postSendCode = async (
   value: string
 ): Promise<EmailVerificationTokenResponse> => {
