@@ -301,9 +301,11 @@ const LoginSection = () => {
                 </span>
               </div>
               <div className="w-full px-5">
-                <span className="w-full hover:underline break-keep">
-                  회원가입
-                </span>
+                <Link to="/signup">
+                  <span className="w-full hover:underline break-keep">
+                    회원가입
+                  </span>
+                </Link>
               </div>
             </div>
           </div>
