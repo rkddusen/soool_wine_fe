@@ -4,6 +4,7 @@ import {
   WineApiResponse,
   WineryApiResponse,
   EmailVerificationTokenResponse,
+  LoginTokenResponse,
 } from "../models/Api";
 import { Filter } from "../models/Filter";
 import { Country } from "../models/Wine";
@@ -153,6 +154,22 @@ export const postUsers = async (
     });
   } catch (error) {
     console.error("Error api postUsers: ", error);
+    throw error;
+  }
+};
+
+export const postLogin = async (
+  id: string,
+  password: string
+): Promise<LoginTokenResponse> => {
+  try {
+    const { data } = await instance.post<LoginTokenResponse>(`/auth/login`, {
+      id,
+      password,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error api postLogin: ", error);
     throw error;
   }
 };

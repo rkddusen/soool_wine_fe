@@ -18,3 +18,7 @@ export interface WineApiResponse {
 export interface EmailVerificationTokenResponse {
   token: string;
 }
+
+export interface LoginTokenResponse {
+  token: string;
+}

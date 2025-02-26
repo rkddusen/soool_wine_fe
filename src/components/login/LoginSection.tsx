@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import SooolLogo from "/src/assets/soool_logo.svg?react";
 import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { LoginTokenResponse } from "../../models/Api";
+import { postLogin } from "../../utils/api";
+import { CustomError } from "../../models/SignUpError";
 
 const LoginSection = () => {
   const [idInput, setIdInput] = useState<string>("");
@@ -11,7 +16,9 @@ const LoginSection = () => {
   const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
   const [seePassword, setSeePassword] = useState<boolean>(false);
   const [checkAutoLogin, setCheckAutoLogin] = useState<boolean>(false);
-  const [isLoginFail, setIsLoginFail] = useState<boolean>(false);
+  const [error, setError] = useState<CustomError | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [prevent, setPrevent] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,13 +66,47 @@ const LoginSection = () => {
     }
   };
 
+  const callPostLogin = async (): Promise<LoginTokenResponse> => {
+    const data: LoginTokenResponse = await postLogin(idInput, passwordInput);
+    return data;
+  };
+
+  const mutation = useMutation<LoginTokenResponse, AxiosError, void>({
+    mutationFn: callPostLogin,
+    onMutate: () => {
+      setLoading(true);
+      setPrevent(true);
+    },
+    onSuccess: (data) => {
+      console.log("login successfully:", data);
+    },
+    onError: (error) => {
+      console.log("Error login:", error);
+      setError({
+        code: "0003",
+        message: "문제가 발생했습니다. 다시 시도해주세요.",
+      });
+    },
+    onSettled: () => {
+      setLoading(false);
+      setPrevent(false);
+    },
+  });
+
   const loginCheck = (): void => {
     // 로그인 확인
-    if (idInput === "aa" && passwordInput === "aa") {
-      setIsLoginFail(false);
-      navigate("/", { replace: true });
+    if (idInput === "") {
+      setError({
+        code: "0001",
+        message: "아이디를 입력해주세요.",
+      });
+    } else if (passwordInput === "") {
+      setError({
+        code: "0002",
+        message: "비밀번호를 입력해주세요.",
+      });
     } else {
-      setIsLoginFail(true);
+      mutation.mutate();
     }
   };
 
@@ -96,8 +137,8 @@ const LoginSection = () => {
             <div className="w-full md:h-50 sm:h-40 h-30">
               <SooolLogo />
             </div>
-            <div className="w-full mt-30">
-              <div className="w-full mb-10">
+            <div className={`w-full mt-30 ${prevent && "pointer-events-none"}`}>
+              <div className="w-full mt-10">
                 <div
                   className={`flex items-center w-full px-20 mb-10 h-50 ${
                     idInputFocus
@@ -237,7 +278,7 @@ const LoginSection = () => {
                   )}
                 </div>
               </div>
-              <div className="inline-block mb-10">
+              <div className="inline-block mt-10">
                 <div
                   onClick={() => setCheckAutoLogin((prev) => !prev)}
                   className="flex flex-row items-center hover:cursor-pointer"
@@ -277,14 +318,12 @@ const LoginSection = () => {
                   <span className="ml-5 text-14 text-49-gray">자동 로그인</span>
                 </div>
               </div>
-              {isLoginFail && (
-                <div className="mb-10 text-red-500 text-14">
-                  <p>아이디 또는 비밀번호를 잘못 입력했습니다.</p>
-                </div>
+              {error && (
+                <p className="mt-5 text-red-500 text-14">{error.message}</p>
               )}
               <div
-                onClick={loginCheck}
-                className="flex flex-row items-center justify-center w-full h-50 rounded-15 bg-49-gray hover:cursor-pointer"
+                onClick={loading ? undefined : loginCheck}
+                className="flex flex-row items-center justify-center w-full mt-10 h-50 rounded-15 bg-49-gray hover:cursor-pointer"
               >
                 <span className="text-white text-16">로그인</span>
               </div>
