@@ -111,17 +111,14 @@ export const getIdExists = async (id: string): Promise<boolean> => {
 };
 
 export const postSendCode = async (
-  value: string
+  email: string
 ): Promise<EmailVerificationTokenResponse> => {
   try {
-    const response: AxiosResponse<EmailVerificationTokenResponse> =
-      await instance.post<EmailVerificationTokenResponse>(
-        `/users/email-verification`,
-        {
-          email: value,
-        }
-      );
-    return response.data;
+    const { data } = await instance.post<EmailVerificationTokenResponse>(
+      `/users/email-verification`,
+      { email }
+    );
+    return data;
   } catch (error) {
     throw error;
   }
@@ -134,9 +131,9 @@ export const postCode = async (
 ): Promise<void> => {
   try {
     await instance.post<void>(`/users/email-verification/verify`, {
-      token: token,
-      email: email,
-      code: code,
+      token,
+      email,
+      code,
     });
   } catch (error) {
     console.error("Error api postCode: ", error);
@@ -151,9 +148,9 @@ export const postUsers = async (
 ): Promise<void> => {
   try {
     await instance.post<void>(`/users`, {
-      id: id,
-      password: password,
-      email: email,
+      id,
+      password,
+      email,
     });
   } catch (error) {
     console.error("Error api postUsers: ", error);
