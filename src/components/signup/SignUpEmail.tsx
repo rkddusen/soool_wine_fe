@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SignUpError } from "../../models/SignUpError";
 import { validEmail } from "../../utils/signUpValidators";
-import { postSendCode } from "../../utils/api";
+import { postEmail } from "../../utils/api";
 import Loading from "/src/assets/loading.svg?react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SignUp } from "../../models/User";
@@ -89,7 +89,7 @@ const SignUpEmail = ({
   };
 
   const callPostEmailForCode = async (value: string): Promise<string> => {
-    const response: EmailVerificationTokenResponse = await postSendCode(value);
+    const response: EmailVerificationTokenResponse = await postEmail(value);
     return response.token;
   };
 

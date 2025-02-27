@@ -110,7 +110,7 @@ export const getIdExists = async (id: string): Promise<boolean> => {
   }
 };
 
-export const postSendCode = async (
+export const postEmail = async (
   email: string
 ): Promise<EmailVerificationTokenResponse> => {
   try {
