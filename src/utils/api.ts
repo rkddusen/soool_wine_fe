@@ -115,9 +115,12 @@ export const postSendCode = async (
 ): Promise<EmailVerificationTokenResponse> => {
   try {
     const response: AxiosResponse<EmailVerificationTokenResponse> =
-      await instance.post<EmailVerificationTokenResponse>(`/email/sendCode`, {
-        email: value,
-      });
+      await instance.post<EmailVerificationTokenResponse>(
+        `/users/email-verification`,
+        {
+          email: value,
+        }
+      );
     return response.data;
   } catch (error) {
     throw error;
@@ -130,7 +133,7 @@ export const postCode = async (
   code: number
 ): Promise<void> => {
   try {
-    await instance.post<void>(`/email/verify`, {
+    await instance.post<void>(`/users/email-verification/verify`, {
       token: token,
       email: email,
       code: code,
