@@ -45,7 +45,7 @@ const SignUpSection = () => {
       }
       if (level > 4) {
         if (!queryClient.getQueryData<boolean>(["isVerifySuccess"])) {
-          setLevel(3);
+          setLevel(4);
         }
       }
       if (level > 5) {
@@ -131,7 +131,7 @@ const SignUpSection = () => {
               <div className="relative w-full my-30">
                 <div className="absolute z-1 top-6 bottom-6 left-10 right-10">
                   <div
-                    className={` h-full rounded-full bg-49-gray transition-all duration-500`}
+                    className={` h-full rounded-full bg-(--gray-49) transition-all duration-500`}
                     style={{
                       width: `${level === 6 ? 100 : 25 * (level - 1)}%`,
                     }}
@@ -143,9 +143,9 @@ const SignUpSection = () => {
                       key={i}
                       className={`flex items-center justify-center w-20 h-20 ${
                         level >= i + 1
-                          ? "bg-49-gray text-white"
-                          : "bg-white text-49-gray"
-                      } border rounded-full border-49-gray text-12`}
+                          ? "bg-(--gray-49) text-white"
+                          : "bg-white text-(--gray-49)"
+                      } border rounded-full border-(--gray-49) text-12`}
                     >
                       {level > i + 1 ? (
                         <svg

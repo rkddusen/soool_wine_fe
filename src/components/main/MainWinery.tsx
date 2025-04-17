@@ -156,7 +156,7 @@ const MainWinery = () => {
                   <p className="mt-5 text-18 sm:text-20">
                     {winery[currentIndex].region}
                   </p>
-                  <p className="mt-10 whitespace-pre-wrap break-keep text-14 sm:text-16 line-clamp-[8]">
+                  <p className="mt-10 whitespace-pre-wrap break-keep text-14 sm:text-16 line-clamp-8">
                     {winery[currentIndex].shortDescription}
                   </p>
                 </div>
@@ -223,7 +223,7 @@ const MoveBtn = ({
   return (
     <div
       onClick={handleClickEvent}
-      className={`z-2 absolute y-center-absolute ${dir} ${mdDir} w-40 h-40 md:w-50 md:h-50 bg-white border-1 border-78-gray rounded-full flex justify-center items-center hover:cursor-pointer`}
+      className={`z-2 absolute y-center-absolute ${dir} ${mdDir} w-40 h-40 md:w-50 md:h-50 bg-white border-1 border-(--gray-78) rounded-full flex justify-center items-center hover:cursor-pointer`}
     >
       {children}
     </div>

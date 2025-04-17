@@ -9,7 +9,7 @@ const SignUpComplete = () => {
         </div>
       </div>
       <Link to={"/login"}>
-        <div className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray hover:cursor-pointer">
+        <div className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-(--gray-49) hover:cursor-pointer">
           <span className="text-white text-16">로그인 하러가기</span>
         </div>
       </Link>

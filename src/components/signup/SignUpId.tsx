@@ -80,17 +80,19 @@ const SignUpId = ({
       <div className="w-full">
         <div className="mt-15">
           <p className="font-bold text-20">아이디를 입력해주세요!</p>
-          <p className="mt-10 text-14 text-78-gray">
+          <p className="mt-10 text-14 text-(--gray-78)">
             4~16자의 영문, 숫자, -, _ 만 사용 가능합니다.
           </p>
           <div
             className={`flex items-center w-full px-15 mt-10 h-50 ${
-              idFocus ? "border-black border-1.5" : "border-78-gray border"
+              idFocus
+                ? "border-black border-[1.5px]"
+                : "border-(--gray-78) border"
             } rounded-5`}
           >
             <svg
               className={`shrink-0 ${
-                idFocus ? "stroke-black" : "stroke-bb-gray"
+                idFocus ? "stroke-black" : "stroke-(--gray-78)"
               }`}
               width="20"
               height="20"
@@ -117,7 +119,7 @@ const SignUpId = ({
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               placeholder="아이디"
-              className="w-full h-full mx-10 border-none outline-none"
+              className="w-full h-full mx-10 border-none outline-hidden"
             />
           </div>
           {error && (
@@ -127,7 +129,7 @@ const SignUpId = ({
       </div>
       <div
         onClick={loading ? undefined : nextLevel}
-        className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray hover:cursor-pointer"
+        className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-(--gray-49) hover:cursor-pointer"
       >
         {loading ? (
           <Loading />

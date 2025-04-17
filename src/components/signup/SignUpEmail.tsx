@@ -149,7 +149,9 @@ const SignUpEmail = ({
           >
             <div
               className={`w-full px-15 h-50 ${
-                emailFocus ? "border-black border-1.5" : "border-78-gray border"
+                emailFocus
+                  ? "border-black border-[1.5px]"
+                  : "border-(--gray-78) border"
               } rounded-5`}
             >
               <input
@@ -160,7 +162,7 @@ const SignUpEmail = ({
                 onFocus={handleEmailOnFocus}
                 onBlur={handleEmailOnBlur}
                 placeholder="이메일"
-                className="w-full h-full border-none outline-none"
+                className="w-full h-full border-none outline-hidden"
               />
             </div>
             <span className="shrink-0 text-nowrap text-20">@</span>
@@ -168,9 +170,9 @@ const SignUpEmail = ({
               <div ref={selectRef} className="relative w-full">
                 <div
                   onClick={() => setOpenSelect((prev) => !prev)}
-                  className="flex items-center w-full border h-50 px-15 rounded-5 border-78-gray hover:cursor-pointer"
+                  className="flex items-center w-full border h-50 px-15 rounded-5 border-(--gray-78) hover:cursor-pointer"
                 >
-                  <p className="w-full text-78-gray">
+                  <p className="w-full text-(--gray-78)">
                     {select > -1 ? selectName[select] : "선택해주세요."}
                   </p>
                   <svg
@@ -191,12 +193,12 @@ const SignUpEmail = ({
                   </svg>
                 </div>
                 {openSelect ? (
-                  <div className="absolute left-0 w-full overflow-y-scroll bg-white border top-55 h-140 border-78-gray rounded-5">
+                  <div className="absolute left-0 w-full overflow-y-scroll bg-white border top-55 h-140 border-(--gray-78) rounded-5">
                     {selectName.map((v, i) => (
                       <div
                         onClick={() => handleSelectMail(i)}
                         key={i}
-                        className="flex items-center justify-center w-full h-40 hover:cursor-pointer hover:bg-f5-gray"
+                        className="flex items-center justify-center w-full h-40 hover:cursor-pointer hover:bg-(--gray-f5)"
                       >
                         <p className="text-16">{v}</p>
                       </div>
@@ -208,8 +210,8 @@ const SignUpEmail = ({
               <div
                 className={`flex items-center w-full px-15 h-50 ${
                   addressFocus
-                    ? "border-black border-1.5"
-                    : "border-78-gray border"
+                    ? "border-black border-[1.5px]"
+                    : "border-(--gray-78) border"
                 } rounded-5`}
               >
                 <input
@@ -220,7 +222,7 @@ const SignUpEmail = ({
                   onFocus={handleAddressOnFocus}
                   onBlur={handleAddressOnBlur}
                   placeholder="직접 입력"
-                  className="w-full h-full mr-10 border-none outline-none"
+                  className="w-full h-full mr-10 border-none outline-hidden"
                 />
                 <svg
                   onClick={handleResetMail}
@@ -260,7 +262,7 @@ const SignUpEmail = ({
       </div>
       <div
         onClick={loading ? undefined : nextLevel}
-        className="flex flex-row items-center justify-center w-full h-50 rounded-15 bg-49-gray hover:cursor-pointer"
+        className="flex flex-row items-center justify-center w-full h-50 rounded-15 bg-(--gray-49) hover:cursor-pointer"
       >
         {loading ? (
           <Loading />

@@ -121,12 +121,12 @@ const StorageSection = () => {
   if (error) return <div>{error}</div>;
   return (
     <>
-      <div className="w-full py-70 rounded-15 bg-lighter-main">
+      <div className="w-full py-70 rounded-15 bg-(--lighter-main)">
         <div className="mb-40 text-center">
           <span className="text-30">와인창고</span>
         </div>
         <div className="w-full px-20 mx-auto max-w-600 h-60">
-          <div className="w-full h-full border-1 border-main rounded-30">
+          <div className="w-full h-full border-1 border-(--main) rounded-30">
             <SearchBar />
           </div>
         </div>
@@ -235,7 +235,7 @@ const StorageSection = () => {
             <div className="mt-10 text-center">
               <div
                 onClick={handleFilterReset}
-                className="inline-flex items-center justify-center px-20 py-10 bg-white border rounded-full border-f0-gray hover:cursor-pointer hover:bg-f0-gray"
+                className="inline-flex items-center justify-center px-20 py-10 bg-white border rounded-full border-(--gray-f0) hover:cursor-pointer hover:bg-(--gray-f0)"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -261,7 +261,9 @@ const StorageSection = () => {
       <div className="w-full">
         <div className="w-full pt-10">
           <div className="flex flex-row items-center justify-between w-full px-10 mx-auto h-60">
-            <span className="text-14 text-78-gray">{totalElements} Wines</span>
+            <span className="text-14 text-(--gray-78)">
+              {totalElements} Wines
+            </span>
           </div>
         </div>
         <div className="flex flex-wrap justify-center w-full gap-40">
@@ -272,7 +274,7 @@ const StorageSection = () => {
           ) : (
             <div className="flex flex-col items-center gap-20 my-100">
               <NoResultsFound />
-              <p className="text-78-gray text-18">
+              <p className="text-(--gray-78) text-18">
                 앗! 찾으시는 와인이 없네요.
               </p>
             </div>
@@ -283,7 +285,7 @@ const StorageSection = () => {
         <div className="w-full text-center mt-50">
           <div
             onClick={handleViewMore}
-            className="inline-block border rounded-full border-78-gray hover:cursor-pointer"
+            className="inline-block border rounded-full border-(--gray-78) hover:cursor-pointer"
           >
             <div className="py-10 px-30 text-12">더보기</div>
           </div>
@@ -302,11 +304,11 @@ const FilterInfoDiv = ({
   children,
 }: FilterInfoDivComponentProps) => {
   return (
-    <div className="flex items-center justify-center px-12 py-8 border rounded-5 border-light-main text-12">
+    <div className="flex items-center justify-center px-12 py-8 border rounded-5 border-(--light-main) text-12">
       {children}
       <svg
         onClick={handleFilterDelete}
-        className="ml-5 stroke-78-gray hover:stroke-black hover:cursor-pointer"
+        className="ml-5 stroke-(--gray-78) hover:stroke-black hover:cursor-pointer"
         xmlns="http://www.w3.org/2000/svg"
         width="14"
         height="14"

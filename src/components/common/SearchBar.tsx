@@ -55,7 +55,7 @@ const SearchBar = () => {
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            className="fill-main"
+            className="fill-(--main)"
             d="M16.3965 12.3926C17.5684 11.5625 19.5312 10.1074 19.5312 6.2793C19.5312 3.18359 17.7246 0.419922 17.7246 0.419922H7.28516C7.28516 0.419922 5.47852 3.20312 5.47852 6.30859C5.47852 10.1367 7.44141 11.5918 8.60352 12.4219C9.95117 13.3789 12.002 15.2051 12.002 15.4883V23.1641H7.41211V24.4727H17.4609V23.1641H12.998V15.4883C12.998 15.1758 15.0488 13.3594 16.3965 12.3926ZM7.98828 1.42578H17.0215C17.4902 1.42578 18.5254 4.21875 18.5254 6.2793C18.5254 6.33789 18.5254 6.39648 18.5254 6.44531H6.47461C6.47461 6.39648 6.47461 6.34766 6.47461 6.30859C6.47461 4.24805 7.51953 2.24609 7.98828 1.42578Z"
           />
         </svg>
@@ -65,7 +65,7 @@ const SearchBar = () => {
           onChange={(e) => handleSearchChange(e)}
           onKeyDown={handleKeyPress}
           value={search}
-          className="w-full h-full outline-none"
+          className="w-full h-full outline-hidden"
           type="text"
           placeholder="마시고 싶은 와인이 있나요?"
         />
@@ -75,7 +75,7 @@ const SearchBar = () => {
         className="shrink-0 hover:cursor-pointer"
       >
         <svg
-          className="stroke-main"
+          className="stroke-(--main)"
           width="25"
           height="25"
           viewBox="0 0 30 30"

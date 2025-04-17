@@ -58,7 +58,7 @@ const RandomWineBox = ({ type, wine }: RandomWineBoxComponentProps) => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <div className="relative w-full overflow-hidden rounded-15 bg-f5-gray h-320">
+      <div className="relative w-full overflow-hidden rounded-15 bg-(--gray-f5) h-320">
         <div
           className={`absolute top-0 left-0 bg-white w-[40%] h-55 flex flex-row justify-center items-center rounded-tl-15 rounded-br-15
           before:content-[url('/src/assets/rounded.svg')] before:w-15 before:h-15 before:absolute before:right-[-15px] before:top-0
@@ -79,7 +79,7 @@ const RandomWineBox = ({ type, wine }: RandomWineBoxComponentProps) => {
                 <p className="break-words text-14 sm:text-16 line-clamp-2 leading-[120%]">
                   {wine.kname}
                 </p>
-                <p className="mt-5 text-12 sm:text-14 text-78-gray line-clamp-2 leading-[120%]">
+                <p className="mt-5 text-12 sm:text-14 text-(--gray-78) line-clamp-2 leading-[120%]">
                   {wine.ename}
                 </p>
               </div>

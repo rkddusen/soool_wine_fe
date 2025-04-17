@@ -2,9 +2,9 @@ import SearchBar from "../common/SearchBar";
 
 const SearchArea = () => {
   return (
-    <div className="relative w-full overflow-hidden pb-[max(200px,33%)] sm:pb-[min(300px,33%)] bg-light-main rounded-15">
+    <div className="relative w-full overflow-hidden pb-[max(200px,33%)] sm:pb-[min(300px,33%)] bg-(--light-main) rounded-15">
       <div className="absolute z-10 flex flex-row items-center w-full px-10 center-absolute max-w-500 h-50 md:h-60">
-        <div className="w-full h-full border-1 rounded-30 border-main">
+        <div className="w-full h-full border rounded-30 border-(--main)">
           <SearchBar />
         </div>
       </div>

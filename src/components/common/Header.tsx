@@ -53,7 +53,7 @@ const Header = () => {
   return (
     <div
       className={`${
-        isBorder ? "shadow" : "shadow-none"
+        isBorder ? "shadow-sm" : "shadow-none"
       } z-99 fixed top-0 left-0 w-full bg-white h-80`}
     >
       <div className="flex flex-row items-center justify-between w-full h-full px-20 mx-auto md:px-40 max-w-1280">
@@ -71,13 +71,19 @@ const Header = () => {
               </span>
               <svg
                 onClick={moveMyPage}
-                className="w-20 h-20 stroke-1.5 stroke-main fill-none hover:cursor-pointer"
+                className="w-20 h-20 stroke-(--main) fill-none hover:cursor-pointer"
                 viewBox="0 0 22 22"
                 strokeLinecap="round"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M11 10.2667C13.43 10.2667 15.4 8.29673 15.4 5.86667C15.4 3.43662 13.43 1.46667 11 1.46667C8.56992 1.46667 6.59998 3.43662 6.59998 5.86667C6.59998 8.29673 8.56992 10.2667 11 10.2667Z" />
-                <path d="M2.55483 16.6808C3.31031 13.8153 6.17527 12.4667 9.0454 12.4667H12.9545C15.8246 12.4667 18.6896 13.8153 19.4451 16.6808C19.5999 17.2684 19.7237 17.9042 19.7938 18.5796C19.8635 19.2509 19.3286 19.8 18.6764 19.8H3.3235C2.67126 19.8 2.13639 19.2509 2.20607 18.5796C2.2762 17.9042 2.39992 17.2684 2.55483 16.6808Z" />
+                <path
+                  strokeWidth="1.5"
+                  d="M11 10.2667C13.43 10.2667 15.4 8.29673 15.4 5.86667C15.4 3.43662 13.43 1.46667 11 1.46667C8.56992 1.46667 6.59998 3.43662 6.59998 5.86667C6.59998 8.29673 8.56992 10.2667 11 10.2667Z"
+                />
+                <path
+                  strokeWidth="1.5"
+                  d="M2.55483 16.6808C3.31031 13.8153 6.17527 12.4667 9.0454 12.4667H12.9545C15.8246 12.4667 18.6896 13.8153 19.4451 16.6808C19.5999 17.2684 19.7237 17.9042 19.7938 18.5796C19.8635 19.2509 19.3286 19.8 18.6764 19.8H3.3235C2.67126 19.8 2.13639 19.2509 2.20607 18.5796C2.2762 17.9042 2.39992 17.2684 2.55483 16.6808Z"
+                />
               </svg>
             </>
           ) : (
@@ -90,8 +96,7 @@ const Header = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             onClick={() => setIsMenuOpen(true)}
-            className="stroke-main hover:cursor-pointer"
-            strokeWidth="1.5"
+            className="stroke-(--main) hover:cursor-pointer"
             width="30"
             height="30"
             viewBox="0 0 24 24"
@@ -120,7 +125,7 @@ const Header = () => {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   onClick={() => setIsMenuOpen(false)}
-                  className="stroke-main hover:cursor-pointer"
+                  className="stroke-(--main) hover:cursor-pointer"
                   width="30"
                   height="30"
                   viewBox="0 0 24 24"
@@ -136,10 +141,10 @@ const Header = () => {
             <div className="h-full px-20">
               <div className="flex flex-col w-full h-full">
                 {isLogin ? (
-                  <div className="flex flex-wrap items-center justify-between w-full px-20 py-10 break-keep shrink-0 min-h-60 rounded-15 bg-light-main">
+                  <div className="flex flex-wrap items-center justify-between w-full px-20 py-10 break-keep shrink-0 min-h-60 rounded-15 bg-(--light-main)">
                     <div className="flex items-center max-w-full py-10 shrink-0">
                       <svg
-                        className="w-20 h-20 shrink-0 stroke-main fill-none hover:cursor-pointer"
+                        className="w-20 h-20 shrink-0 stroke-(--main) fill-none hover:cursor-pointer"
                         viewBox="0 0 22 22"
                         strokeLinecap="round"
                         xmlns="http://www.w3.org/2000/svg"
@@ -166,10 +171,10 @@ const Header = () => {
                   </div>
                 ) : (
                   <Link to="/login">
-                    <div className="flex items-center justify-between w-full px-20 shrink-0 min-h-60 rounded-15 bg-light-main hover:cursor-pointer">
+                    <div className="flex items-center justify-between w-full px-20 shrink-0 min-h-60 rounded-15 bg-(--light-main) hover:cursor-pointer">
                       <div className="flex items-center">
                         <svg
-                          className="w-20 h-20 stroke-main fill-none hover:cursor-pointer"
+                          className="w-20 h-20 stroke-(--main) fill-none hover:cursor-pointer"
                           viewBox="0 0 22 22"
                           strokeLinecap="round"
                           xmlns="http://www.w3.org/2000/svg"
@@ -204,18 +209,18 @@ const Header = () => {
                 )}
                 <ul className="px-20 pb-40 text-20 sm:text-25">
                   <Link to={"/storage"} onClick={() => setIsMenuOpen(false)}>
-                    <li className="py-10 mt-30 hover:text-main">
+                    <li className="py-10 mt-30 hover:text-(--main)">
                       <span>와인창고</span>
                     </li>
                   </Link>
                   <Link to={"/place"} onClick={() => setIsMenuOpen(false)}>
-                    <li className="py-10 mt-30 hover:text-main">
+                    <li className="py-10 mt-30 hover:text-(--main)">
                       <span>주변와인</span>
                     </li>
                   </Link>
                   {isLogin ? (
                     <Link to={"/place"} onClick={() => setIsMenuOpen(false)}>
-                      <li className="py-10 mt-30 hover:text-main">
+                      <li className="py-10 mt-30 hover:text-(--main)">
                         <span>마이페이지</span>
                       </li>
                     </Link>
@@ -243,7 +248,7 @@ interface HeaderNavComponentProps {
 const HeaderNav = ({ text, link }: HeaderNavComponentProps) => {
   return (
     <li className="flex flex-row justify-center h-full w-100">
-      <div className="flex items-center h-full hover:cursor-pointer border-y-2 border-y-white hover:border-b-main hover:text-main">
+      <div className="flex items-center h-full hover:cursor-pointer border-y-2 border-y-white hover:border-b-(--main) hover:text-(--main)">
         <span className="text-nowrap">
           <Link to={`/${link}`}>{text}</Link>
         </span>

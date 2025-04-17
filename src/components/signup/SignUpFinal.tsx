@@ -60,7 +60,7 @@ const SignUpFinal = ({ user, setLevel }: SignUpFinalComponentProps) => {
       </div>
       <div
         onClick={loading ? undefined : nextLevel}
-        className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray hover:cursor-pointer"
+        className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-(--gray-49) hover:cursor-pointer"
       >
         {loading ? (
           <Loading />

@@ -117,12 +117,14 @@ const SignUpCode = ({
       <div className="w-full">
         <div className="mt-15">
           <p className="font-bold text-20">이메일로 인증 코드를 보냈어요!</p>
-          <p className="mt-10 text-78-gray text-14">
+          <p className="mt-10 text-(--gray-78) text-14">
             인증 코드를 입력해주세요.
           </p>
           <div
             className={`flex items-center w-full px-15 mt-10 h-50 ${
-              keyFocus ? "border-black border-1.5" : "border-78-gray border"
+              keyFocus
+                ? "border-black border-[1.5px]"
+                : "border-(--gray-78) border"
             } ${prevent && "pointer-events-none"} rounded-5`}
           >
             <input
@@ -135,7 +137,7 @@ const SignUpCode = ({
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               placeholder="인증 코드"
-              className="w-full h-full border-none outline-none"
+              className="w-full h-full border-none outline-hidden"
             />
             <span className="text-red-500 text-14 shrink-0 text-nowrap">
               {String(Math.floor(seconds / 60)).padStart(2, "0")}:
@@ -151,9 +153,9 @@ const SignUpCode = ({
         onClick={loading ? undefined : nextLevel}
         className={`${
           seconds > 0 && inputValue["code"]
-            ? "bg-49-gray cursor-pointer"
-            : "bg-e0-gray cursor-default"
-        } flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-49-gray`}
+            ? "bg-(--gray-49) cursor-pointer"
+            : "bg-(--gray-e0) cursor-default"
+        } flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-(--gray-49)`}
       >
         {loading ? (
           <Loading />
@@ -163,7 +165,7 @@ const SignUpCode = ({
       </div>
       <p
         onClick={reSendEmailCode}
-        className="mt-10 text-center underline text-12 text-78-gray hover:cursor-pointer"
+        className="mt-10 text-center underline text-12 text-(--gray-78) hover:cursor-pointer"
       >
         인증 코드 재전송
       </p>

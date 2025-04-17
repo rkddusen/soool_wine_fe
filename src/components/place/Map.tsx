@@ -353,11 +353,11 @@ const Map = () => {
       <div
         className={`${
           isListOpen ? "h-[calc(100%-20px)]" : "h-50"
-        } w-[calc(100%-20px)] sm:w-350 md:w-400 z-9 absolute bottom-10 left-10 bg-white rounded-15 shadow-wine-box overflow-hidden flex flex-col`}
+        } w-[calc(100%-20px)] sm:w-350 md:w-400 z-9 absolute bottom-10 left-10 bg-white rounded-15 shadow-(--wine-box) overflow-hidden flex flex-col`}
       >
         <div
           onClick={() => setIsListOpen((prev) => !prev)}
-          className="flex items-center justify-center w-full bg-white border-b shrink-0 h-50 border-b-f0-gray sm:border-l sm:border-l-f0-gray hover:bg-f5-gray hover:cursor-pointer"
+          className="flex items-center justify-center w-full bg-white border-b shrink-0 h-50 border-b-(--gray-f0) sm:border-l sm:border-l-(--gray-f0) hover:bg-(--gray-f5) hover:cursor-pointer"
         >
           <div>
             <p>와인 판매 장소</p>
@@ -393,10 +393,12 @@ const Map = () => {
               onMouseEnter={() => handleOverMarker(i)}
               onMouseLeave={() => handleOutMarker(i)}
               className={`w-full px-20 py-20 border-b ${
-                isClickedIndex === i ? "bg-lighter-main" : "hover:bg-f5-gray"
-              } hover:cursor-pointer shrink-0 border-b-f5-gray`}
+                isClickedIndex === i
+                  ? "bg-(--lighter-main)"
+                  : "hover:bg-(--gray-f5)"
+              } hover:cursor-pointer shrink-0 border-b-(--gray-f5)`}
             >
-              <p className="mb-5 text-14 text-78-gray line-clamp-1">
+              <p className="mb-5 text-14 text-(--gray-78) line-clamp-1">
                 {v.category_name}
               </p>
               <a className="block" href={v.place_url} target="_blank">
@@ -405,7 +407,7 @@ const Map = () => {
                 </span>
               </a>
               <p className="mt-5 line-clamp-2">{v.address_name}</p>
-              <p className="mt-10 text-14 text-78-gray line-clamp-1">
+              <p className="mt-10 text-14 text-(--gray-78) line-clamp-1">
                 {v.phone}
               </p>
             </div>
@@ -417,7 +419,7 @@ const Map = () => {
           onClick={() => setIsSearch(true)}
           className="absolute flex justify-center w-full top-20 z-1"
         >
-          <div className="flex flex-row items-center justify-center max-w-full gap-5 px-20 py-12 rounded-full bg-main hover:bg-dark-main hover:cursor-pointer">
+          <div className="flex flex-row items-center justify-center max-w-full gap-5 px-20 py-12 rounded-full bg-(--main) hover:bg-(--dark-main) hover:cursor-pointer">
             <svg
               className="w-12 h-12 shrink-0 sm:w-14 sm:h-14"
               xmlns="http://www.w3.org/2000/svg"

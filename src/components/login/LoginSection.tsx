@@ -142,13 +142,13 @@ const LoginSection = () => {
                 <div
                   className={`flex items-center w-full px-20 mb-10 h-50 ${
                     idInputFocus
-                      ? "border-black border-1.5"
-                      : "border-78-gray border"
+                      ? "border-black border-[1.5px]"
+                      : "border-(--gray-78) border"
                   } rounded-5`}
                 >
                   <svg
                     className={`shrink-0 ${
-                      idInputFocus ? "stroke-black" : "stroke-bb-gray"
+                      idInputFocus ? "stroke-black" : "stroke-(--gray-bb)"
                     }`}
                     width="20"
                     height="20"
@@ -176,19 +176,19 @@ const LoginSection = () => {
                     onFocus={() => setIdInputFocus(true)}
                     onBlur={() => setIdInputFocus(false)}
                     placeholder="아이디"
-                    className="w-full h-full ml-10 border-none outline-none"
+                    className="w-full h-full ml-10 border-none outline-hidden"
                   />
                 </div>
                 <div
                   className={`flex items-center w-full px-20 h-50 ${
                     passwordInputFocus
-                      ? "border-black border-1.5"
-                      : "border-78-gray border"
+                      ? "border-black border-[1.5px]"
+                      : "border-(--gray-78) border"
                   } rounded-5`}
                 >
                   <svg
                     className={`shrink-0 ${
-                      passwordInputFocus ? "fill-black" : "fill-bb-gray"
+                      passwordInputFocus ? "fill-black" : "fill-(--gray-bb)"
                     }`}
                     width="20"
                     height="20"
@@ -209,7 +209,7 @@ const LoginSection = () => {
                     onFocus={() => setPasswordInputFocus(true)}
                     onBlur={() => setPasswordInputFocus(false)}
                     placeholder="비밀번호"
-                    className="w-full h-full ml-10 border-none outline-none"
+                    className="w-full h-full ml-10 border-none outline-hidden"
                   />
                   {seePassword ? (
                     <svg
@@ -285,7 +285,7 @@ const LoginSection = () => {
                 >
                   {checkAutoLogin ? (
                     <svg
-                      className="stroke-0.5 stroke-49-gray"
+                      className="stroke-(--gray-49)"
                       width="20"
                       height="20"
                       viewBox="0 0 12 12"
@@ -294,14 +294,14 @@ const LoginSection = () => {
                     >
                       <path
                         d="M4 6L5.5 7.5L8 4.5M2 8.4001V3.6001C2 3.04005 2 2.75981 2.10899 2.5459C2.20486 2.35774 2.35774 2.20486 2.5459 2.10899C2.75981 2 3.04005 2 3.6001 2H8.4001C8.96015 2 9.2398 2 9.4537 2.10899C9.64185 2.20486 9.79525 2.35774 9.8911 2.5459C10 2.7596 10 3.03949 10 3.59845V8.4018C10 8.96075 10 9.24025 9.8911 9.45395C9.79525 9.6421 9.64185 9.79525 9.4537 9.8911C9.24 10 8.9605 10 8.40155 10H3.59845C3.03949 10 2.7596 10 2.5459 9.8911C2.35774 9.79525 2.20486 9.6421 2.10899 9.45395C2 9.24005 2 8.96015 2 8.4001Z"
-                        stroke="black"
+                        strokeWidth="0.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                     </svg>
                   ) : (
                     <svg
-                      className="stroke-0.5 stroke-49-gray"
+                      className="stroke-(--gray-49)"
                       width="20"
                       height="20"
                       viewBox="0 0 12 12"
@@ -310,12 +310,15 @@ const LoginSection = () => {
                     >
                       <path
                         d="M2 3.6001V8.4001C2 8.96015 2 9.24005 2.10899 9.45395C2.20486 9.6421 2.35774 9.79525 2.5459 9.8911C2.7596 10 3.03949 10 3.59845 10H8.40155C8.9605 10 9.24 10 9.4537 9.8911C9.64185 9.79525 9.79525 9.6421 9.8911 9.45395C10 9.24025 10 8.96075 10 8.4018V3.59845C10 3.03949 10 2.7596 9.8911 2.5459C9.79525 2.35774 9.64185 2.20486 9.4537 2.10899C9.2398 2 8.96015 2 8.4001 2H3.6001C3.04004 2 2.75981 2 2.5459 2.10899C2.35774 2.20486 2.20486 2.35774 2.10899 2.5459C2 2.75981 2 3.04004 2 3.6001Z"
+                        strokeWidth="0.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                     </svg>
                   )}
-                  <span className="ml-5 text-14 text-49-gray">자동 로그인</span>
+                  <span className="ml-5 text-14 text-(--gray-49)">
+                    자동 로그인
+                  </span>
                 </div>
               </div>
               {error && (
@@ -323,7 +326,7 @@ const LoginSection = () => {
               )}
               <div
                 onClick={loading ? undefined : loginCheck}
-                className="flex flex-row items-center justify-center w-full mt-10 h-50 rounded-15 bg-49-gray hover:cursor-pointer"
+                className="flex flex-row items-center justify-center w-full mt-10 h-50 rounded-15 bg-(--gray-49) hover:cursor-pointer"
               >
                 <span className="text-white text-16">로그인</span>
               </div>

@@ -22,7 +22,7 @@ const WineListBox = ({ wine, filterInfo }: WineListBoxComponentProps) => {
 
   return (
     <div
-      className="max-w-700 w-full lg:w-[calc((100%/2)-20px)] bg-f5-gray rounded-15 h-200 hover:cursor-pointer hover:shadow-wine-box duration-300"
+      className="max-w-700 w-full lg:w-[calc((100%/2)-20px)] bg-(--gray-f5) rounded-15 h-200 hover:cursor-pointer hover:shadow-(--wine-box) duration-300"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -57,7 +57,7 @@ const WineListBox = ({ wine, filterInfo }: WineListBoxComponentProps) => {
             </div>
             <div className="mt-5">
               <p className="truncate-2 text-16 leading-[120%]">{wine.ename}</p>
-              <p className="mt-5 truncate-2 text-14 text-78-gray leading-[120%]">
+              <p className="mt-5 truncate-2 text-14 text-(--gray-78) leading-[120%]">
                 {wine.kname}
               </p>
             </div>

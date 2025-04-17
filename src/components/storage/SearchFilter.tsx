@@ -59,10 +59,10 @@ const FilterWineType = ({
 }: FilterWineTypeComponentProps) => {
   const TYPE = ["레드", "화이트", "로제", "스파클링", "기타"];
   const COLOR = [
-    "fill-red-wine",
-    "fill-white-wine",
-    "fill-rose-wine",
-    "fill-sparkling-wine",
+    "fill-(--red-wine)",
+    "fill-(--white-wine)",
+    "fill-(--rose-wine)",
+    "fill-(--sparkling-wine)",
     "fill-black",
   ];
 
@@ -74,7 +74,7 @@ const FilterWineType = ({
           <li
             onClick={() => handleCheck("type", i)}
             key={i}
-            className="relative flex flex-col items-center justify-center overflow-hidden bg-white border border-f0-gray sm:w-100 sm:h-100 w-80 h-80 rounded-15 hover:cursor-pointer"
+            className="relative flex flex-col items-center justify-center overflow-hidden bg-white border border-(--gray-f0) sm:w-100 sm:h-100 w-80 h-80 rounded-15 hover:cursor-pointer"
           >
             {check?.includes(i) ? <CheckFilter /> : null}
             <svg
@@ -100,11 +100,11 @@ const FilterTaste = ({ check, handleCheck }: FilterTasteComponentProps) => {
   const TASTE: (keyof Filter)[] = ["sweetness", "acidity", "body", "tannin"];
   const TASTE_KR = ["당도", "산도", "바디", "타닌"];
   const DEGREE = [
-    "text-very-light-degree",
-    "text-light-degree",
-    "text-medium-degree",
-    "text-full-degree",
-    "text-very-full-degree",
+    "text-(--very-light-degree)",
+    "text-(--light-degree)",
+    "text-(--medium-degree)",
+    "text-(--full-degree)",
+    "text-(--very-full-degree)",
   ];
 
   return (
@@ -119,7 +119,7 @@ const FilterTaste = ({ check, handleCheck }: FilterTasteComponentProps) => {
                 <div
                   onClick={() => handleCheck(v, i2 + 1)}
                   key={i2}
-                  className="relative flex items-center justify-center overflow-hidden bg-white border rounded-full w-30 h-30 sm:w-40 sm:h-40 border-f0-gray hover:cursor-pointer"
+                  className="relative flex items-center justify-center overflow-hidden bg-white border rounded-full w-30 h-30 sm:w-40 sm:h-40 border-(--gray-f0) hover:cursor-pointer"
                 >
                   {check[i]?.includes(i2 + 1) ? <CheckFilter /> : null}
                   <span className={`${DEGREE[i2]} text-12 sm:text-14`}>
@@ -156,7 +156,7 @@ const FilterCountry = ({ check, handleCheck }: FilterCountryComponentProps) => {
           >
             <div
               onClick={() => handleCheck("country", i)}
-              className="relative flex items-center justify-center overflow-hidden bg-white border w-70 h-70 rounded-15 border-f0-gray hover:cursor-pointer"
+              className="relative flex items-center justify-center overflow-hidden bg-white border w-70 h-70 rounded-15 border-(--gray-f0) hover:cursor-pointer"
             >
               {check?.includes(i) ? <CheckFilter /> : null}
               <span className="text-30">{v.emoji}</span>
@@ -172,7 +172,7 @@ const FilterCountry = ({ check, handleCheck }: FilterCountryComponentProps) => {
 const CheckFilter = () => {
   return (
     <div className="absolute top-0 left-0 w-full h-full">
-      <div className="w-full h-full opacity-50 bg-c0-gray"></div>
+      <div className="w-full h-full opacity-50 bg-(--gray-c0)"></div>
       <div className="absolute center-absolute">
         <svg
           xmlns="http://www.w3.org/2000/svg"

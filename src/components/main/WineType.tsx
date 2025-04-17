@@ -3,20 +3,17 @@ import { Link } from "react-router-dom";
 const WineType = () => {
   const WINETYPE = ["레드", "화이트", "로제", "스파클링"];
   const WINECOLOR = [
-    "fill-red-wine",
-    "fill-white-wine",
-    "fill-rose-wine",
-    "fill-sparkling-wine",
+    "fill-(--red-wine)",
+    "fill-(--white-wine)",
+    "fill-(--rose-wine)",
+    "fill-(--sparkling-wine)",
   ];
 
   return (
-    <div className="flex flex-row flex-wrap items-start justify-center w-full gap-y-30 my-70">
+    <div className="flex flex-row items-start justify-center w-full my-40 md:gap-100 sm:gap-70 gap-50 md:my-70">
       {WINETYPE.map((v, i) => (
-        <div
-          key={i}
-          className="w-1/2 md:w-1/4 md:max-w-200 sm:max-w-300 max-w-200 min-w-90"
-        >
-          <div className="group relative mx-auto text-center max-w-100 sm:max-w-120 px-10 sm:w-120 hover:cursor-pointer">
+        <div key={i} className="w-60 sm:w-80 md:w-100">
+          <div className="relative mx-auto text-center group hover:cursor-pointer">
             <Link to={`/storage?type=${i}`}>
               <WineTypeBtn type={v} color={WINECOLOR[i]} />
             </Link>
@@ -37,7 +34,7 @@ const WineTypeBtn = ({ type, color }: WineTypeBtnComponentProps) => {
     <>
       <div className="relative rounded-full w-full pb-[100%]">
         <div
-          className={`flex justify-center items-center absolute top-0 left-0 w-full h-full rounded-full ${color} group-hover:bg-f0-gray bg-f5-gray`}
+          className={`flex justify-center items-center absolute top-0 left-0 w-full h-full rounded-full ${color} group-hover:bg-(--gray-f0) bg-(--gray-f5)`}
         >
           <svg
             className="h-24 w-18 sm:h-40 sm:w-30"
@@ -48,9 +45,9 @@ const WineTypeBtn = ({ type, color }: WineTypeBtnComponentProps) => {
           </svg>
         </div>
       </div>
-      <div className="mt-10 text-14 md:text-16 group-hover:font-semibold">
-        <span>{type} 와인</span>
-      </div>
+      <p className="mt-10 text-12 sm:text-14 md:text-16 group-hover:font-medium">
+        {type}
+      </p>
     </>
   );
 };
