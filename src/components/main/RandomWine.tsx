@@ -5,6 +5,25 @@ import { RandomWineApiResponse } from "../../models/Api";
 import { AxiosResponse } from "axios";
 import { getRandomWine } from "../../utils/api";
 
+const WINETYPE = [
+  {
+    type: "Red Wine",
+    bg: "bg-(--red-wine)",
+  },
+  {
+    type: "White Wine",
+    bg: "bg-(--white-wine)",
+  },
+  {
+    type: "Rose Wine",
+    bg: "bg-(--rose-wine)",
+  },
+  {
+    type: "Sparkling Wine",
+    bg: "bg-(--sparkling-wine)",
+  },
+];
+
 const RandomWine = () => {
   const [wine, setWine] = useState<WineWithWinery[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -28,76 +47,84 @@ const RandomWine = () => {
   }, []);
 
   if (loading) return <div>Loading</div>;
-  if (error) return <div>{error}</div>;
 
   return (
-    <div className="w-full mt-70">
+    <section className="w-full mt-70">
       <p className="text-25 md:text-30">오늘의 랜덤 와인</p>
       <div className="flex flex-col gap-20 mt-20 md:grid md:grid-cols-2">
-        <RandomWineBox type="Red Wine" wine={wine[0]} />
-        <RandomWineBox type="White Wine" wine={wine[1]} />
-        <RandomWineBox type="Rose Wine" wine={wine[2]} />
-        <RandomWineBox type="Sparkling Wine" wine={wine[3]} />
+        {WINETYPE.map((_, i) => (
+          <RandomWineBox id={i} wine={wine[i]} />
+        ))}
       </div>
-    </div>
+    </section>
   );
 };
 
 interface RandomWineBoxComponentProps {
-  type: string;
-  wine: WineWithWinery;
+  id: number;
+  wine?: WineWithWinery;
 }
 
-const RandomWineBox = ({ type, wine }: RandomWineBoxComponentProps) => {
-  const countryInfo = Country.get(wine.country);
+const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
+  const countryInfo = wine ? Country.get(wine.country) : null;
   const [isHover, setIsHover] = useState<boolean>(false);
 
   return (
     <Link
-      to={`/wine/${wine.id}`}
+      to={wine ? `/wine/${wine.id}` : ""}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <div className="relative w-full overflow-hidden rounded-15 bg-(--gray-f5) h-320">
+      <div className="flex flex-col w-full overflow-hidden bg-white rounded-15 h-320">
         <div
-          className={`absolute top-0 left-0 bg-white w-[40%] h-55 flex flex-row justify-center items-center rounded-tl-15 rounded-br-15
-          before:content-[url('/src/assets/rounded.svg')] before:w-15 before:h-15 before:absolute before:right-[-15px] before:top-0
-          after:content-[url('/src/assets/rounded.svg')] after:w-15 after:h-15 after:absolute after:bottom-[-15px] after:left-0`}
+          className={`shrink-0 ml-10 mt-10 w-[45%] max-w-200 h-50 flex flex-row justify-center items-center rounded-15 ${WINETYPE[id].bg} text-white`}
         >
-          <span className="text-center text-14 sm:text-16">{type}</span>
+          <span className="text-center text-14 md:text-16">
+            {WINETYPE[id].type}
+          </span>
         </div>
-        <div className="w-full h-full px-20 py-20">
-          <div className="flex w-full h-full">
-            <div className="w-[70%] h-full pt-55 break-keep">
-              <div className="line-clamp-1 leading-[120%]">
-                <span className="text-12 sm:text-14">
-                  {countryInfo ? countryInfo.emoji : null}
-                </span>
-                <span className="ml-5 text-12 sm:text-14">{wine.region}</span>
-              </div>
-              <div className="mt-5">
-                <p className="break-words text-14 sm:text-16 line-clamp-2 leading-[120%]">
-                  {wine.kname}
-                </p>
-                <p className="mt-5 text-12 sm:text-14 text-(--gray-78) line-clamp-2 leading-[120%]">
-                  {wine.ename}
-                </p>
-              </div>
-              <div className="relative mt-20 z-2">
-                <WineTaste taste="당도" degree={wine.sweetness} />
-                <WineTaste taste="산도" degree={wine.acidity} />
-                <WineTaste taste="바디" degree={wine.body} />
-                <WineTaste taste="타닌" degree={wine.tannin} />
-              </div>
-            </div>
-            <div className="relative w-[30%] h-full">
-              <img
-                src={wine.image ? wine.image : undefined}
-                className={`object-cover max-w-none absolute center-absolute ${
-                  isHover ? "h-[85%]" : "h-[75%]"
-                } duration-300`}
-              />
-            </div>
+        <div className="w-full h-full p-20">
+          <div className="flex items-center justify-center w-full h-full">
+            {wine ? (
+              <>
+                <div className="w-[70%] h-full pt-55 break-keep">
+                  <div className="line-clamp-1 leading-[120%]">
+                    <span className="text-12 sm:text-14">
+                      {countryInfo ? countryInfo.emoji : null}
+                    </span>
+                    <span className="ml-5 text-12 sm:text-14">
+                      {wine.region}
+                    </span>
+                  </div>
+                  <div className="mt-5">
+                    <p className="break-words text-14 sm:text-16 line-clamp-2 leading-[120%]">
+                      {wine.kname}
+                    </p>
+                    <p className="mt-5 text-12 sm:text-14 text-(--gray-78) line-clamp-2 leading-[120%]">
+                      {wine.ename}
+                    </p>
+                  </div>
+                  <div className="relative mt-20 z-2">
+                    <WineTaste taste="당도" degree={wine.sweetness} />
+                    <WineTaste taste="산도" degree={wine.acidity} />
+                    <WineTaste taste="바디" degree={wine.body} />
+                    <WineTaste taste="타닌" degree={wine.tannin} />
+                  </div>
+                </div>
+                <div className="relative w-[30%] h-full">
+                  <img
+                    src={wine.image ? wine.image : undefined}
+                    className={`object-cover max-w-none absolute center-absolute ${
+                      isHover ? "h-[85%]" : "h-[75%]"
+                    } duration-300`}
+                  />
+                </div>
+              </>
+            ) : (
+              <p className="text-center">
+                와인을 불러오는 데에 문제가 발생했습니다.
+              </p>
+            )}
           </div>
         </div>
       </div>

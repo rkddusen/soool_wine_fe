@@ -1,40 +1,41 @@
 import { Link } from "react-router-dom";
 
-const WineType = () => {
-  const WINETYPE = ["레드", "화이트", "로제", "스파클링"];
-  const WINECOLOR = [
-    "fill-(--red-wine)",
-    "fill-(--white-wine)",
-    "fill-(--rose-wine)",
-    "fill-(--sparkling-wine)",
-  ];
+const WINETYPE = [
+  { type: "Red", fill: "fill-(--red-wine)" },
+  { type: "White", fill: "fill-(--white-wine)" },
+  { type: "Rose", fill: "fill-(--rose-wine)" },
+  { type: "Sparkling", fill: "fill-(--sparkling-wine)" },
+];
 
+const WineType = () => {
   return (
-    <div className="flex flex-row items-start justify-center w-full my-40 md:gap-100 sm:gap-70 gap-50 md:my-70">
-      {WINETYPE.map((v, i) => (
-        <div key={i} className="w-60 sm:w-80 md:w-100">
-          <div className="relative mx-auto text-center group hover:cursor-pointer">
+    <section className="flex flex-row items-start justify-center w-full my-30">
+      {WINETYPE.map((_, i) => (
+        <div
+          key={i}
+          className="w-full overflow-hidden text-center px-15 sm:px-20 sm:max-w-150 max-w-100"
+        >
+          <div className="mx-auto group hover:cursor-pointer">
             <Link to={`/storage?type=${i}`}>
-              <WineTypeBtn type={v} color={WINECOLOR[i]} />
+              <WineTypeBtn id={i} />
             </Link>
           </div>
         </div>
       ))}
-    </div>
+    </section>
   );
 };
 
 interface WineTypeBtnComponentProps {
-  type: string;
-  color: string;
+  id: number;
 }
 
-const WineTypeBtn = ({ type, color }: WineTypeBtnComponentProps) => {
+const WineTypeBtn = ({ id }: WineTypeBtnComponentProps) => {
   return (
     <>
       <div className="relative rounded-full w-full pb-[100%]">
         <div
-          className={`flex justify-center items-center absolute top-0 left-0 w-full h-full rounded-full ${color} group-hover:bg-(--gray-f0) bg-(--gray-f5)`}
+          className={`flex justify-center items-center absolute top-0 left-0 w-full h-full rounded-full ${WINETYPE[id].fill} group-hover:bg-(--gray-f5) bg-white overflow-hidden`}
         >
           <svg
             className="h-24 w-18 sm:h-40 sm:w-30"
@@ -45,8 +46,8 @@ const WineTypeBtn = ({ type, color }: WineTypeBtnComponentProps) => {
           </svg>
         </div>
       </div>
-      <p className="mt-10 text-12 sm:text-14 md:text-16 group-hover:font-medium">
-        {type}
+      <p className="flex justify-center mt-10 mb-5 text-12 sm:text-14 md:text-16 group-hover:font-medium">
+        {WINETYPE[id].type}
       </p>
     </>
   );
