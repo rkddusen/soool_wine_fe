@@ -50,7 +50,7 @@ const RandomWine = () => {
 
   return (
     <section className="w-full mt-70">
-      <p className="text-25 md:text-30">오늘의 랜덤 와인</p>
+      <p className="text-24 md:text-28">오늘의 랜덤 와인</p>
       <div className="flex flex-col gap-20 mt-20 md:grid md:grid-cols-2">
         {WINETYPE.map((_, i) => (
           <RandomWineBox id={i} wine={wine[i]} />
