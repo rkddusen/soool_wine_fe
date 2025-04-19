@@ -9,7 +9,7 @@ const WINETYPE = [
 
 const WineType = () => {
   return (
-    <section className="flex flex-row items-start justify-center w-full my-30">
+    <section className="flex flex-row items-start justify-center w-full px-20 mx-auto my-30 md:px-40 max-w-1280">
       {WINETYPE.map((_, i) => (
         <div
           key={i}

@@ -1,15 +1,15 @@
-import MainWinery from "../components/main/MainWinery";
-import RandomWine from "../components/main/RandomWine";
 import SearchArea from "../components/main/SearchArea";
 import WineType from "../components/main/WineType";
+import RandomWine from "../components/main/RandomWine";
+import MainCity from "../components/main/MainCity";
 
 const MainPage = () => {
   return (
-    <main className="w-full px-20 mx-auto md:px-40 max-w-1280">
+    <main className="w-full">
       <SearchArea />
       <WineType />
       <RandomWine />
-      <MainWinery />
+      <MainCity />
     </main>
   );
 };

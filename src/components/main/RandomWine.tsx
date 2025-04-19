@@ -49,7 +49,7 @@ const RandomWine = () => {
   if (loading) return <div>Loading</div>;
 
   return (
-    <section className="w-full mt-70">
+    <section className="w-full px-20 mx-auto mt-70 md:px-40 max-w-1280">
       <p className="text-20 md:text-24">오늘의 랜덤 와인</p>
       <div className="flex flex-col gap-20 mt-20 md:grid md:grid-cols-2">
         {WINETYPE.map((_, i) => (
