@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { Country } from "@/models/Wine";
 import { CITY } from "@/data/City";
+import SideFlipCard from "../common/SideFlipCard";
 
 const MainCity = () => {
   const [detailMap, setDetailMap] = useState<Record<string, boolean>>(
@@ -37,10 +38,10 @@ const MainCity = () => {
     };
   }, []);
 
-  const handleOpenDetail = (key: string): void => {
+  const handleDetail = (key: string): void => {
     setDetailMap((prev) => ({
       ...prev,
-      [key]: !prev[key],
+      [key]: !detailMap[key],
     }));
   };
 
@@ -70,66 +71,38 @@ const MainCity = () => {
         >
           {CITY.map((c) => (
             <li
-              className="flex flex-col justify-between p-20 overflow-hidden bg-white w-320 shrink-0 h-500 rounded-20"
               key={c.city}
+              className="overflow-hidden bg-white w-320 shrink-0 h-500 rounded-20"
             >
-              <div className="flex items-center gap-5">
-                <p className="text-32">{Country.get(c.country)?.emoji}</p>
-                <p className="text-16">{Country.get(c.country)?.ename}</p>
-              </div>
-              {!detailMap[c.city] ? (
-                <div>
-                  <p className="tracking-wider text-center text-24">{c.city}</p>
-                  <p className="mt-10 text-center">{c.kname}</p>
-                  <img
-                    className="object-cover w-full my-20 h-200 rounded-20"
-                    src={c.img}
-                    alt={c.city}
-                  />
-                </div>
-              ) : (
-                <div>
-                  <p className="leading-32">{c.description}</p>
-                </div>
-              )}
-              <div className="flex h-40 gap-10">
-                <div className="w-full h-full rounded-20 flex flex-row justify-center items-center bg-[#D3E6BC] hover:cursor-pointer hover:bg-[#C1D4AA]">
-                  <span className="mr-5 text-nowrap text-12 sm:text-14">
-                    이 지역 와인 보기
-                  </span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-20 h-20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#000000"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M5 12h13M12 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <div
-                  onClick={() => handleOpenDetail(c.city)}
-                  className="shrink-0 w-50 h-full rounded-20 bg-(--gray-f0) flex justify-center items-center hover:cursor-pointer hover:bg-(--gray-e0)"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-18 h-18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#000000"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M17 2.1l4 4-4 4" />
-                    <path d="M3 12.2v-2a4 4 0 0 1 4-4h12.8M7 21.9l-4-4 4-4" />
-                    <path d="M21 11.8v2a4 4 0 0 1-4 4H4.2" />
-                  </svg>
-                </div>
-              </div>
+              <SideFlipCard
+                flipped={detailMap[c.city]}
+                front={
+                  <div className="flex flex-col justify-between w-full h-full p-20">
+                    <CountryArea country={c.country} />
+                    <div>
+                      <p className="tracking-wider text-center text-24">
+                        {c.city}
+                      </p>
+                      <p className="mt-10 text-center">{c.kname}</p>
+                      <img
+                        className="object-cover w-full my-20 h-200 rounded-20"
+                        src={c.img}
+                        alt={c.city}
+                      />
+                    </div>
+                    <BtnArea handleOpenDetail={() => handleDetail(c.city)} />
+                  </div>
+                }
+                back={
+                  <div className="flex flex-col justify-between w-full h-full p-20">
+                    <CountryArea country={c.country} />
+                    <div>
+                      <p className="leading-32">{c.description}</p>
+                    </div>
+                    <BtnArea handleOpenDetail={() => handleDetail(c.city)} />
+                  </div>
+                }
+              ></SideFlipCard>
             </li>
           ))}
         </ul>
@@ -152,17 +125,70 @@ const MainCity = () => {
   );
 };
 
-interface MoveBtnComponentProps {
+interface CountryAreaProps {
+  country: string;
+}
+const CountryArea = ({ country }: CountryAreaProps) => {
+  return (
+    <div className="flex items-center gap-5">
+      <p className="text-32">{Country.get(country)?.emoji}</p>
+      <p className="text-16">{Country.get(country)?.ename}</p>
+    </div>
+  );
+};
+
+interface BtnAreaProps {
+  handleOpenDetail(): void;
+}
+const BtnArea = ({ handleOpenDetail }: BtnAreaProps) => {
+  return (
+    <div className="flex h-40 gap-10">
+      <div className="w-full h-full rounded-20 flex flex-row justify-center items-center bg-[#D3E6BC] hover:cursor-pointer hover:bg-[#C1D4AA]">
+        <span className="mr-5 text-nowrap text-12 sm:text-14">
+          이 지역 와인 보기
+        </span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-20 h-20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#000000"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M5 12h13M12 5l7 7-7 7" />
+        </svg>
+      </div>
+      <div
+        onClick={handleOpenDetail}
+        className="shrink-0 w-50 h-full rounded-20 bg-(--gray-f0) flex justify-center items-center hover:cursor-pointer hover:bg-(--gray-e0)"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-18 h-18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#000000"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M17 2.1l4 4-4 4" />
+          <path d="M3 12.2v-2a4 4 0 0 1 4-4h12.8M7 21.9l-4-4 4-4" />
+          <path d="M21 11.8v2a4 4 0 0 1-4 4H4.2" />
+        </svg>
+      </div>
+    </div>
+  );
+};
+
+interface MoveBtnProps {
   children: ReactNode;
   handleClickEvent(): void;
   isActive: boolean;
 }
-
-const MoveBtn = ({
-  children,
-  handleClickEvent,
-  isActive,
-}: MoveBtnComponentProps) => {
+const MoveBtn = ({ children, handleClickEvent, isActive }: MoveBtnProps) => {
   return (
     <div
       onClick={handleClickEvent}
