@@ -103,7 +103,7 @@ const MainWinery = () => {
   if (error) return <div>{error}</div>;
   return (
     <div className="w-full pt-70">
-      <p className="text-24 md:text-28">주요 와이너리 지역</p>
+      <p className="text-20 md:text-24">주요 와이너리 지역</p>
       <div className="flex flex-row justify-center w-full bg-[#F2F3EA] rounded-15 py-80 mt-20 overflow-hidden">
         <div className="relative w-400 h-480 sm:w-450 sm:h-540 px-25">
           <div className="relative flex flex-col w-full h-full bg-white rounded-20">
