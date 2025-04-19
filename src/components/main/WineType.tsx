@@ -1,11 +1,5 @@
 import { Link } from "react-router-dom";
-
-const WINETYPE = [
-  { type: "Red", fill: "fill-(--red-wine)" },
-  { type: "White", fill: "fill-(--white-wine)" },
-  { type: "Rose", fill: "fill-(--rose-wine)" },
-  { type: "Sparkling", fill: "fill-(--sparkling-wine)" },
-];
+import { WINETYPE } from "@/data/Wine";
 
 const WineType = () => {
   return (

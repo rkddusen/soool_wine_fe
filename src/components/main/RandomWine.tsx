@@ -1,28 +1,10 @@
 import { useEffect, useState } from "react";
-import { Country, WineWithWinery } from "../../models/Wine";
+import { Country, WineWithWinery } from "@/models/Wine";
 import { Link } from "react-router-dom";
-import { RandomWineApiResponse } from "../../models/Api";
+import { RandomWineApiResponse } from "@/models/Api";
 import { AxiosResponse } from "axios";
-import { getRandomWine } from "../../utils/api";
-
-const WINETYPE = [
-  {
-    type: "Red Wine",
-    bg: "bg-(--red-wine)",
-  },
-  {
-    type: "White Wine",
-    bg: "bg-(--white-wine)",
-  },
-  {
-    type: "Rose Wine",
-    bg: "bg-(--rose-wine)",
-  },
-  {
-    type: "Sparkling Wine",
-    bg: "bg-(--sparkling-wine)",
-  },
-];
+import { getRandomWine } from "@/utils/api";
+import { WINETYPE } from "@/data/Wine";
 
 const RandomWine = () => {
   const [wine, setWine] = useState<WineWithWinery[]>([]);
