@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "pretendard/dist/web/static/pretendard.css";
+@config "../tailwind.config.ts";
 
 @layer base {
   * {
@@ -9,7 +10,6 @@
   }
   body {
     width: 100%;
-    height: 100dvh;
     font-family: "Pretendard";
     line-height: 1;
     color: black;
@@ -34,10 +34,16 @@
   --text-14: 14px;
   --text-16: 16px;
   --text-18: 18px;
+  --text-20: 20px;
   --text-24: 24px;
   --text-28: 28px;
   --text-32: 32px;
   --text-40: 40px;
+  --text-48: 48px;
+  --text-54: 54px;
+  --text-64: 64px;
+  --text-84: 84px;
+  --bg-linear: #ffeeee, #f6f6f6;
   --main: #ff8080;
   --dark-main: #ee6c6c;
   --light-main: #ffdcdc;
@@ -49,9 +55,9 @@
   --gray-bb: #bbbbbb;
   --gray-78: #787878;
   --gray-49: #494949;
-  --red-wine: #df2121;
+  --red-wine: #de4141;
   --white-wine: #b3b3b3;
-  --rose-wine: #ff9992;
+  --rose-wine: #ffaca7;
   --sparkling-wine: #f9da37;
   --very-light-degree: #ffd7d7;
   --light-degree: #ffafaf;
@@ -63,6 +69,7 @@
   --memo: #ffefc8;
   --light-memo: #fffbf1;
   --wine-box: 0 5px 10px rgba(0, 0, 0, 0.15);
+  --font-display: "iceJaram-Rg", "sans-serif";
 }
 
 @layer utilities {
@@ -79,4 +86,12 @@
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+@font-face {
+  font-family: "iceJaram-Rg";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/iceJaram-Rg.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
