@@ -1,12 +1,12 @@
 import { Country, WineType } from "@/models/Wine";
 import { ReactNode, useEffect, useState } from "react";
-import { TYPE, COUNTRY } from "@/data/Filter";
+import { WINETYPE, COUNTRY } from "@/data/Filter";
 import { Filter } from "@/models/Filter";
 import { useSearchParams } from "react-router-dom";
 import SearchFilter from "./SearchFilter";
 
 const FILTER_LABELS: Record<string, (value: any) => React.ReactNode> = {
-  type: (value) => WineType.get(TYPE[value])!.kr,
+  type: (value) => WineType.get(WINETYPE[value].type)!.kr,
   sweetness: (value) => `당도 ${value}`,
   acidity: (value) => `산도 ${value}`,
   body: (value) => `바디 ${value}`,
