@@ -58,7 +58,7 @@ const StorageSection = () => {
 
   const handleFilterChange = (page: number, filter: Filter): void => {
     if (validateFilter(filter)) {
-      getWineData(page, searchParams.get("search"), filter);
+      //getWineData(page, searchParams.get("search"), filter);
       setFilterInfo(filter);
     } else {
       setQueryParamsFromFilter(searchParams, filter);
@@ -75,11 +75,11 @@ const StorageSection = () => {
   const handleViewMore = (): void => {
     if (page + 1 <= totalPages) {
       setPage(page + 1);
-      getWineData(page + 1, searchParams.get("search"), filterInfo);
+      //getWineData(page + 1, searchParams.get("search"), filterInfo);
     }
   };
 
-  if (loading) return <div>Loading</div>;
+  //if (loading) return <div>Loading</div>;
   return (
     <section>
       <section className="w-full">

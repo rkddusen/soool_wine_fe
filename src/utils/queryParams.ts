@@ -3,9 +3,9 @@ import { Filter } from "../models/Filter";
 export const getFilterFromQueryParams = (
   searchParams: URLSearchParams
 ): Filter => {
-  const getParamValues = (key: string): number[] => {
+  const getParamValues = (key: string): string[] => {
     const value = searchParams.get(key);
-    return value ? value.split(",").map(Number) : [];
+    return value ? value.split(",") : [];
   };
 
   return {

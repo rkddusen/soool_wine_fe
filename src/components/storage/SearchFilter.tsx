@@ -8,8 +8,8 @@ interface SearchFilterProps {
 const SearchFilter = ({ filterInfo }: SearchFilterProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleCheck = (key: keyof Filter, value: number): void => {
-    const keyParams = filterInfo[key] || [];
+  const handleCheck = (key: keyof Filter, value: string): void => {
+    const keyParams = filterInfo[key] ?? [];
     const updatedKeyParams = new Set(keyParams);
 
     updatedKeyParams.has(value)
@@ -48,8 +48,8 @@ const SearchFilter = ({ filterInfo }: SearchFilterProps) => {
 };
 
 interface FilterWineTypeProps {
-  check: number[] | null;
-  handleCheck: (key: keyof Filter, value: number) => void;
+  check: string[] | null;
+  handleCheck: (key: keyof Filter, value: string) => void;
 }
 
 const FilterWineType = ({ check, handleCheck }: FilterWineTypeProps) => {
@@ -59,11 +59,11 @@ const FilterWineType = ({ check, handleCheck }: FilterWineTypeProps) => {
       <ul className="flex flex-wrap justify-center w-full gap-10 px-10">
         {WINETYPE.map((v, i) => (
           <li
-            onClick={() => handleCheck("type", i)}
+            onClick={() => handleCheck("type", v.type)}
             key={i}
             className="relative flex flex-col items-center justify-center overflow-hidden bg-white border border-(--gray-f0) sm:w-100 sm:h-100 w-80 h-80 rounded-15 hover:cursor-pointer"
           >
-            {check?.includes(i) ? <CheckFilter /> : null}
+            {check?.includes(v.type) ? <CheckFilter /> : null}
             <svg
               className={`w-21 h-28 sm:w-24 sm:h-32 mb-10 ${v.fill}`}
               viewBox="0 0 36 48"
@@ -80,8 +80,8 @@ const FilterWineType = ({ check, handleCheck }: FilterWineTypeProps) => {
 };
 
 interface FilterTasteProps {
-  check: (number[] | null)[];
-  handleCheck: (key: keyof Filter, value: number) => void;
+  check: (string[] | null)[];
+  handleCheck: (key: keyof Filter, value: string) => void;
 }
 const FilterTaste = ({ check, handleCheck }: FilterTasteProps) => {
   return (
@@ -92,15 +92,15 @@ const FilterTaste = ({ check, handleCheck }: FilterTasteProps) => {
           <li key={i} className="px-10 text-center mb-50">
             <p className="mb-5 text-14">[{v.kr}]</p>
             <div className="flex flex-wrap justify-center gap-10">
-              {Array.from({ length: 5 }).map((_, i2) => (
+              {Object.entries(v.level).map(([levelKey, label], i2) => (
                 <div
-                  onClick={() => handleCheck(v.taste, i2 + 1)}
-                  key={i2}
+                  onClick={() => handleCheck(v.taste, levelKey)}
+                  key={label}
                   className="relative flex items-center justify-center overflow-hidden bg-white border rounded-full w-30 h-30 sm:w-40 sm:h-40 border-(--gray-f0) hover:cursor-pointer"
                 >
-                  {check[i]?.includes(i2 + 1) ? <CheckFilter /> : null}
+                  {check[i]?.includes(levelKey) ? <CheckFilter /> : null}
                   <span className={`${TASTEDEGREE[i2]} text-12 sm:text-14`}>
-                    {i2 + 1}
+                    {label}
                   </span>
                 </div>
               ))}
@@ -113,8 +113,8 @@ const FilterTaste = ({ check, handleCheck }: FilterTasteProps) => {
 };
 
 interface FilterCountryProps {
-  check: number[] | null;
-  handleCheck: (key: keyof Filter, value: number) => void;
+  check: string[] | null;
+  handleCheck: (key: keyof Filter, value: string) => void;
 }
 const FilterCountry = ({ check, handleCheck }: FilterCountryProps) => {
   return (
@@ -127,10 +127,10 @@ const FilterCountry = ({ check, handleCheck }: FilterCountryProps) => {
             className="flex flex-col items-center max-w-full p-10 sm:w-150 w-120"
           >
             <div
-              onClick={() => handleCheck("country", i)}
+              onClick={() => handleCheck("country", v.country)}
               className="relative flex items-center justify-center overflow-hidden bg-white border w-70 h-70 rounded-15 border-(--gray-f0) hover:cursor-pointer"
             >
-              {check?.includes(i) ? <CheckFilter /> : null}
+              {check?.includes(v.country) ? <CheckFilter /> : null}
               <span className="text-32">{v.emoji}</span>
             </div>
             <span className="mt-5 text-12 sm:text-14">{v.kname}</span>

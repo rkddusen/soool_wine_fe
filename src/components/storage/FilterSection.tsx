@@ -1,20 +1,25 @@
-import { Country, WineType } from "@/models/Wine";
 import { ReactNode, useEffect, useState } from "react";
-import { WINETYPE, COUNTRY } from "@/data/Filter";
+import { WINETYPE, COUNTRY, TASTE, TasteItem } from "@/data/Filter";
 import { Filter } from "@/models/Filter";
 import { useSearchParams } from "react-router-dom";
 import SearchFilter from "./SearchFilter";
 
-const FILTER_LABELS: Record<string, (value: any) => React.ReactNode> = {
-  type: (value) => WineType.get(WINETYPE[value].type)!.kr,
-  sweetness: (value) => `당도 ${value}`,
-  acidity: (value) => `산도 ${value}`,
-  body: (value) => `바디 ${value}`,
-  tannin: (value) => `타닌 ${value}`,
+const FILTER_LABELS: Record<keyof Filter, (value: any) => React.ReactNode> = {
+  type: (value) => `${WINETYPE.find((w) => w.type === value)?.kr} 와인`,
+  sweetness: (value: keyof TasteItem["level"]) =>
+    `당도: ${TASTE.find((t) => t.taste === "sweetness")?.level[value]}`,
+  acidity: (value: keyof TasteItem["level"]) =>
+    `산도: ${TASTE.find((t) => t.taste === "acidity")?.level[value]}`,
+  body: (value: keyof TasteItem["level"]) =>
+    `바디: ${TASTE.find((t) => t.taste === "body")?.level[value]}`,
+  tannin: (value: keyof TasteItem["level"]) =>
+    `타닌: ${TASTE.find((t) => t.taste === "tannin")?.level[value]}`,
   country: (value) => (
     <>
-      <span>{Country.get(COUNTRY[value].country)!.emoji}</span>
-      <span className="ml-5">{Country.get(COUNTRY[value].country)!.kname}</span>
+      <span>{COUNTRY.find((c) => c.country === value)?.emoji}</span>
+      <span className="ml-5">
+        {COUNTRY.find((c) => c.country === value)?.kname}
+      </span>
     </>
   ),
 };
@@ -90,12 +95,12 @@ const FilterSection = ({ filterInfo }: FilterSectionProps) => {
               Array.isArray(arr)
                 ? arr.map((value, idx) => (
                     <FilterInfoDiv
-                      key={String(value)}
+                      key={value}
                       handleFilterDelete={() =>
                         handleFilterDelete(key as keyof typeof filterInfo, idx)
                       }
                     >
-                      {FILTER_LABELS[key]?.(value)}
+                      {FILTER_LABELS[key as keyof Filter]?.(value)}
                     </FilterInfoDiv>
                   ))
                 : null
