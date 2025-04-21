@@ -90,7 +90,7 @@ const FilterTaste = ({ check, handleCheck }: FilterTasteProps) => {
       <ul className="flex flex-col items-center justify-center grid-cols-2 px-10 md:inline-grid gap-x-60">
         {TASTE.map((v, i) => (
           <li key={i} className="px-10 text-center mb-50">
-            <p className="mb-5">[{v.kr}]</p>
+            <p className="mb-5 text-14">[{v.kr}]</p>
             <div className="flex flex-wrap justify-center gap-10">
               {Array.from({ length: 5 }).map((_, i2) => (
                 <div
@@ -131,7 +131,7 @@ const FilterCountry = ({ check, handleCheck }: FilterCountryProps) => {
               className="relative flex items-center justify-center overflow-hidden bg-white border w-70 h-70 rounded-15 border-(--gray-f0) hover:cursor-pointer"
             >
               {check?.includes(i) ? <CheckFilter /> : null}
-              <span className="text-30">{v.emoji}</span>
+              <span className="text-32">{v.emoji}</span>
             </div>
             <span className="mt-5 text-12 sm:text-14">{v.kname}</span>
           </li>
