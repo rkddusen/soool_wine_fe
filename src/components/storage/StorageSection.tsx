@@ -6,7 +6,6 @@ import { AxiosResponse } from "axios";
 import { getWine } from "../../utils/api";
 import { WineApiResponse } from "../../models/Api";
 import { useSearchParams } from "react-router-dom";
-import SearchFilter from "./SearchFilter";
 import { Filter } from "../../models/Filter";
 import NoResultsFound from "/src/assets/noResultsFound.svg?react";
 import {
@@ -14,6 +13,7 @@ import {
   setQueryParamsFromFilter,
 } from "../../utils/queryParams";
 import { validateFilter } from "@/utils/validateFilter";
+import FilterSection from "./FilterSection";
 
 const initFilter: Filter = {
   type: null,
@@ -91,7 +91,7 @@ const StorageSection = () => {
             <SearchBar />
           </div>
         </div>
-        <SearchFilter filterInfo={filterInfo} />
+        <FilterSection filterInfo={filterInfo} />
       </section>
       {!error ? (
         <section className="w-full">
