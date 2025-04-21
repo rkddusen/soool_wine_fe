@@ -1,6 +1,6 @@
 import { WineryShortDescription, WineWithWinery } from "./Wine";
 
-export interface RandomWineApiResponse {
+export interface RandomWineResponse {
   content: WineWithWinery[];
 }
 

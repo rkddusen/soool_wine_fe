@@ -1,9 +1,8 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance } from "axios";
 import qs from "qs";
 import {
-  RandomWineApiResponse,
+  RandomWineResponse,
   WinesResponse,
-  WineryApiResponse,
   EmailVerificationTokenResponse,
   LoginTokenResponse,
 } from "../models/Api";
@@ -23,28 +22,12 @@ const userInstance: AxiosInstance = axios.create({
   headers: HEADERS,
 });
 
-export const getRandomWine = async (): Promise<
-  AxiosResponse<RandomWineApiResponse>
-> => {
+export const getRandomWines = async (): Promise<RandomWineResponse> => {
   try {
-    const response: AxiosResponse<RandomWineApiResponse> =
-      await wineInstance.get<RandomWineApiResponse>(`/random`);
-    return response;
+    const { data } = await wineInstance.get<RandomWineResponse>(`/random`);
+    return data;
   } catch (error) {
-    console.error("Error api getRandomWine: ", error);
-    throw error;
-  }
-};
-
-export const getWinery = async (): Promise<
-  AxiosResponse<WineryApiResponse>
-> => {
-  try {
-    const response: AxiosResponse<WineryApiResponse> =
-      await wineInstance.get<WineryApiResponse>(`/winery`);
-    return response;
-  } catch (error) {
-    console.error("Error api getWinery: ", error);
+    console.error("Error api getRandomWines: ", error);
     throw error;
   }
 };

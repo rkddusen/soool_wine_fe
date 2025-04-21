@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Country, WineWithWinery } from "@/models/Wine";
 import { Link } from "react-router-dom";
-import { RandomWineApiResponse } from "@/models/Api";
-import { AxiosResponse } from "axios";
-import { getRandomWine } from "@/utils/api";
+import { RandomWineResponse } from "@/models/Api";
+import { getRandomWines } from "@/utils/api";
 import { WINETYPE } from "@/data/Wine";
 
 const RandomWine = () => {
@@ -13,9 +12,8 @@ const RandomWine = () => {
 
   const getWineData = async () => {
     try {
-      const response: AxiosResponse<RandomWineApiResponse> =
-        await getRandomWine();
-      setWine(response.data.content);
+      const { content }: RandomWineResponse = await getRandomWines();
+      setWine(content);
     } catch (error) {
       setError("Error getWineData");
       console.log("Error getWineData: ", error);
