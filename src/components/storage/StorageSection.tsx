@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import SearchBar from "../common/SearchBar";
 import { WineWithWinery } from "../../models/Wine";
 import WineListBox from "./WineListBox";
-import { AxiosResponse } from "axios";
-import { getWine } from "../../utils/api";
-import { WineApiResponse } from "../../models/Api";
+import { getWines } from "../../utils/api";
+import { WinesResponse } from "../../models/Api";
 import { useSearchParams } from "react-router-dom";
 import { Filter } from "../../models/Filter";
 import NoResultsFound from "/src/assets/noResultsFound.svg?react";
@@ -40,14 +39,11 @@ const StorageSection = () => {
     filter: Filter
   ) => {
     try {
-      const response: AxiosResponse<WineApiResponse> = await getWine(
-        pageIndex,
-        search,
-        filter
-      );
-      setWineList((prev) => [...prev, ...response.data.content]);
-      setTotalElements(response.data.totalElements);
-      setTotalPages(response.data.totalPages);
+      const { content, totalElements, totalPages }: WinesResponse =
+        await getWines(pageIndex, search, filter);
+      setWineList((prev) => [...prev, ...content]);
+      setTotalElements(totalElements);
+      setTotalPages(totalPages);
     } catch (error) {
       setError("Error getWineData");
       console.log("Error getWineData: ", error);
@@ -58,7 +54,7 @@ const StorageSection = () => {
 
   const handleFilterChange = (page: number, filter: Filter): void => {
     if (validateFilter(filter)) {
-      //getWineData(page, searchParams.get("search"), filter);
+      getWineData(page, searchParams.get("search"), filter);
       setFilterInfo(filter);
     } else {
       setQueryParamsFromFilter(searchParams, filter);
@@ -75,11 +71,11 @@ const StorageSection = () => {
   const handleViewMore = (): void => {
     if (page + 1 <= totalPages) {
       setPage(page + 1);
-      //getWineData(page + 1, searchParams.get("search"), filterInfo);
+      getWineData(page + 1, searchParams.get("search"), filterInfo);
     }
   };
 
-  //if (loading) return <div>Loading</div>;
+  if (loading) return <div>Loading</div>;
   return (
     <section>
       <section className="w-full">
