@@ -9,11 +9,18 @@ import {
 } from "../models/Api";
 import { Filter } from "../models/Filter";
 
-const instance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+const BASEURL = import.meta.env.VITE_API_BASE_URL;
+const HEADERS = {
+  "Content-Type": "application/json",
+};
+
+const wineInstance: AxiosInstance = axios.create({
+  baseURL: BASEURL + "/wine",
+  headers: HEADERS,
+});
+const userInstance: AxiosInstance = axios.create({
+  baseURL: BASEURL + "/user",
+  headers: HEADERS,
 });
 
 export const getRandomWine = async (): Promise<
@@ -21,7 +28,7 @@ export const getRandomWine = async (): Promise<
 > => {
   try {
     const response: AxiosResponse<RandomWineApiResponse> =
-      await instance.get<RandomWineApiResponse>(`/random`);
+      await wineInstance.get<RandomWineApiResponse>(`/random`);
     return response;
   } catch (error) {
     console.error("Error api getRandomWine: ", error);
@@ -34,7 +41,7 @@ export const getWinery = async (): Promise<
 > => {
   try {
     const response: AxiosResponse<WineryApiResponse> =
-      await instance.get<WineryApiResponse>(`/winery`);
+      await wineInstance.get<WineryApiResponse>(`/winery`);
     return response;
   } catch (error) {
     console.error("Error api getWinery: ", error);
@@ -56,7 +63,7 @@ export const getWines = async (
       ),
     };
 
-    const { data } = await instance.get<WinesResponse>("/wines", {
+    const { data } = await wineInstance.get<WinesResponse>("/wines", {
       params,
       paramsSerializer: (params) =>
         qs.stringify(params, { arrayFormat: "repeat" }),
@@ -70,7 +77,9 @@ export const getWines = async (
 
 export const getIdExists = async (id: string): Promise<boolean> => {
   try {
-    const response = await instance.get<boolean>(`/users/id-exists?id=${id}`);
+    const response = await userInstance.get<boolean>(
+      `/users/id-exists?id=${id}`
+    );
     return response.data;
   } catch (error) {
     console.error("Error api getIdExists: ", error);
@@ -82,7 +91,7 @@ export const postEmail = async (
   email: string
 ): Promise<EmailVerificationTokenResponse> => {
   try {
-    const { data } = await instance.post<EmailVerificationTokenResponse>(
+    const { data } = await userInstance.post<EmailVerificationTokenResponse>(
       `/users/email-verification`,
       { email }
     );
@@ -98,7 +107,7 @@ export const postCode = async (
   code: number
 ): Promise<void> => {
   try {
-    await instance.post<void>(`/users/email-verification/verify`, {
+    await userInstance.post<void>(`/users/email-verification/verify`, {
       token,
       email,
       code,
@@ -115,7 +124,7 @@ export const postUsers = async (
   email: string
 ): Promise<void> => {
   try {
-    await instance.post<void>(`/users`, {
+    await userInstance.post<void>(`/users`, {
       id,
       password,
       email,
@@ -131,10 +140,13 @@ export const postLogin = async (
   password: string
 ): Promise<LoginTokenResponse> => {
   try {
-    const { data } = await instance.post<LoginTokenResponse>(`/auth/login`, {
-      id,
-      password,
-    });
+    const { data } = await userInstance.post<LoginTokenResponse>(
+      `/auth/login`,
+      {
+        id,
+        password,
+      }
+    );
     return data;
   } catch (error) {
     console.error("Error api postLogin: ", error);
