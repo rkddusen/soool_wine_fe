@@ -8,11 +8,10 @@ export interface WineryApiResponse {
   content: WineryShortDescription[];
 }
 
-export interface WineApiResponse {
+export interface WinesResponse {
   content: WineWithWinery[];
   totalElements: number;
   totalPages: number;
-  [key: string]: any;
 }
 
 export interface EmailVerificationTokenResponse {
