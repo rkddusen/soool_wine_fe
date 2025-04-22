@@ -1,21 +1,25 @@
 export const WINETYPE = [
   {
-    type: "Red Wine",
+    label: "Red Wine",
+    type: "red",
     bg: "bg-(--red-wine)",
     fill: "fill-(--red-wine)",
   },
   {
-    type: "White Wine",
+    label: "White Wine",
+    type: "white",
     bg: "bg-(--white-wine)",
     fill: "fill-(--white-wine)",
   },
   {
-    type: "Rose Wine",
+    label: "Rose Wine",
+    type: "rose",
     bg: "bg-(--rose-wine)",
     fill: "fill-(--rose-wine)",
   },
   {
-    type: "Sparkling Wine",
+    label: "Sparkling Wine",
+    type: "sparkling",
     bg: "bg-(--sparkling-wine)",
     fill: "fill-(--sparkling-wine)",
   },
