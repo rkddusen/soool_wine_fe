@@ -3,7 +3,7 @@ import { Country, WineWithWinery } from "@/models/Wine";
 import { Link } from "react-router-dom";
 import { RandomWineResponse } from "@/models/Api";
 import { getRandomWines } from "@/utils/api";
-import { WINETYPE } from "@/data/Wine";
+import { WINETYPE, WINETASTEDEGREE } from "@/data/Wine";
 
 const RandomWine = () => {
   const [wine, setWine] = useState<WineWithWinery[]>([]);
@@ -30,7 +30,7 @@ const RandomWine = () => {
 
   return (
     <section className="w-full px-20 mx-auto mt-70 md:px-40 max-w-1280">
-      <p className="text-20 md:text-24">오늘의 랜덤 와인</p>
+      <p className="text-20 md:text-24">오늘의 와인</p>
       <div className="flex flex-col gap-20 mt-20 md:grid md:grid-cols-2">
         {WINETYPE.map((_, i) => (
           <RandomWineBox id={i} wine={wine[i]} />
@@ -64,10 +64,10 @@ const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
           </span>
         </div>
         <div className="w-full h-full p-20">
-          <div className="flex items-center justify-center w-full h-full">
+          <div className="relative flex items-center w-full h-full">
             {wine ? (
               <>
-                <div className="w-[70%] h-full pt-55 break-keep">
+                <div className="w-[70%] h-full break-keep z-10">
                   <div className="line-clamp-1 leading-[120%]">
                     <span className="text-12 sm:text-14">
                       {countryInfo ? countryInfo.emoji : null}
@@ -84,14 +84,14 @@ const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
                       {wine.ename}
                     </p>
                   </div>
-                  <div className="relative mt-20 z-2">
+                  <div className="mt-20">
                     <WineTaste taste="당도" degree={wine.sweetness} />
                     <WineTaste taste="산도" degree={wine.acidity} />
                     <WineTaste taste="바디" degree={wine.body} />
                     <WineTaste taste="타닌" degree={wine.tannin} />
                   </div>
                 </div>
-                <div className="relative w-[30%] h-full">
+                <div className="absolute w-[30%] right-0 h-[calc(100%+50px)] bottom-0">
                   <img
                     src={wine.image ? wine.image : undefined}
                     className={`object-cover max-w-none absolute center-absolute ${
@@ -117,14 +117,6 @@ interface WineTasteComponentProps {
   degree: number | null;
 }
 const WineTaste = ({ taste, degree }: WineTasteComponentProps) => {
-  const degreeFill: string[] = [
-    "bg-very-light-degree",
-    "bg-light-degree",
-    "bg-medium-degree",
-    "bg-full-degree",
-    "bg-very-full-degree",
-  ];
-
   return (
     <div className="flex flex-row items-center mt-10">
       <span className="shrink-0 text-14 sm:text-16">{taste}</span>
@@ -133,7 +125,7 @@ const WineTaste = ({ taste, degree }: WineTasteComponentProps) => {
           {Array.from({ length: degree }).map((_, i) => (
             <div
               key={i}
-              className={`shrink-0 ml-10 rounded-full w-12 h-12 sm:w-14 sm:h-14 ${degreeFill[i]}`}
+              className={`shrink-0 ml-10 rounded-full w-12 h-12 sm:w-14 sm:h-14 ${WINETASTEDEGREE[i]}`}
             ></div>
           ))}
         </>

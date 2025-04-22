@@ -20,3 +20,10 @@ export const WINETYPE = [
     fill: "fill-(--sparkling-wine)",
   },
 ];
+export const WINETASTEDEGREE = [
+  "bg-(--very-light-degree)",
+  "bg-(--light-degree)",
+  "bg-(--medium-degree)",
+  "bg-(--full-degree)",
+  "bg-(--very-full-degree)",
+];
