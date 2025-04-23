@@ -4,7 +4,7 @@
   background-color: white;
   max-width: 250px;
   border: 1px solid #e0e0e0;
-  box-shadow: 0px 2px 5px rgba(0,0,0,0.15);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
 }
 .place-title {
   display: flex;
@@ -35,14 +35,15 @@
 }
 
 .place-name {
-  display: block;
+  display: inline;
   font-size: 16px;
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: var(--main);
 }
-.place-name:hover{
+.place-name:hover {
   text-decoration: underline;
   cursor: pointer;
 }

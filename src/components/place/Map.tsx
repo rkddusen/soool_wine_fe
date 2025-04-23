@@ -353,32 +353,30 @@ const Map = () => {
       <div
         className={`${
           isListOpen ? "h-[calc(100%-20px)]" : "h-50"
-        } w-[calc(100%-20px)] sm:w-350 md:w-400 z-9 absolute bottom-10 left-10 bg-white rounded-15 shadow-(--wine-box) overflow-hidden flex flex-col`}
+        } w-[calc(100%-20px)] sm:w-350 md:w-400 z-9 absolute top-10 left-10 bg-white rounded-15 overflow-hidden flex flex-col shadow-(--wine-box)`}
       >
         <div
           onClick={() => setIsListOpen((prev) => !prev)}
-          className="flex items-center justify-center w-full bg-white border-b shrink-0 h-50 border-b-(--gray-f0) sm:border-l sm:border-l-(--gray-f0) hover:bg-(--gray-f5) hover:cursor-pointer"
+          className="flex items-center justify-center gap-5 w-full bg-(--light-main) shrink-0 h-50  hover:cursor-pointer"
         >
           <div>
             <p>와인 판매 장소</p>
           </div>
           <svg
-            className="ml-5"
+            className="w-20 h-20"
+            viewBox="0 0 22 22"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="#000000 "
             stroke="#000000"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
-            <polygon
-              points={
-                isListOpen ? "5 3 14 17 23 3 5 3" : "5 17 14 3 23 17 14 17"
-              }
-              strokeWidth="1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></polygon>
+            {isListOpen ? (
+              <path d="M18 15l-6-6-6 6" />
+            ) : (
+              <path d="M6 9l6 6 6-6" />
+            )}
           </svg>
         </div>
         <div
@@ -402,7 +400,7 @@ const Map = () => {
                 {v.category_name}
               </p>
               <a className="block" href={v.place_url} target="_blank">
-                <span className="text-18 hover:underline line-clamp-2">
+                <span className="text-18 hover:underline line-clamp-2 text-(--main) font-medium">
                   {v.place_name}
                 </span>
               </a>
@@ -417,7 +415,7 @@ const Map = () => {
       {isMoved && (
         <div
           onClick={() => setIsSearch(true)}
-          className="absolute flex justify-center w-full top-20 z-1"
+          className="absolute flex justify-center w-full bottom-20 z-1"
         >
           <div className="flex flex-row items-center justify-center max-w-full gap-5 px-20 py-12 rounded-full bg-(--main) hover:bg-(--dark-main) hover:cursor-pointer">
             <svg
