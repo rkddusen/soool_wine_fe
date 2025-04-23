@@ -1,42 +1,25 @@
-import { useState } from "react";
 import { WineType, Country, WineWithWinery } from "../../models/Wine";
 import { Link } from "react-router-dom";
 import { Filter } from "../../models/Filter";
 
-interface WineListBoxComponentProps {
+interface WineListBoxProps {
   wine: WineWithWinery;
   filterInfo: Filter;
 }
 
-const WineListBox = ({ wine, filterInfo }: WineListBoxComponentProps) => {
+const WineListBox = ({ wine, filterInfo }: WineListBoxProps) => {
   const countryInfo = Country.get(wine.country);
   const wineType = WineType.get(wine.type);
-  const [isHover, setIsHover] = useState<boolean>(false);
-
-  const handleMouseEnter = (): void => {
-    setIsHover(true);
-  };
-  const handleMouseLeave = (): void => {
-    setIsHover(false);
-  };
 
   return (
-    <div
-      className="max-w-700 w-full lg:w-[calc((100%/2)-20px)] bg-(--gray-f5) rounded-15 h-200 hover:cursor-pointer hover:shadow-(--wine-box) duration-300"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className="max-w-700 w-full lg:w-[calc((100%/2)-20px)] bg-white rounded-15 h-200 hover:cursor-pointer hover:scale-102 duration-300">
       <Link to={`/wine/${wine.id}`} state={{ filterInfo: filterInfo }}>
         <div className="flex w-full h-full p-20">
-          <div className="w-[30%] h-full flex items-center justify-center overflow-x-hidden">
-            <div className="h-[90%]">
-              <img
-                src={wine.image ? wine.image : undefined}
-                className={`object-cover w-full ${
-                  isHover ? "h-[105%]" : "h-full"
-                } duration-300`}
-              />
-            </div>
+          <div className="w-[30%] h-full">
+            <img
+              src={wine.image ? wine.image : undefined}
+              className={`object-cover h-full`}
+            />
           </div>
           <div className="w-[70%] break-keep shrink-0">
             <div>

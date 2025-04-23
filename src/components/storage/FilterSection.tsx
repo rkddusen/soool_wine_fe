@@ -62,30 +62,28 @@ const FilterSection = ({ filterInfo }: FilterSectionProps) => {
   };
 
   return (
-    <>
-      <div className="flex flex-row justify-center w-full mt-20">
-        <div
-          onClick={() => setFilterOpen((prev) => !prev)}
-          className="flex items-center hover:cursor-pointer"
+    <div className="select-none">
+      <div
+        onClick={() => setFilterOpen((prev) => !prev)}
+        className="flex items-center justify-center mt-20 hover:cursor-pointer"
+      >
+        <span className="text-14">필터</span>
+        <svg
+          className="w-16 h-16"
+          viewBox="0 0 22 22"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          stroke="#000000"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <span className="text-14">필터</span>
-          <svg
-            className="w-20 h-20"
-            viewBox="0 0 22 22"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            stroke="#000000"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            {filterOpen ? (
-              <path d="M18 15l-6-6-6 6" />
-            ) : (
-              <path d="M6 9l6 6 6-6" />
-            )}
-          </svg>
-        </div>
+          {filterOpen ? (
+            <path d="M18 15l-6-6-6 6" />
+          ) : (
+            <path d="M6 9l6 6 6-6" />
+          )}
+        </svg>
       </div>
       {filterOpen ? <SearchFilter filterInfo={filterInfo} /> : null}
       {Object.entries(filterInfo).some(([_, arr]) => arr && arr.length > 0) && (
@@ -109,7 +107,7 @@ const FilterSection = ({ filterInfo }: FilterSectionProps) => {
           <div className="mt-10 text-center">
             <div
               onClick={handleFilterReset}
-              className="inline-flex items-center justify-center px-20 py-10 bg-white border rounded-full border-(--gray-f0) hover:cursor-pointer hover:bg-(--gray-f0)"
+              className="inline-flex gap-5 items-center justify-center px-20 py-10 bg-white border rounded-full border-(--gray-f0) hover:cursor-pointer hover:bg-(--gray-f0)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -126,12 +124,12 @@ const FilterSection = ({ filterInfo }: FilterSectionProps) => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span className="ml-5 text-12 text-nowrap">필터 초기화</span>
+              <span className="text-12 text-nowrap">필터 초기화</span>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import SearchBar from "../common/SearchBar";
-import { WineWithWinery } from "../../models/Wine";
-import WineListBox from "./WineListBox";
-import { getWines } from "../../utils/api";
-import { WinesResponse } from "../../models/Api";
+import SearchBar from "@/components/common/SearchBar";
+import { WineWithWinery } from "@/models/Wine";
+import { getWines } from "@/utils/api";
+import { WinesResponse } from "@/models/Api";
 import { useSearchParams } from "react-router-dom";
-import { Filter } from "../../models/Filter";
+import { Filter } from "@/models/Filter";
 import NoResultsFound from "/src/assets/noResultsFound.svg?react";
 import {
   getFilterFromQueryParams,
   setQueryParamsFromFilter,
-} from "../../utils/queryParams";
+} from "@/utils/queryParams";
 import { validateFilter } from "@/utils/validateFilter";
 import FilterSection from "./FilterSection";
+import WineListBox from "./WineListBox";
 
 const initFilter: Filter = {
   type: null,
@@ -77,12 +77,14 @@ const StorageSection = () => {
 
   if (loading) return <div>Loading</div>;
   return (
-    <section>
-      <section className="w-full">
-        <div className="pb-20 text-center sm:pt-70 sm:pb-50 pt-50">
-          <p className="text-84 font-display text-(--main)">와인창고</p>
+    <div>
+      <section className="px-20 mx-auto md:px-40 max-w-1280">
+        <div className="pb-20 text-center pt-50 sm:pt-70 sm:pb-50">
+          <p className="md:text-84 sm:text-64 text-48 font-display text-(--main)">
+            와인창고
+          </p>
         </div>
-        <div className="w-full px-20 mx-auto max-w-600 h-60">
+        <div className="mx-auto max-w-600 h-55">
           <div className="w-full h-full border-1 border-(--main) rounded-30">
             <SearchBar />
           </div>
@@ -90,21 +92,17 @@ const StorageSection = () => {
         <FilterSection filterInfo={filterInfo} />
       </section>
       {!error ? (
-        <section className="w-full">
-          <div className="w-full pt-10">
-            <div className="flex flex-row items-center justify-between w-full px-10 mx-auto h-60">
-              <span className="text-14 text-(--gray-78)">
-                {totalElements} Wines
-              </span>
-            </div>
+        <section className="px-20 mx-auto mt-20 md:px-40 max-w-1280">
+          <div className="flex items-center px-10 h-60">
+            <p className="text-14 text-(--gray-78)">{totalElements} Wines</p>
           </div>
-          <div className="flex flex-wrap justify-center w-full gap-40">
+          <div className="flex flex-wrap justify-center gap-40">
             {wineList.length > 0 ? (
               wineList.map((w, i) => (
                 <WineListBox key={i} wine={w} filterInfo={filterInfo} />
               ))
             ) : (
-              <div className="flex flex-col items-center gap-20 my-100">
+              <div className="flex flex-col items-center gap-30 my-100">
                 <NoResultsFound />
                 <p className="text-(--gray-78) text-18">
                   앗! 찾으시는 와인이 없네요.
@@ -113,7 +111,7 @@ const StorageSection = () => {
             )}
           </div>
           {page + 1 <= totalPages ? (
-            <div className="w-full text-center mt-50">
+            <div className="text-center mt-50">
               <div
                 onClick={handleViewMore}
                 className="inline-block border rounded-full border-(--gray-78) hover:cursor-pointer"
@@ -126,7 +124,7 @@ const StorageSection = () => {
       ) : (
         <></>
       )}
-    </section>
+    </div>
   );
 };
 

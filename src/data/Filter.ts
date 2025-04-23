@@ -42,11 +42,9 @@ export const TASTE: TasteItem[] = [
   },
 ];
 export const TASTEDEGREE = [
-  "text-(--very-light-degree)",
   "text-(--light-degree)",
   "text-(--medium-degree)",
   "text-(--full-degree)",
-  "text-(--very-full-degree)",
 ];
 
 // [
