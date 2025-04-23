@@ -248,11 +248,11 @@ interface HeaderNavComponentProps {
 const HeaderNav = ({ text, link }: HeaderNavComponentProps) => {
   return (
     <li className="flex flex-row justify-center h-full w-100">
-      <div className="flex items-center h-full hover:cursor-pointer border-y-2 border-y-white hover:border-b-(--main) hover:text-(--main)">
-        <span className="text-nowrap">
-          <Link to={`/${link}`}>{text}</Link>
-        </span>
-      </div>
+      <Link to={`/${link}`}>
+        <div className="flex items-center h-full hover:cursor-pointer border-y-2 border-y-white hover:border-b-(--main) hover:text-(--main)">
+          <span className="text-nowrap">{text}</span>
+        </div>
+      </Link>
     </li>
   );
 };
