@@ -54,18 +54,18 @@ interface FilterWineTypeProps {
 
 const FilterWineType = ({ check, handleCheck }: FilterWineTypeProps) => {
   return (
-    <div className="w-full text-center">
+    <div className="text-center">
       <p className="mb-20 font-bold text-25">Wine Type</p>
       <ul className="flex flex-wrap justify-center w-full gap-10 px-10">
         {WINETYPE.map((v, i) => (
           <li
             onClick={() => handleCheck("type", v.type)}
             key={i}
-            className="relative flex flex-col items-center justify-center overflow-hidden bg-white border border-(--gray-f0) sm:w-100 sm:h-100 w-80 h-80 rounded-15 hover:cursor-pointer"
+            className="relative flex flex-col gap-10 items-center justify-center overflow-hidden bg-white border border-(--gray-f0) sm:w-100 sm:h-100 w-80 h-80 rounded-15 hover:cursor-pointer"
           >
             {check?.includes(v.type) ? <CheckFilter /> : null}
             <svg
-              className={`w-21 h-28 sm:w-24 sm:h-32 mb-10 ${v.fill}`}
+              className={`w-21 h-28 sm:w-24 sm:h-32 ${v.fill}`}
               viewBox="0 0 36 48"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -85,7 +85,7 @@ interface FilterTasteProps {
 }
 const FilterTaste = ({ check, handleCheck }: FilterTasteProps) => {
   return (
-    <div className="w-full mt-40 text-center">
+    <div className="mt-40 text-center">
       <p className="mb-20 font-bold text-25">Wine Taste</p>
       <ul className="flex flex-col items-center justify-center grid-cols-2 px-10 md:inline-grid gap-x-60">
         {TASTE.map((v, i) => (
@@ -96,7 +96,7 @@ const FilterTaste = ({ check, handleCheck }: FilterTasteProps) => {
                 <div
                   onClick={() => handleCheck(v.taste, levelKey)}
                   key={label}
-                  className="relative flex items-center justify-center overflow-hidden bg-white border rounded-full w-30 h-30 sm:w-40 sm:h-40 border-(--gray-f0) hover:cursor-pointer"
+                  className="relative flex items-center justify-center overflow-hidden bg-white border rounded-full w-65 h-30 sm:w-80 sm:h-40 border-(--gray-f0) hover:cursor-pointer"
                 >
                   {check[i]?.includes(levelKey) ? <CheckFilter /> : null}
                   <span className={`${TASTEDEGREE[i2]} text-12 sm:text-14`}>
@@ -118,7 +118,7 @@ interface FilterCountryProps {
 }
 const FilterCountry = ({ check, handleCheck }: FilterCountryProps) => {
   return (
-    <div className="w-full mt-40 text-center">
+    <div className="mt-40 text-center">
       <p className="mb-20 font-bold text-25">Country</p>
       <ul className="flex flex-wrap justify-center gap-10 px-10">
         {COUNTRY.map((v, i) => (
@@ -144,7 +144,7 @@ const FilterCountry = ({ check, handleCheck }: FilterCountryProps) => {
 const CheckFilter = () => {
   return (
     <div className="absolute top-0 left-0 w-full h-full">
-      <div className="w-full h-full opacity-50 bg-(--gray-c0)"></div>
+      <div className="w-full h-full opacity-80 bg-(--gray-e0)"></div>
       <div className="absolute center-absolute">
         <svg
           xmlns="http://www.w3.org/2000/svg"

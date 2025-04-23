@@ -19,10 +19,10 @@ export interface WineTypeInfo {
 }
 
 export const WineType = new Map<string, WineTypeInfo>([
-  ["red", { kr: "레드와인", bg: "bg-red-wine" }],
-  ["white", { kr: "화이트와인", bg: "bg-white-wine" }],
-  ["rose", { kr: "로제와인", bg: "bg-rose-wine" }],
-  ["sparkling", { kr: "스파클링와인", bg: "bg-sparkling-wine" }],
+  ["red", { kr: "레드와인", bg: "bg-(--red-wine)" }],
+  ["white", { kr: "화이트와인", bg: "bg-(--white-wine)" }],
+  ["rose", { kr: "로제와인", bg: "bg-(--rose-wine)" }],
+  ["sparkling", { kr: "스파클링와인", bg: "bg-(--sparkling-wine)" }],
   ["etc", { kr: "기타와인", bg: "bg-black" }],
 ]);
 
