@@ -145,12 +145,14 @@ const SignUpEmail = ({
               />
             </div>
             <ul
-              className={` absolute w-full bg-white z-1 max-h-100 overflow-y-auto shadow-(--shadow-base)`}
+              className={`${
+                emailFocus && addressList.length !== 0 ? "block" : "hidden"
+              } absolute w-full bg-white z-1 max-h-100 overflow-y-auto shadow-(--shadow-base)`}
             >
               {addressList.map((v) => (
                 <li
                   key={v}
-                  onClick={() => {
+                  onMouseDown={() => {
                     handleEmailSelect(v);
                   }}
                   className="p-12 hover:cursor-pointer hover:bg-(--gray-f0) text-14"
