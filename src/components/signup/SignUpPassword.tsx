@@ -3,20 +3,22 @@ import { validPassword } from "../../utils/signUpValidators";
 import { SignUpError } from "../../models/SignUpError";
 import { SignUp } from "../../models/User";
 
-interface SignUpPasswordComponentProps {
+interface SignUpPasswordProps {
   inputValue: { password: string };
   handleInputChange: (
     event: React.ChangeEvent<HTMLInputElement>,
     name: keyof SignUp
   ) => void;
   setLevel: React.Dispatch<React.SetStateAction<number>>;
+  handlePrevLevel: () => void;
 }
 
 const SignUpPassword = ({
   inputValue,
   handleInputChange,
   setLevel,
-}: SignUpPasswordComponentProps) => {
+  handlePrevLevel,
+}: SignUpPasswordProps) => {
   const [passwordFocus, setPasswordFocus] = useState<boolean>(false);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [seePassword, setSeePassword] = useState<boolean>(false);
@@ -161,11 +163,19 @@ const SignUpPassword = ({
           )}
         </div>
       </div>
-      <div
-        onClick={nextLevel}
-        className="flex flex-row items-center justify-center w-full h-50 rounded-15 bg-(--gray-49) hover:cursor-pointer"
-      >
-        <span className="text-white text-16">다음 단계</span>
+      <div className="flex gap-10 mt-20 h-50">
+        <div
+          onClick={handlePrevLevel}
+          className="flex flex-1 items-center justify-center rounded-15 border border-(--gray-49) hover:cursor-pointer"
+        >
+          <span>이전</span>
+        </div>
+        <div
+          onClick={nextLevel}
+          className="flex flex-3 items-center justify-center rounded-15 bg-(--gray-49) hover:cursor-pointer"
+        >
+          <span className="text-white">다음</span>
+        </div>
       </div>
     </>
   );

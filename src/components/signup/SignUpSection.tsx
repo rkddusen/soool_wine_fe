@@ -1,5 +1,5 @@
-import SooolLogo from "/src/assets/soool_logo.svg?react";
 import { useEffect, useState } from "react";
+import SooolLogo from "/src/assets/soool_logo.svg?react";
 import SignUpPassword from "./SignUpPassword";
 import SignUpId from "./SignUpId";
 import SignUpEmail from "./SignUpEmail";
@@ -20,7 +20,6 @@ const SignUpSection = () => {
     id: "",
     password: "",
     email: "",
-    address: "",
     code: "",
   });
   const [level, setLevel] = useState<number>(1);
@@ -37,10 +36,7 @@ const SignUpSection = () => {
       if (level > 2 && validPassword(inputValues["password"])) {
         setLevel(2);
       }
-      if (
-        level > 3 &&
-        validEmail(inputValues["email"], inputValues["address"])
-      ) {
+      if (level > 3 && validEmail(inputValues["email"])) {
         setLevel(3);
       }
       if (level > 4) {
@@ -66,10 +62,12 @@ const SignUpSection = () => {
       [name]: type === "number" ? (value === "" ? "" : Number(value)) : value,
     }));
   };
-  const handleSetAddress = (value: string): void => {
+
+  const handleEmailSelect = (email: string): void => {
+    console.log(email);
     setInputValues((prev) => ({
       ...prev,
-      ["address"]: value,
+      email: email,
     }));
   };
 
@@ -83,140 +81,123 @@ const SignUpSection = () => {
   const handlePrevLevel = (): void => {
     if (level === 1) {
       navigate(-1);
-    } else if (level > 1 && level < 5) {
-      if (level === 4) {
-        handleResetInput("code");
-        handleResetInput("address");
+    } else if (level > 1 && level < 6) {
+      if (level === 2) {
+        handleResetInput("password");
+        setLevel(1);
       } else if (level === 3) {
-        handleResetInput("address");
         handleResetInput("email");
         handleResetInput("password");
+        setLevel(2);
       } else {
-        handleResetInput("password");
+        handleResetInput("code");
+        setLevel(3);
       }
-      setLevel((prev) => prev - 1);
     }
   };
 
   return (
-    <div className="max-w-full">
-      <div className="h-full p-10 sm:p-50">
-        <div className="relative flex items-center justify-center w-full bg-white sm:w-500 md:w-600 md:h-500 rounded-15">
-          <div
-            onClick={handlePrevLevel}
-            className={`absolute top-15 left-15 md:top-25 md:left-25 hover:cursor-pointer ${
-              level === 5 ? "hidden" : "block"
-            }`}
-          >
-            <svg
-              className="w-24 h-24 md:w-26 md:h-26"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M19 12H6M12 5L5 12L12 19"
-                strokeWidth="1.5"
-                stroke="black"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+    <section className="max-w-full">
+      <div className="bg-white sm:w-500 md:w-600 rounded-15">
+        <div className="max-w-full mx-auto text-center px-15 w-410 sm:py-60">
+          <div className="inline-block md:h-35 h-30">
+            <SooolLogo />
           </div>
-          <div className="px-15 w-410 py-60">
-            <div className="w-full md:h-40 sm:h-40 h-30">
-              <SooolLogo />
-            </div>
-            <div className="w-full mt-50">
-              <div className="relative w-full my-30">
-                <div className="absolute z-1 top-6 bottom-6 left-10 right-10">
-                  <div
-                    className={` h-full rounded-full bg-(--gray-49) transition-all duration-500`}
-                    style={{
-                      width: `${level === 6 ? 100 : 25 * (level - 1)}%`,
-                    }}
-                  ></div>
-                </div>
-                <div className="relative flex justify-between w-full z-2">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className={`flex items-center justify-center w-20 h-20 ${
-                        level >= i + 1
-                          ? "bg-(--gray-49) text-white"
-                          : "bg-white text-(--gray-49)"
-                      } border rounded-full border-(--gray-49) text-12`}
-                    >
-                      {level > i + 1 ? (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="12"
-                          height="12"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="white"
-                        >
-                          <polyline
-                            points="20 6 9 17 4 12"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          ></polyline>
-                        </svg>
-                      ) : (
-                        <span>{i + 1}</span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              {level === 1 && (
-                <SignUpId
-                  inputValue={{ id: inputValues["id"] }}
-                  handleInputChange={handleInputChange}
-                  setLevel={setLevel}
-                />
-              )}
-              {level === 2 && (
-                <SignUpPassword
-                  inputValue={{ password: inputValues["password"] }}
-                  handleInputChange={handleInputChange}
-                  setLevel={setLevel}
-                />
-              )}
-              {level === 3 && (
-                <SignUpEmail
-                  inputValue={{
-                    email: inputValues["email"],
-                    address: inputValues["address"],
+          <div className="text-start">
+            <div className="relative w-full my-30">
+              <div className="absolute z-1 top-12 bottom-12 left-15 right-15">
+                <div
+                  className={`h-full rounded-full bg-(--gray-49) transition-all duration-500`}
+                  style={{
+                    width: `${level === 6 ? 100 : 25 * (level - 1)}%`,
                   }}
-                  handleInputChange={handleInputChange}
-                  handleResetInput={handleResetInput}
-                  handleSetAddress={handleSetAddress}
-                  setLevel={setLevel}
-                />
-              )}
-              {level === 4 && (
-                <SignUpCode
-                  inputValue={{ code: inputValues["code"] }}
-                  handleInputChange={handleInputChange}
-                  setLevel={setLevel}
-                />
-              )}
-              {level === 5 && (
-                <SignUpFinal user={inputValues} setLevel={setLevel} />
-              )}
-              {level === 6 && <SignUpComplete />}
+                ></div>
+              </div>
+              <div className="relative flex justify-between w-full z-2">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className={`flex items-center justify-center w-30 h-30 ${
+                      level >= i + 1
+                        ? "bg-(--gray-49) text-white"
+                        : "sm:bg-white text-(--gray-49)"
+                    } border rounded-full border-(--gray-49) text-12`}
+                  >
+                    {level > i + 1 ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="white"
+                      >
+                        <polyline
+                          points="20 6 9 17 4 12"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        ></polyline>
+                      </svg>
+                    ) : (
+                      <span>{i + 1}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
+            {level === 1 && (
+              <SignUpId
+                inputValue={{ id: inputValues["id"] }}
+                handleInputChange={handleInputChange}
+                setLevel={setLevel}
+                handlePrevLevel={handlePrevLevel}
+              />
+            )}
+            {level === 2 && (
+              <SignUpPassword
+                inputValue={{ password: inputValues["password"] }}
+                handleInputChange={handleInputChange}
+                setLevel={setLevel}
+                handlePrevLevel={handlePrevLevel}
+              />
+            )}
+            {level === 3 && (
+              <SignUpEmail
+                inputValue={{
+                  email: inputValues["email"],
+                }}
+                handleInputChange={handleInputChange}
+                setLevel={setLevel}
+                handlePrevLevel={handlePrevLevel}
+                handleEmailSelect={handleEmailSelect}
+              />
+            )}
+            {level === 4 && (
+              <SignUpCode
+                inputValue={{ code: inputValues["code"] }}
+                handleInputChange={handleInputChange}
+                setLevel={setLevel}
+                handlePrevLevel={handlePrevLevel}
+              />
+            )}
+            {level === 5 && (
+              <SignUpFinal
+                user={inputValues}
+                setLevel={setLevel}
+                handlePrevLevel={handlePrevLevel}
+              />
+            )}
+            {level === 6 && <SignUpComplete />}
           </div>
         </div>
       </div>
-      <div className="w-full mb-10">
-        <p className="text-center text-12">
-          Copyright JeongKangE. All rights reserved.
+      <div className="w-full mt-20">
+        <p className="text-center text-12 text-(--gray-78)">
+          ©JeongKangE. All rights reserved.
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 
