@@ -29,18 +29,11 @@ export const validPassword = (data: string): SignUpError | null => {
   }
   return null;
 };
-export const validEmail = (
-  data1: string,
-  data2: string
-): SignUpError | null => {
-  const emailRegex = /^[a-zA-Z0-9+-_.]+$/;
-  const addressRegex = /^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+export const validEmail = (data: string): SignUpError | null => {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$/;
 
-  if (!emailRegex.test(data1)) {
+  if (!emailRegex.test(data)) {
     return { code: "3001", message: "이메일을 올바르게 입력해주세요." };
-  }
-  if (!addressRegex.test(data2)) {
-    return { code: "3002", message: "이메일 주소를 올바르게 입력해주세요." };
   }
   return null;
 };

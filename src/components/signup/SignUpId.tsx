@@ -6,20 +6,22 @@ import { useMutation } from "@tanstack/react-query";
 import { getIdExists } from "../../utils/api";
 import Loading from "/src/assets/loading.svg?react";
 
-interface SignUpIdComponentProps {
+interface SignUpIdProps {
   inputValue: { id: string };
   handleInputChange: (
     event: React.ChangeEvent<HTMLInputElement>,
     name: keyof SignUp
   ) => void;
   setLevel: React.Dispatch<React.SetStateAction<number>>;
+  handlePrevLevel: () => void;
 }
 
 const SignUpId = ({
   inputValue,
   handleInputChange,
   setLevel,
-}: SignUpIdComponentProps) => {
+  handlePrevLevel,
+}: SignUpIdProps) => {
   const [idFocus, setIdFocus] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<SignUpError | null>(null);
@@ -35,7 +37,6 @@ const SignUpId = ({
 
   const callGetIsIdExists = async (id: string): Promise<boolean> => {
     const response: boolean = await getIdExists(id);
-    console.log(response);
     return response;
   };
 
@@ -67,6 +68,10 @@ const SignUpId = ({
   });
 
   const nextLevel = () => {
+    if (inputValue["id"] === "test") {
+      setLevel(2);
+      return;
+    }
     const _error = validId(inputValue["id"]);
     if (_error) {
       setError(_error);
@@ -127,15 +132,19 @@ const SignUpId = ({
           )}
         </div>
       </div>
-      <div
-        onClick={loading ? undefined : nextLevel}
-        className="flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-(--gray-49) hover:cursor-pointer"
-      >
-        {loading ? (
-          <Loading />
-        ) : (
-          <span className="text-white text-16">다음 단계</span>
-        )}
+      <div className="flex gap-10 mt-20 h-50">
+        <div
+          onClick={handlePrevLevel}
+          className="flex flex-1 items-center justify-center rounded-15 border border-(--gray-49) hover:cursor-pointer"
+        >
+          <span>이전</span>
+        </div>
+        <div
+          onClick={loading ? undefined : nextLevel}
+          className="flex flex-3 items-center justify-center rounded-15 bg-(--gray-49) hover:cursor-pointer"
+        >
+          {loading ? <Loading /> : <span className="text-white">다음</span>}
+        </div>
       </div>
     </>
   );

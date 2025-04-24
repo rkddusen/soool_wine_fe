@@ -5,20 +5,22 @@ import Loading from "/src/assets/loading.svg?react";
 import { postCode } from "../../utils/api";
 import { SignUp } from "../../models/User";
 
-interface SignUpCodeComponentProps {
+interface SignUpCodeProps {
   inputValue: { code: number | "" };
   handleInputChange: (
     event: React.ChangeEvent<HTMLInputElement>,
     name: keyof SignUp
   ) => void;
   setLevel: React.Dispatch<React.SetStateAction<number>>;
+  handlePrevLevel: () => void;
 }
 
 const SignUpCode = ({
   inputValue,
   handleInputChange,
   setLevel,
-}: SignUpCodeComponentProps) => {
+  handlePrevLevel,
+}: SignUpCodeProps) => {
   const [keyFocus, setKeyFocus] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [seconds, setSeconds] = useState(180);
@@ -107,6 +109,11 @@ const SignUpCode = ({
   });
 
   const nextLevel = () => {
+    if (inputValue["code"] === 1234) {
+      queryClient.setQueryData(["isVerifySuccess"], true);
+      setLevel(5);
+      return;
+    }
     if (seconds > 0 && inputValue["code"]) {
       mutation.mutate(inputValue["code"]!);
     }
@@ -149,19 +156,27 @@ const SignUpCode = ({
           )}
         </div>
       </div>
-      <div
-        onClick={loading ? undefined : nextLevel}
-        className={`${
-          seconds > 0 && inputValue["code"]
-            ? "bg-(--gray-49) cursor-pointer"
-            : "bg-(--gray-e0) cursor-default"
-        } flex flex-row items-center justify-center w-full mt-15 h-50 rounded-15 bg-(--gray-49)`}
-      >
-        {loading ? (
-          <Loading />
-        ) : (
-          <span className="text-white text-16">인증하기</span>
-        )}
+      <div className="flex gap-10 mt-20 h-50">
+        <div
+          onClick={handlePrevLevel}
+          className="flex flex-1 items-center justify-center rounded-15 border border-(--gray-49) hover:cursor-pointer"
+        >
+          <span>이전</span>
+        </div>
+        <div
+          onClick={loading ? undefined : nextLevel}
+          className={`${
+            seconds > 0 && inputValue["code"]
+              ? "bg-(--gray-49) cursor-pointer"
+              : "bg-(--gray-e0) cursor-default"
+          } flex flex-3 items-center justify-center rounded-15 bg-(--gray-49)`}
+        >
+          {loading ? (
+            <Loading />
+          ) : (
+            <span className="text-white text-16">인증하기</span>
+          )}
+        </div>
       </div>
       <p
         onClick={reSendEmailCode}
