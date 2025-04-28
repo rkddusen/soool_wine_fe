@@ -13,6 +13,9 @@ export interface WinesResponse {
   totalElements: number;
   totalPages: number;
 }
+export interface WineResponse {
+  content: WineWithWinery;
+}
 
 export interface EmailVerificationTokenResponse {
   token: string;

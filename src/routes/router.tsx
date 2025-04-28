@@ -5,6 +5,7 @@ import StoragePage from "../pages/StoragePage";
 import PlacePage from "../pages/PlacePage";
 import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
+import WinePage from "@/pages/WinePage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/storage",
         element: <StoragePage />,
+      },
+      {
+        path: `/wine/:id`,
+        element: <WinePage />,
       },
     ],
   },
