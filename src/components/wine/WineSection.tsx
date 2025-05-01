@@ -5,10 +5,11 @@ import { WineResponse } from "@/models/Api";
 import { WineWithWinery } from "@/models/Wine";
 import { useParams } from "react-router-dom";
 import {
-  WineCityAndWinery,
-  WineImage,
-  WineName,
-  WineTypeAndCountry,
+  WineCityAndWineryBox,
+  WineImageBox,
+  WineNameBox,
+  WineTypeBox,
+  WineCountryBox,
 } from "./WineInfoBox";
 
 const WineSection = () => {
@@ -49,16 +50,17 @@ const WineSection = () => {
   return (
     <div>
       <div className="flex flex-col justify-center gap-20 px-20 pt-20 mx-auto md:flex-row md:px-40 md:max-w-1000 max-w-500">
-        <WineImage image={wineInfo.image} ename={wineInfo.ename} />
+        <WineImageBox image={wineInfo.image} ename={wineInfo.ename} />
         <div className="flex flex-col w-full gap-20">
-          <WineTypeAndCountry type={wineInfo.type} country={wineInfo.country} />
-          <WineCityAndWinery
+          <WineTypeBox type={wineInfo.type} />
+          <WineCountryBox country={wineInfo.country} />
+          <WineCityAndWineryBox
             region={wineInfo.region}
             country={wineInfo.country}
             city={wineInfo.city}
             winery={wineInfo.winery}
           />
-          <WineName
+          <WineNameBox
             ename={wineInfo.ename}
             kname={wineInfo.kname}
             abv={wineInfo.abv}
