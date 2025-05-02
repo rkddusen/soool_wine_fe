@@ -1,19 +1,19 @@
 import { ReactNode, useEffect, useState } from "react";
-import { WINETYPE, COUNTRY, TASTE, TasteItem } from "@/data/Filter";
-import { Filter } from "@/models/Filter";
+import { FILTER_TYPE_ARRAY, COUNTRY, FILTER_TASTE } from "@/data/Filter";
+import { Filter, FilterTaste } from "@/models/Filter";
 import { useSearchParams } from "react-router-dom";
 import SearchFilter from "./SearchFilter";
 
 const FILTER_LABELS: Record<keyof Filter, (value: any) => React.ReactNode> = {
-  type: (value) => `${WINETYPE.find((w) => w.type === value)?.kr} 와인`,
-  sweetness: (value: keyof TasteItem["level"]) =>
-    `당도: ${TASTE.find((t) => t.taste === "sweetness")?.level[value]}`,
-  acidity: (value: keyof TasteItem["level"]) =>
-    `산도: ${TASTE.find((t) => t.taste === "acidity")?.level[value]}`,
-  body: (value: keyof TasteItem["level"]) =>
-    `바디: ${TASTE.find((t) => t.taste === "body")?.level[value]}`,
-  tannin: (value: keyof TasteItem["level"]) =>
-    `타닌: ${TASTE.find((t) => t.taste === "tannin")?.level[value]}`,
+  type: (value) => `${FILTER_TYPE_ARRAY.find((w) => w.type === value)?.title}`,
+  sweetness: (value: keyof FilterTaste["level"]) =>
+    `당도: ${FILTER_TASTE.find((t) => t.taste === "sweetness")?.level[value]}`,
+  acidity: (value: keyof FilterTaste["level"]) =>
+    `산도: ${FILTER_TASTE.find((t) => t.taste === "acidity")?.level[value]}`,
+  body: (value: keyof FilterTaste["level"]) =>
+    `바디: ${FILTER_TASTE.find((t) => t.taste === "body")?.level[value]}`,
+  tannin: (value: keyof FilterTaste["level"]) =>
+    `타닌: ${FILTER_TASTE.find((t) => t.taste === "tannin")?.level[value]}`,
   country: (value) => (
     <>
       <span>{COUNTRY.find((c) => c.country === value)?.emoji}</span>

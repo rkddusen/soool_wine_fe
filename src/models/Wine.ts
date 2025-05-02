@@ -12,29 +12,20 @@ export interface Wine {
   city: string | null;
   winery: string;
 }
-
-export interface WineTypeInfo {
-  en: string;
-  kr: string;
-  bg: string;
-}
-
-export const WineType = new Map<string, WineTypeInfo>([
-  ["red", { en: "Red Wine", kr: "레드와인", bg: "bg-(--red-wine)" }],
-  ["white", { en: "White Wine", kr: "화이트와인", bg: "bg-(--white-wine)" }],
-  ["rose", { en: "Rose Wine", kr: "로제와인", bg: "bg-(--rose-wine)" }],
-  [
-    "sparkling",
-    { en: "Sparkling Wine", kr: "스파클링와인", bg: "bg-(--sparkling-wine)" },
-  ],
-  ["etc", { en: "Etc Wine", kr: "기타와인", bg: "bg-black" }],
-]);
-
 export interface Winery {
   country: string;
   region: string;
   wineryImage: string | null;
 }
+
+export interface WineType {
+  label: string;
+  title: string;
+  type: string;
+  bg: string;
+  fill: string;
+}
+
 export interface WineryShortDescription extends Winery {
   shortDescription: string;
 }

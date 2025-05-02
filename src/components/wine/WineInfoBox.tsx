@@ -1,4 +1,5 @@
-import { WineType, Country } from "@/models/Wine";
+import { Country } from "@/models/Wine";
+import { WINETYPE_MAP } from "@/data/Wine";
 
 interface WineImageBoxProps {
   image: string | null;
@@ -20,10 +21,12 @@ export const WineTypeBox = ({ type }: WineTypeBoxProps) => {
   return (
     <div
       className={`w-full h-120 rounded-15 flex justify-center items-center text-white ${
-        WineType.get(type)?.bg
+        WINETYPE_MAP.get(type)?.bg
       }`}
     >
-      <p className="text-center md:text-28 text-24">{WineType.get(type)?.en}</p>
+      <p className="text-center md:text-28 text-24">
+        {WINETYPE_MAP.get(type)?.label}
+      </p>
     </div>
   );
 };

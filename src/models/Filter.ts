@@ -6,3 +6,13 @@ export interface Filter {
   tannin: string[] | null;
   country: string[] | null;
 }
+
+export interface FilterTaste {
+  taste: keyof Filter;
+  kr: string;
+  level: {
+    low: string;
+    medium: string;
+    high: string;
+  };
+}

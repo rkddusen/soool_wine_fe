@@ -3,7 +3,7 @@ import { Country, WineWithWinery } from "@/models/Wine";
 import { Link } from "react-router-dom";
 import { RandomWineResponse } from "@/models/Api";
 import { getRandomWines } from "@/utils/api";
-import { WINETYPE, WINETASTEDEGREE } from "@/data/Wine";
+import { WINETYPE_ARRAY, WINETASTEDEGREE } from "@/data/Wine";
 
 const RandomWine = () => {
   const [wine, setWine] = useState<WineWithWinery[]>([]);
@@ -32,7 +32,7 @@ const RandomWine = () => {
     <section className="w-full px-20 mx-auto mt-70 md:px-40 max-w-1280">
       <p className="text-20 md:text-24">오늘의 와인</p>
       <div className="flex flex-col gap-20 mt-20 md:grid md:grid-cols-2">
-        {WINETYPE.map((_, i) => (
+        {WINETYPE_ARRAY.map((_, i) => (
           <RandomWineBox id={i} wine={wine[i]} />
         ))}
       </div>
@@ -57,10 +57,10 @@ const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
     >
       <div className="flex flex-col w-full overflow-hidden bg-white rounded-15 h-320">
         <div
-          className={`shrink-0 ml-10 mt-10 w-[45%] max-w-200 h-50 flex flex-row justify-center items-center rounded-15 ${WINETYPE[id].bg} text-white`}
+          className={`shrink-0 ml-10 mt-10 w-[45%] max-w-200 h-50 flex flex-row justify-center items-center rounded-15 ${WINETYPE_ARRAY[id].bg} text-white`}
         >
           <span className="text-center text-14 md:text-16">
-            {WINETYPE[id].type}
+            {WINETYPE_ARRAY[id].label}
           </span>
         </div>
         <div className="w-full h-full p-20">

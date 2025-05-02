@@ -1,25 +1,28 @@
-import { Filter } from "@/models/Filter";
-import { Country } from "@/models/Wine";
+import { FilterTaste } from "@/models/Filter";
+import { Country, WineType } from "@/models/Wine";
 
-export const WINETYPE = [
-  { type: "red", kr: "레드", fill: "fill-(--red-wine)" },
-  { type: "white", kr: "화이트", fill: "fill-(--white-wine)" },
-  { type: "rose", kr: "로제", fill: "fill-(--rose-wine)" },
-  { type: "sparkling", kr: "스파클링", fill: "fill-(--sparkling-wine)" },
-  { type: "etc", kr: "기타", fill: "fill-(--etc-wine)" },
+import { WINETYPE_ARRAY, WINETYPE_MAP } from "./Wine";
+
+export const FILTER_TYPE_ARRAY = [
+  ...WINETYPE_ARRAY,
+  {
+    label: "Etc Wine",
+    title: "기타 와인",
+    type: "etc",
+    bg: "bg-black",
+    fill: "fill-black",
+  },
 ];
+export const FILTER_TYPE_MAP: Map<string, WineType> = new Map(WINETYPE_MAP);
+FILTER_TYPE_MAP.set("etc", {
+  label: "Etc Wine",
+  title: "기타 와인",
+  type: "etc",
+  bg: "bg-black",
+  fill: "fill-black",
+});
 
-export interface TasteItem {
-  taste: keyof Filter;
-  kr: string;
-  level: {
-    low: string;
-    medium: string;
-    high: string;
-  };
-}
-
-export const TASTE: TasteItem[] = [
+export const FILTER_TASTE: FilterTaste[] = [
   {
     taste: "sweetness",
     kr: "당도",
@@ -41,7 +44,7 @@ export const TASTE: TasteItem[] = [
     level: { low: "부드러움", medium: "중간", high: "떫음" },
   },
 ];
-export const TASTEDEGREE = [
+export const FILTER_TASTEDEGREE = [
   "text-(--light-degree)",
   "text-(--medium-degree)",
   "text-(--full-degree)",
