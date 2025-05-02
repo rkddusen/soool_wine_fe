@@ -3,6 +3,7 @@ import qs from "qs";
 import {
   RandomWineResponse,
   WinesResponse,
+  WineResponse,
   EmailVerificationTokenResponse,
   LoginTokenResponse,
 } from "../models/Api";
@@ -54,6 +55,16 @@ export const getWines = async (
     return data;
   } catch (error) {
     console.error("Error api getWines: ", error);
+    throw error;
+  }
+};
+
+export const getWine = async (id: number): Promise<WineResponse> => {
+  try {
+    const { data } = await wineInstance.get<WineResponse>(`/wines/${id}`);
+    return data;
+  } catch (error) {
+    console.error("Error api getWine: ", error);
     throw error;
   }
 };
