@@ -1,4 +1,6 @@
-export const CITY = [
+import { City } from "@/models/Country";
+
+export const CITY: City[] = [
   {
     city: "Bordeaux",
     kname: "보르도",

@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { Country } from "@/models/Wine";
+import { COUNTRY } from "@/data/Country";
 import { CITY } from "@/data/City";
 import SideFlipCard from "../common/SideFlipCard";
 
@@ -131,8 +131,8 @@ interface CountryAreaProps {
 const CountryArea = ({ country }: CountryAreaProps) => {
   return (
     <div className="flex items-center gap-5">
-      <p className="text-32">{Country.get(country)?.emoji}</p>
-      <p className="text-16">{Country.get(country)?.ename}</p>
+      <p className="text-32">{COUNTRY.get(country)?.emoji}</p>
+      <p className="text-16">{COUNTRY.get(country)?.en}</p>
     </div>
   );
 };

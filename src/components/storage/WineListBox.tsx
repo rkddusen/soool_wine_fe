@@ -1,7 +1,8 @@
-import { Country, WineWithWinery } from "../../models/Wine";
+import { WineWithWinery } from "../../models/Wine";
 import { Link } from "react-router-dom";
 import { Filter } from "../../models/Filter";
 import { FILTER_TYPE_MAP } from "@/data/Filter";
+import { COUNTRY } from "@/data/Country";
 
 interface WineListBoxProps {
   wine: WineWithWinery;
@@ -9,7 +10,7 @@ interface WineListBoxProps {
 }
 
 const WineListBox = ({ wine, filterInfo }: WineListBoxProps) => {
-  const countryInfo = Country.get(wine.country);
+  const countryInfo = COUNTRY.get(wine.country);
   const wineType = FILTER_TYPE_MAP.get(wine.type);
 
   return (
@@ -35,7 +36,7 @@ const WineListBox = ({ wine, filterInfo }: WineListBoxProps) => {
                 {countryInfo ? countryInfo.emoji : null}
               </span>
               <span className="ml-5 text-14">
-                {countryInfo?.ename}
+                {countryInfo?.en}
                 {wine.region ? " > " + wine.region : null}
               </span>
             </div>

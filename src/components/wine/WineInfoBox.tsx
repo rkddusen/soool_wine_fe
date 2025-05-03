@@ -1,5 +1,5 @@
-import { Country } from "@/models/Wine";
 import { WINETYPE_MAP } from "@/data/Wine";
+import { COUNTRY } from "@/data/Country";
 
 interface WineImageBoxProps {
   image: string | null;
@@ -38,10 +38,10 @@ export const WineCountryBox = ({ country }: WineCountryBoxProps) => {
   return (
     <div className="flex gap-20 h-80">
       <div className="w-80 md:text-36 text-32  bg-(--lightest-main) flex justify-center items-center rounded-15">
-        <p className="">{Country.get(country)?.emoji}</p>
+        <p className="">{COUNTRY.get(country)?.emoji}</p>
       </div>
       <div className="w-full bg-(--lightest-main) rounded-15 flex justify-center items-center">
-        <p className="md:text-20 text-18">{Country.get(country)?.ename}</p>
+        <p className="md:text-20 text-18">{COUNTRY.get(country)?.en}</p>
       </div>
     </div>
   );
@@ -63,7 +63,7 @@ export const WineCityAndWineryBox = ({
     <div className="bg-(--lightest-main) rounded-15 p-20 leading-[1.5]">
       <p className="font-bold">와이너리</p>
       <p className="flex flex-wrap">
-        <span>{region || Country.get(country)?.ename}</span>
+        <span>{region || COUNTRY.get(country)?.en}</span>
         <span>
           &nbsp;{">"} {city}
         </span>

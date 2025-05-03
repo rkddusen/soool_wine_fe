@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Country, WineWithWinery } from "@/models/Wine";
+import { WineWithWinery } from "@/models/Wine";
 import { Link } from "react-router-dom";
 import { RandomWineResponse } from "@/models/Api";
 import { getRandomWines } from "@/utils/api";
 import { WINETYPE_ARRAY, WINETASTEDEGREE } from "@/data/Wine";
+import { COUNTRY } from "@/data/Country";
 
 const RandomWine = () => {
   const [wine, setWine] = useState<WineWithWinery[]>([]);
@@ -46,7 +47,7 @@ interface RandomWineBoxComponentProps {
 }
 
 const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
-  const countryInfo = wine ? Country.get(wine.country) : null;
+  const countryInfo = wine ? COUNTRY.get(wine.country) : null;
   const [isHover, setIsHover] = useState<boolean>(false);
 
   return (

@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import { Filter } from "@/models/Filter";
 import {
   FILTER_TYPE_ARRAY,
-  COUNTRY,
+  FILTER_COUNTRY,
   FILTER_TASTE,
   FILTER_TASTEDEGREE,
 } from "@/data/Filter";
@@ -128,7 +128,7 @@ const FilterCountry = ({ check, handleCheck }: FilterCountryProps) => {
     <div className="mt-40 text-center">
       <p className="mb-20 font-bold text-25">Country</p>
       <ul className="flex flex-wrap justify-center gap-10 px-10">
-        {COUNTRY.map((v, i) => (
+        {FILTER_COUNTRY.map((v, i) => (
           <li
             key={i}
             className="flex flex-col items-center max-w-full p-10 sm:w-150 w-120"
@@ -140,7 +140,7 @@ const FilterCountry = ({ check, handleCheck }: FilterCountryProps) => {
               {check?.includes(v.country) ? <CheckFilter /> : null}
               <span className="text-32">{v.emoji}</span>
             </div>
-            <span className="mt-5 text-12 sm:text-14">{v.kname}</span>
+            <span className="mt-5 text-12 sm:text-14">{v.kr}</span>
           </li>
         ))}
       </ul>
