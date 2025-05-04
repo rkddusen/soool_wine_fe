@@ -1,5 +1,6 @@
-import { WINETYPE_MAP } from "@/data/Wine";
+import { WINETYPE_LOOKUP } from "@/data/Wine";
 import { COUNTRY } from "@/data/Country";
+import { WineTypeKey } from "@/models/Wine";
 
 interface WineImageBoxProps {
   image: string | null;
@@ -15,18 +16,15 @@ export const WineImageBox = ({ image, ename }: WineImageBoxProps) => {
 };
 
 interface WineTypeBoxProps {
-  type: string;
+  type: WineTypeKey;
 }
 export const WineTypeBox = ({ type }: WineTypeBoxProps) => {
+  const nowWineType = WINETYPE_LOOKUP[type] ?? WINETYPE_LOOKUP["etc"];
   return (
     <div
-      className={`w-full h-120 rounded-15 flex justify-center items-center text-white ${
-        WINETYPE_MAP.get(type)?.bg
-      }`}
+      className={`w-full h-120 rounded-15 flex justify-center items-center text-white ${nowWineType.bg}`}
     >
-      <p className="text-center md:text-28 text-24">
-        {WINETYPE_MAP.get(type)?.label}
-      </p>
+      <p className="text-center md:text-28 text-24">{nowWineType.label}</p>
     </div>
   );
 };

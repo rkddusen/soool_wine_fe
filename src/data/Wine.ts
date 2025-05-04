@@ -1,4 +1,4 @@
-import { WineType } from "@/models/Wine";
+import { WineType, WineTypeKey } from "@/models/Wine";
 
 export const WINETYPE_ARRAY: WineType[] = [
   {
@@ -29,11 +29,20 @@ export const WINETYPE_ARRAY: WineType[] = [
     bg: "bg-(--sparkling-wine)",
     fill: "fill-(--sparkling-wine)",
   },
+  {
+    label: "Etc Wine",
+    title: "기타 와인",
+    type: "etc",
+    bg: "bg-black",
+    fill: "fill-black",
+  },
 ];
 
-export const WINETYPE_MAP: Map<string, WineType> = new Map(
-  WINETYPE_ARRAY.map((item) => [item.type, item])
-);
+export const WINETYPE_LOOKUP: Record<WineTypeKey, WineType> =
+  WINETYPE_ARRAY.reduce((acc, item) => {
+    acc[item.type] = item;
+    return acc;
+  }, {} as Record<WineTypeKey, WineType>);
 
 export const WINETASTEDEGREE = [
   "bg-(--very-light-degree)",

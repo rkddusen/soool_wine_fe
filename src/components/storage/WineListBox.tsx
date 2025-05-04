@@ -1,8 +1,8 @@
 import { WineWithWinery } from "../../models/Wine";
 import { Link } from "react-router-dom";
 import { Filter } from "../../models/Filter";
-import { FILTER_TYPE_MAP } from "@/data/Filter";
 import { COUNTRY } from "@/data/Country";
+import { WINETYPE_LOOKUP } from "@/data/Wine";
 
 interface WineListBoxProps {
   wine: WineWithWinery;
@@ -11,7 +11,7 @@ interface WineListBoxProps {
 
 const WineListBox = ({ wine, filterInfo }: WineListBoxProps) => {
   const countryInfo = COUNTRY.get(wine.country);
-  const wineType = FILTER_TYPE_MAP.get(wine.type);
+  const wineType = WINETYPE_LOOKUP[wine.type] ?? WINETYPE_LOOKUP["etc"];
 
   return (
     <div className="max-w-700 w-full lg:w-[calc((100%/2)-20px)] bg-white rounded-15 h-200 hover:cursor-pointer hover:scale-102 duration-300">
@@ -26,9 +26,9 @@ const WineListBox = ({ wine, filterInfo }: WineListBoxProps) => {
           <div className="w-[70%] break-keep shrink-0">
             <div>
               <span
-                className={`inline-block text-12 text-white py-6 px-8 rounded-5 mb-5 ${wineType?.bg}`}
+                className={`inline-block text-12 text-white py-6 px-8 rounded-5 mb-5 ${wineType.bg}`}
               >
-                {wineType?.title}
+                {wineType.title}
               </span>
             </div>
             <div>

@@ -2,7 +2,7 @@ export interface Wine {
   id: number;
   ename: string;
   kname: string;
-  type: string;
+  type: WineTypeKey;
   image: string | null;
   abv: number | null;
   sweetness: number | null;
@@ -18,10 +18,11 @@ export interface Winery {
   wineryImage: string | null;
 }
 
+export type WineTypeKey = "red" | "white" | "rose" | "sparkling" | "etc";
 export interface WineType {
   label: string;
   title: string;
-  type: string;
+  type: WineTypeKey;
   bg: string;
   fill: string;
 }

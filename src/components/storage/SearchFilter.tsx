@@ -1,11 +1,11 @@
 import { useSearchParams } from "react-router-dom";
 import { Filter } from "@/models/Filter";
 import {
-  FILTER_TYPE_ARRAY,
   FILTER_COUNTRY,
   FILTER_TASTE,
   FILTER_TASTEDEGREE,
 } from "@/data/Filter";
+import { WINETYPE_ARRAY } from "@/data/Wine";
 
 interface SearchFilterProps {
   filterInfo: Filter;
@@ -62,7 +62,7 @@ const FilterWineType = ({ check, handleCheck }: FilterWineTypeProps) => {
     <div className="text-center">
       <p className="mb-20 font-bold text-25">Wine Type</p>
       <ul className="flex flex-wrap justify-center w-full gap-10 px-10">
-        {FILTER_TYPE_ARRAY.map((v, i) => (
+        {WINETYPE_ARRAY.map((v, i) => (
           <li
             onClick={() => handleCheck("type", v.type)}
             key={i}
