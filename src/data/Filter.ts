@@ -4,7 +4,7 @@ import { WINETYPE_ARRAY, WINETYPE_MAP } from "./Wine";
 import { COUNTRY } from "./Country";
 import { Country } from "@/models/Country";
 
-export const FILTER_TYPE_ARRAY = [
+export const FILTER_TYPE_ARRAY: WineType[] = [
   ...WINETYPE_ARRAY,
   {
     label: "Etc Wine",
