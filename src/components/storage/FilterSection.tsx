@@ -16,9 +16,9 @@ const FILTER_LABELS: Record<keyof Filter, (value: any) => React.ReactNode> = {
     `타닌: ${FILTER_TASTE.find((t) => t.taste === "tannin")?.level[value]}`,
   country: (value) => (
     <>
-      <span>{FILTER_COUNTRY.find((c) => c.country === value)?.emoji}</span>
+      <span>{FILTER_COUNTRY.find((c) => c.code === value)?.emoji}</span>
       <span className="ml-5">
-        {FILTER_COUNTRY.find((c) => c.country === value)?.kr}
+        {FILTER_COUNTRY.find((c) => c.code === value)?.kr}
       </span>
     </>
   ),

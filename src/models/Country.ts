@@ -1,4 +1,5 @@
 export interface Country {
+  code: string;
   en: string;
   kr: string;
   emoji: string;

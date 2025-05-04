@@ -134,10 +134,10 @@ const FilterCountry = ({ check, handleCheck }: FilterCountryProps) => {
             className="flex flex-col items-center max-w-full p-10 sm:w-150 w-120"
           >
             <div
-              onClick={() => handleCheck("country", v.country)}
+              onClick={() => handleCheck("country", v.code)}
               className="relative flex items-center justify-center overflow-hidden bg-white border w-70 h-70 rounded-15 border-(--gray-f0) hover:cursor-pointer"
             >
-              {check?.includes(v.country) ? <CheckFilter /> : null}
+              {check?.includes(v.code) ? <CheckFilter /> : null}
               <span className="text-32">{v.emoji}</span>
             </div>
             <span className="mt-5 text-12 sm:text-14">{v.kr}</span>

@@ -2,6 +2,7 @@ import { FilterTaste } from "@/models/Filter";
 import { WineType } from "@/models/Wine";
 import { WINETYPE_ARRAY, WINETYPE_MAP } from "./Wine";
 import { COUNTRY } from "./Country";
+import { Country } from "@/models/Country";
 
 export const FILTER_TYPE_ARRAY = [
   ...WINETYPE_ARRAY,
@@ -51,9 +52,12 @@ export const FILTER_TASTEDEGREE = [
 ];
 
 // [
-//   { country: "FR", ename: "France", kname: "프랑스", emoji: "🇫🇷" },
+//   { code: "FR", en: "France", kr: "프랑스", emoji: "🇫🇷" },
 // ]
-export const FILTER_COUNTRY = Array.from(COUNTRY, ([key, value]) => ({
-  country: key,
-  ...value,
-}));
+export const FILTER_COUNTRY: Country[] = Array.from(
+  COUNTRY,
+  ([key, value]) => ({
+    country: key,
+    ...value,
+  })
+);
