@@ -56,7 +56,6 @@ const WineSection = () => {
           <WineCountryBox country={wineInfo.country} />
           <WineCityAndWineryBox
             region={wineInfo.region}
-            country={wineInfo.country}
             city={wineInfo.city}
             winery={wineInfo.winery}
           />

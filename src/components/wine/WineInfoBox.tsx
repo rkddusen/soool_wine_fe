@@ -40,7 +40,7 @@ export const WineCountryBox = ({ country }: WineCountryBoxProps) => {
         <p className="">{nowCountry.emoji}</p>
       </div>
       <div className="w-full bg-(--lightest-main) rounded-15 flex justify-center items-center">
-        <p className="md:text-20 text-18">{nowCountry.en}</p>
+        <p className="md:text-20 text-18">{nowCountry.kr}</p>
       </div>
     </div>
   );
@@ -48,28 +48,25 @@ export const WineCountryBox = ({ country }: WineCountryBoxProps) => {
 
 interface WineCityAndWineryBoxProps {
   region: string;
-  country: string;
   city: string | null;
   winery: string;
 }
 export const WineCityAndWineryBox = ({
   region,
-  country,
   city,
   winery,
 }: WineCityAndWineryBoxProps) => {
-  const nowCountry = COUNTRY_LOOKUP[country] ?? COUNTRY_LOOKUP["etc"];
+  const wineryList = [region, city, winery].filter((v) => !!v);
   return (
     <div className="bg-(--lightest-main) rounded-15 p-20 leading-[1.5]">
       <p className="font-bold">와이너리</p>
       <p className="flex flex-wrap">
-        <span>{region || nowCountry.en}</span>
-        <span>
-          &nbsp;{">"} {city}
-        </span>
-        <span>
-          &nbsp;{">"} {winery}
-        </span>
+        {wineryList.map((v, i) => (
+          <span key={i}>
+            {i !== 0 && <span>&nbsp;&gt;&nbsp;</span>}
+            {v}
+          </span>
+        ))}
       </p>
     </div>
   );
