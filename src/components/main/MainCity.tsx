@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { COUNTRY } from "@/data/Country";
 import { CITY } from "@/data/City";
 import SideFlipCard from "../common/SideFlipCard";
+import { COUNTRY_LOOKUP } from "@/data/Country";
 
 const MainCity = () => {
   const [detailMap, setDetailMap] = useState<Record<string, boolean>>(
@@ -129,10 +129,11 @@ interface CountryAreaProps {
   country: string;
 }
 const CountryArea = ({ country }: CountryAreaProps) => {
+  const nowCountry = COUNTRY_LOOKUP[country] ?? COUNTRY_LOOKUP["etc"];
   return (
     <div className="flex items-center gap-5">
-      <p className="text-32">{COUNTRY.get(country)?.emoji}</p>
-      <p className="text-16">{COUNTRY.get(country)?.en}</p>
+      <p className="text-32">{nowCountry.emoji}</p>
+      <p className="text-16">{nowCountry.en}</p>
     </div>
   );
 };

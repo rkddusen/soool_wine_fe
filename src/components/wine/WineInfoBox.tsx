@@ -1,5 +1,6 @@
-import { WINETYPE_MAP } from "@/data/Wine";
-import { COUNTRY } from "@/data/Country";
+import { WINETYPE_LOOKUP } from "@/data/Wine";
+import { COUNTRY_LOOKUP } from "@/data/Country";
+import { WineTypeKey } from "@/models/Wine";
 
 interface WineImageBoxProps {
   image: string | null;
@@ -15,18 +16,15 @@ export const WineImageBox = ({ image, ename }: WineImageBoxProps) => {
 };
 
 interface WineTypeBoxProps {
-  type: string;
+  type: WineTypeKey;
 }
 export const WineTypeBox = ({ type }: WineTypeBoxProps) => {
+  const nowWineType = WINETYPE_LOOKUP[type] ?? WINETYPE_LOOKUP["etc"];
   return (
     <div
-      className={`w-full h-120 rounded-15 flex justify-center items-center text-white ${
-        WINETYPE_MAP.get(type)?.bg
-      }`}
+      className={`w-full h-120 rounded-15 flex justify-center items-center text-white ${nowWineType.bg}`}
     >
-      <p className="text-center md:text-28 text-24">
-        {WINETYPE_MAP.get(type)?.label}
-      </p>
+      <p className="text-center md:text-28 text-24">{nowWineType.label}</p>
     </div>
   );
 };
@@ -35,13 +33,14 @@ interface WineCountryBoxProps {
   country: string;
 }
 export const WineCountryBox = ({ country }: WineCountryBoxProps) => {
+  const nowCountry = COUNTRY_LOOKUP[country] ?? COUNTRY_LOOKUP["etc"];
   return (
     <div className="flex gap-20 h-80">
       <div className="w-80 md:text-36 text-32  bg-(--lightest-main) flex justify-center items-center rounded-15">
-        <p className="">{COUNTRY.get(country)?.emoji}</p>
+        <p className="">{nowCountry.emoji}</p>
       </div>
       <div className="w-full bg-(--lightest-main) rounded-15 flex justify-center items-center">
-        <p className="md:text-20 text-18">{COUNTRY.get(country)?.en}</p>
+        <p className="md:text-20 text-18">{nowCountry.kr}</p>
       </div>
     </div>
   );
@@ -49,27 +48,25 @@ export const WineCountryBox = ({ country }: WineCountryBoxProps) => {
 
 interface WineCityAndWineryBoxProps {
   region: string;
-  country: string;
   city: string | null;
   winery: string;
 }
 export const WineCityAndWineryBox = ({
   region,
-  country,
   city,
   winery,
 }: WineCityAndWineryBoxProps) => {
+  const wineryList = [region, city, winery].filter((v) => !!v);
   return (
     <div className="bg-(--lightest-main) rounded-15 p-20 leading-[1.5]">
       <p className="font-bold">와이너리</p>
       <p className="flex flex-wrap">
-        <span>{region || COUNTRY.get(country)?.en}</span>
-        <span>
-          &nbsp;{">"} {city}
-        </span>
-        <span>
-          &nbsp;{">"} {winery}
-        </span>
+        {wineryList.map((v, i) => (
+          <span key={i}>
+            {i !== 0 && <span>&nbsp;&gt;&nbsp;</span>}
+            {v}
+          </span>
+        ))}
       </p>
     </div>
   );

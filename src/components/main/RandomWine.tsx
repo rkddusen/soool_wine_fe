@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { RandomWineResponse } from "@/models/Api";
 import { getRandomWines } from "@/utils/api";
 import { WINETYPE_ARRAY, WINETASTEDEGREE } from "@/data/Wine";
-import { COUNTRY } from "@/data/Country";
+import { COUNTRY_LOOKUP } from "@/data/Country";
 
 const RandomWine = () => {
   const [wine, setWine] = useState<WineWithWinery[]>([]);
@@ -14,6 +14,7 @@ const RandomWine = () => {
   const getWineData = async () => {
     try {
       const { content }: RandomWineResponse = await getRandomWines();
+      console.log(content);
       setWine(content);
     } catch (error) {
       setError("Error getWineData");
@@ -47,7 +48,8 @@ interface RandomWineBoxComponentProps {
 }
 
 const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
-  const countryInfo = wine ? COUNTRY.get(wine.country) : null;
+  const countryInfo =
+    wine && (COUNTRY_LOOKUP[wine.country] ?? COUNTRY_LOOKUP["etc"]);
   const [isHover, setIsHover] = useState<boolean>(false);
 
   return (

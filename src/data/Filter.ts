@@ -1,27 +1,4 @@
 import { FilterTaste } from "@/models/Filter";
-import { WineType } from "@/models/Wine";
-import { WINETYPE_ARRAY, WINETYPE_MAP } from "./Wine";
-import { COUNTRY } from "./Country";
-import { Country } from "@/models/Country";
-
-export const FILTER_TYPE_ARRAY: WineType[] = [
-  ...WINETYPE_ARRAY,
-  {
-    label: "Etc Wine",
-    title: "기타 와인",
-    type: "etc",
-    bg: "bg-black",
-    fill: "fill-black",
-  },
-];
-export const FILTER_TYPE_MAP: Map<string, WineType> = new Map(WINETYPE_MAP);
-FILTER_TYPE_MAP.set("etc", {
-  label: "Etc Wine",
-  title: "기타 와인",
-  type: "etc",
-  bg: "bg-black",
-  fill: "fill-black",
-});
 
 export const FILTER_TASTE: FilterTaste[] = [
   {
@@ -50,14 +27,3 @@ export const FILTER_TASTEDEGREE = [
   "text-(--medium-degree)",
   "text-(--full-degree)",
 ];
-
-// [
-//   { code: "FR", en: "France", kr: "프랑스", emoji: "🇫🇷" },
-// ]
-export const FILTER_COUNTRY: Country[] = Array.from(
-  COUNTRY,
-  ([key, value]) => ({
-    country: key,
-    ...value,
-  })
-);

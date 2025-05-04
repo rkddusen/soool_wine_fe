@@ -4,18 +4,21 @@ import { WINETYPE_ARRAY } from "@/data/Wine";
 const WineType = () => {
   return (
     <section className="flex flex-row items-start justify-center w-full px-20 mx-auto my-30 md:px-40 max-w-1280">
-      {WINETYPE_ARRAY.map((v) => (
-        <div
-          key={v.type}
-          className="w-full overflow-hidden text-center px-15 sm:px-20 sm:max-w-150 max-w-100"
-        >
-          <div className="mx-auto group hover:cursor-pointer">
-            <Link to={`/storage?type=${v.type}`}>
-              <WineTypeBtn label={v.label} fill={v.fill} />
-            </Link>
-          </div>
-        </div>
-      ))}
+      {WINETYPE_ARRAY.map(
+        (v) =>
+          v.type !== "etc" && (
+            <div
+              key={v.type}
+              className="w-full overflow-hidden text-center px-15 sm:px-20 sm:max-w-150 max-w-100"
+            >
+              <div className="mx-auto group hover:cursor-pointer">
+                <Link to={`/storage?type=${v.type}`}>
+                  <WineTypeBtn label={v.label} fill={v.fill} />
+                </Link>
+              </div>
+            </div>
+          )
+      )}
     </section>
   );
 };
