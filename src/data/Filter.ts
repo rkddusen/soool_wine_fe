@@ -1,6 +1,4 @@
 import { FilterTaste } from "@/models/Filter";
-import { COUNTRY } from "./Country";
-import { Country } from "@/models/Country";
 
 export const FILTER_TASTE: FilterTaste[] = [
   {
@@ -29,14 +27,3 @@ export const FILTER_TASTEDEGREE = [
   "text-(--medium-degree)",
   "text-(--full-degree)",
 ];
-
-// [
-//   { code: "FR", en: "France", kr: "프랑스", emoji: "🇫🇷" },
-// ]
-export const FILTER_COUNTRY: Country[] = Array.from(
-  COUNTRY,
-  ([key, value]) => ({
-    country: key,
-    ...value,
-  })
-);

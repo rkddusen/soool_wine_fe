@@ -1,5 +1,5 @@
 import { WINETYPE_LOOKUP } from "@/data/Wine";
-import { COUNTRY } from "@/data/Country";
+import { COUNTRY_LOOKUP } from "@/data/Country";
 import { WineTypeKey } from "@/models/Wine";
 
 interface WineImageBoxProps {
@@ -33,13 +33,14 @@ interface WineCountryBoxProps {
   country: string;
 }
 export const WineCountryBox = ({ country }: WineCountryBoxProps) => {
+  const nowCountry = COUNTRY_LOOKUP[country] ?? COUNTRY_LOOKUP["etc"];
   return (
     <div className="flex gap-20 h-80">
       <div className="w-80 md:text-36 text-32  bg-(--lightest-main) flex justify-center items-center rounded-15">
-        <p className="">{COUNTRY.get(country)?.emoji}</p>
+        <p className="">{nowCountry.emoji}</p>
       </div>
       <div className="w-full bg-(--lightest-main) rounded-15 flex justify-center items-center">
-        <p className="md:text-20 text-18">{COUNTRY.get(country)?.en}</p>
+        <p className="md:text-20 text-18">{nowCountry.en}</p>
       </div>
     </div>
   );
@@ -57,11 +58,12 @@ export const WineCityAndWineryBox = ({
   city,
   winery,
 }: WineCityAndWineryBoxProps) => {
+  const nowCountry = COUNTRY_LOOKUP[country] ?? COUNTRY_LOOKUP["etc"];
   return (
     <div className="bg-(--lightest-main) rounded-15 p-20 leading-[1.5]">
       <p className="font-bold">와이너리</p>
       <p className="flex flex-wrap">
-        <span>{region || COUNTRY.get(country)?.en}</span>
+        <span>{region || nowCountry.en}</span>
         <span>
           &nbsp;{">"} {city}
         </span>

@@ -1,9 +1,10 @@
 import { ReactNode, useEffect, useState } from "react";
-import { FILTER_COUNTRY, FILTER_TASTE } from "@/data/Filter";
+import { FILTER_TASTE } from "@/data/Filter";
 import { Filter, FilterTaste } from "@/models/Filter";
 import { useSearchParams } from "react-router-dom";
 import SearchFilter from "./SearchFilter";
 import { WINETYPE_ARRAY } from "@/data/Wine";
+import { COUNTRY_ARRAY } from "@/data/Country";
 
 const FILTER_LABELS: Record<keyof Filter, (value: any) => React.ReactNode> = {
   type: (value) => `${WINETYPE_ARRAY.find((w) => w.type === value)?.title}`,
@@ -17,9 +18,9 @@ const FILTER_LABELS: Record<keyof Filter, (value: any) => React.ReactNode> = {
     `타닌: ${FILTER_TASTE.find((t) => t.taste === "tannin")?.level[value]}`,
   country: (value) => (
     <>
-      <span>{FILTER_COUNTRY.find((c) => c.code === value)?.emoji}</span>
+      <span>{COUNTRY_ARRAY.find((c) => c.code === value)?.emoji}</span>
       <span className="ml-5">
-        {FILTER_COUNTRY.find((c) => c.code === value)?.kr}
+        {COUNTRY_ARRAY.find((c) => c.code === value)?.kr}
       </span>
     </>
   ),
