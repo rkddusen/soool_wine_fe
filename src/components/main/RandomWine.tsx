@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { WineWithWinery } from "@/models/Wine";
+import { RandomWineType, WineWithWinery } from "@/models/Wine";
 import { Link } from "react-router-dom";
 import { RandomWineResponse } from "@/models/Api";
 import { getRandomWines } from "@/utils/api";
@@ -7,14 +7,13 @@ import { WINETYPE_ARRAY, WINETASTEDEGREE } from "@/data/Wine";
 import { COUNTRY_LOOKUP } from "@/data/Country";
 
 const RandomWine = () => {
-  const [wine, setWine] = useState<WineWithWinery[]>([]);
+  const [wine, setWine] = useState<RandomWineType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const getWineData = async () => {
     try {
       const { content }: RandomWineResponse = await getRandomWines();
-      console.log(content);
       setWine(content);
     } catch (error) {
       setError("Error getWineData");
@@ -34,9 +33,13 @@ const RandomWine = () => {
     <section className="w-full px-20 mx-auto mt-70 md:px-40 max-w-1280">
       <p className="text-20 md:text-24">오늘의 와인</p>
       <div className="flex flex-col gap-20 mt-20 md:grid md:grid-cols-2">
-        {WINETYPE_ARRAY.map((_, i) => (
-          <RandomWineBox id={i} wine={wine[i]} />
-        ))}
+        {wine &&
+          WINETYPE_ARRAY.map(
+            (v, i) =>
+              v.type !== "etc" && (
+                <RandomWineBox key={v.type} id={i} wine={wine[v.type]} />
+              )
+          )}
       </div>
     </section>
   );
@@ -104,7 +107,7 @@ const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
                 </div>
               </>
             ) : (
-              <p className="text-center">
+              <p className="w-full text-center">
                 와인을 불러오는 데에 문제가 발생했습니다.
               </p>
             )}
