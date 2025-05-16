@@ -19,6 +19,8 @@ export interface Winery {
 }
 
 export type WineTypeKey = "red" | "white" | "rose" | "sparkling" | "etc";
+export type WineTypeKeyMain = Exclude<WineTypeKey, "etc">;
+
 export interface WineType {
   label: string;
   title: string;
@@ -26,6 +28,8 @@ export interface WineType {
   bg: string;
   fill: string;
 }
+
+export type RandomWineType = Record<WineTypeKeyMain, WineWithWinery>;
 
 export interface WineryShortDescription extends Winery {
   shortDescription: string;
