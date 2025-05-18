@@ -5,26 +5,38 @@ import { RandomWineResponse } from "@/models/Api";
 import { getRandomWines } from "@/utils/api";
 import { WINETYPE_ARRAY, WINETASTEDEGREE } from "@/data/Wine";
 import { COUNTRY_LOOKUP } from "@/data/Country";
+import { AxiosError } from "axios";
+import { useMutation } from "@tanstack/react-query";
 
 const RandomWine = () => {
   const [wine, setWine] = useState<RandomWineType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const getWineData = async () => {
-    try {
-      const { content }: RandomWineResponse = await getRandomWines();
-      setWine(content);
-    } catch (error) {
-      setError("Error getWineData");
-      console.log("Error getWineData: ", error);
-    } finally {
-      setLoading(false);
-    }
+  const callGetRandomWines = async (): Promise<RandomWineResponse> => {
+    const data: RandomWineResponse = await getRandomWines();
+    return data;
   };
 
+  const mutation = useMutation<RandomWineResponse, AxiosError, void>({
+    mutationFn: callGetRandomWines,
+    onMutate: () => {
+      setLoading(true);
+    },
+    onSuccess: (data) => {
+      setWine(data.content);
+    },
+    onError: (error) => {
+      setError("Error getWineData");
+      console.log("Error getRandomWines:", error);
+    },
+    onSettled: () => {
+      setLoading(false);
+    },
+  });
+
   useEffect(() => {
-    getWineData();
+    mutation.mutate();
   }, []);
 
   if (loading) return <div>Loading</div>;
