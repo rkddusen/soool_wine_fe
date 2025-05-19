@@ -18,6 +18,7 @@ export const getFilterFromQueryParams = (
   };
 };
 
+// validateFilter에서 변경된 filter를 다시 searchParams에 세팅
 export const setQueryParamsFromFilter = (
   searchParams: URLSearchParams,
   filter: Filter
