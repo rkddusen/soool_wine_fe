@@ -13,6 +13,8 @@ import { validateFilter } from "@/utils/validateFilter";
 import FilterSection from "./FilterSection";
 import WineListBox from "./WineListBox";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import Loading2 from "/src/assets/loading2.svg?react";
+import Loading3 from "/src/assets/loading3.svg?react";
 
 const initFilter: Filter = {
   type: null,
@@ -42,7 +44,7 @@ const StorageSection = () => {
     return { content, totalElements, totalPages };
   };
 
-  const { fetchNextPage, hasNextPage, isLoading, isError, data } =
+  const { fetchNextPage, hasNextPage, isLoading, isFetching, isError, data } =
     useInfiniteQuery({
       queryKey: ["wines", search, JSON.stringify(filterInfo)],
       queryFn: ({ pageParam }) =>
@@ -109,22 +111,29 @@ const StorageSection = () => {
                   </div>
                 )}
               </div>
-              {hasNextPage ? (
+              {hasNextPage && (
                 <div className="text-center mt-50">
-                  <button
-                    onClick={() => fetchNextPage()}
-                    disabled={isLoading}
-                    className="inline-block border rounded-full border-(--gray-78) hover:cursor-pointer"
-                  >
-                    <div className="py-10 px-30 text-12">더보기</div>
-                  </button>
+                  {!isFetching ? (
+                    <button
+                      onClick={() => fetchNextPage()}
+                      disabled={isLoading}
+                      className="inline-block border rounded-full border-(--gray-78) hover:cursor-pointer"
+                    >
+                      <div className="py-10 px-30 text-12">더보기</div>
+                    </button>
+                  ) : (
+                    <div className="flex flex-col items-center mx-auto">
+                      <Loading3></Loading3>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <p>데이터를 가져오는 중입니다.</p>
               )}
             </>
           ) : (
-            <>Loading</>
+            <div className="flex flex-col items-center gap-10 mx-auto py-100">
+              <Loading2></Loading2>
+              <p className="text-(--gray-78) text-18">와인 가져오는 중...</p>
+            </div>
           )}
         </section>
       ) : (
