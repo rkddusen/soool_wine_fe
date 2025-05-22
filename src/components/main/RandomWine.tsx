@@ -73,16 +73,16 @@ const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <div className="flex flex-col w-full overflow-hidden bg-white rounded-15 h-320">
+      <div className="flex flex-col w-full p-10 overflow-hidden bg-white rounded-15 h-320">
         <div
-          className={`shrink-0 ml-10 mt-10 w-[45%] max-w-200 h-50 flex flex-row justify-center items-center rounded-15 ${WINETYPE_ARRAY[id].bg} text-white`}
+          className={`shrink-0 w-[45%] max-w-200 h-50 flex flex-row justify-center items-center rounded-15 ${WINETYPE_ARRAY[id].bg} text-white`}
         >
-          <span className="text-center text-14 md:text-16">
+          <span className="text-center text-14 sm:text-16">
             {WINETYPE_ARRAY[id].label}
           </span>
         </div>
-        <div className="w-full h-full p-20">
-          <div className="relative flex items-center w-full h-full">
+        <div className="w-full h-full p-10">
+          <div className="relative h-full">
             {wine ? (
               <>
                 <div className="w-[70%] h-full break-keep z-10">
@@ -96,13 +96,13 @@ const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
                   </div>
                   <div className="mt-5">
                     <p className="break-words text-14 sm:text-16 line-clamp-2 leading-[120%]">
-                      {wine.kname}
-                    </p>
-                    <p className="mt-5 text-12 sm:text-14 text-(--gray-78) line-clamp-2 leading-[120%]">
                       {wine.ename}
                     </p>
+                    <p className="mt-5 text-12 sm:text-14 text-(--gray-78) line-clamp-2 leading-[120%]">
+                      {wine.kname}
+                    </p>
                   </div>
-                  <div className="mt-20">
+                  <div className="flex flex-col gap-10 mt-20">
                     <WineTaste taste="당도" degree={wine.sweetness} />
                     <WineTaste taste="산도" degree={wine.acidity} />
                     <WineTaste taste="바디" degree={wine.body} />
@@ -136,19 +136,19 @@ interface WineTasteComponentProps {
 }
 const WineTaste = ({ taste, degree }: WineTasteComponentProps) => {
   return (
-    <div className="flex flex-row items-center mt-10">
-      <span className="shrink-0 text-14 sm:text-16">{taste}</span>
+    <div className="flex items-center gap-10">
+      <span className="text-14 sm:text-16">{taste}</span>
       {degree ? (
-        <>
+        <div className="flex gap-10">
           {Array.from({ length: degree }).map((_, i) => (
             <div
               key={i}
-              className={`shrink-0 ml-10 rounded-full w-12 h-12 sm:w-14 sm:h-14 ${WINETASTEDEGREE[i]}`}
+              className={`shrink-0 rounded-full w-12 h-12 sm:w-14 sm:h-14 ${WINETASTEDEGREE[i]}`}
             ></div>
           ))}
-        </>
+        </div>
       ) : (
-        <p className="ml-10 text-12 sm:text-14">정보 없음</p>
+        <p className="text-12 sm:text-14">정보 없음</p>
       )}
     </div>
   );
