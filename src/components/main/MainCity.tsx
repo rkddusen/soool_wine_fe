@@ -144,10 +144,8 @@ interface BtnAreaProps {
 const BtnArea = ({ handleOpenDetail }: BtnAreaProps) => {
   return (
     <div className="flex h-40 gap-10">
-      <div className="w-full h-full rounded-20 flex flex-row justify-center items-center bg-[#D3E6BC] hover:cursor-pointer hover:bg-[#C1D4AA]">
-        <span className="mr-5 text-nowrap text-12 sm:text-14">
-          이 지역 와인 보기
-        </span>
+      <div className="w-full h-full rounded-20 flex gap-5 justify-center items-center bg-[#D3E6BC] hover:cursor-pointer hover:bg-[#C1D4AA]">
+        <span className="text-nowrap text-14">이 지역 와인 보기</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-20 h-20"

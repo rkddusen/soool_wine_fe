@@ -23,10 +23,10 @@ const WineListBox = ({ wine, filterInfo }: WineListBoxProps) => {
               className={`object-cover h-full`}
             />
           </div>
-          <div className="w-[70%] break-keep shrink-0">
+          <div className="w-[70%] break-keep shrink-0 px-10 flex flex-col gap-5">
             <div>
               <span
-                className={`inline-block text-12 text-white py-6 px-8 rounded-5 mb-5 ${nowWineType.bg}`}
+                className={`inline-block text-12 text-white py-6 px-8 rounded-5 ${nowWineType.bg}`}
               >
                 {nowWineType.title}
               </span>
@@ -38,12 +38,10 @@ const WineListBox = ({ wine, filterInfo }: WineListBoxProps) => {
                 {wine.region ? " > " + wine.region : null}
               </span>
             </div>
-            <div className="mt-5">
-              <p className="truncate-2 text-16 leading-[120%]">{wine.ename}</p>
-              <p className="mt-5 truncate-2 text-14 text-(--gray-78) leading-[120%]">
-                {wine.kname}
-              </p>
-            </div>
+            <p className="truncate-2 text-16 leading-[120%]">{wine.ename}</p>
+            <p className="truncate-2 text-14 text-(--gray-78) leading-[120%]">
+              {wine.kname}
+            </p>
           </div>
         </div>
       </Link>
