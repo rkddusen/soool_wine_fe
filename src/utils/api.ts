@@ -147,3 +147,22 @@ export const postLogin = async (
     throw error;
   }
 };
+
+export const getWineWishlist = async (wineId: number): Promise<boolean> => {
+  try {
+    const { data } = await userInstance.get<boolean>(`/wishlists/${wineId}`);
+    return data;
+  } catch (error) {
+    console.error("Error api getWishlist: ", error);
+    return false;
+  }
+};
+
+export const postWineWishlist = async (wineId: number): Promise<void> => {
+  try {
+    await userInstance.post<void>(`/wishlists/${wineId}`);
+  } catch (error) {
+    console.error("Error api postWishlist: ", error);
+    throw error;
+  }
+};
