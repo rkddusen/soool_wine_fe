@@ -10,9 +10,15 @@ import {
 
 interface WineSectionProps {
   wineInfo: WineWithWinery;
+  wishlist: boolean;
+  refetchWineWishlist: () => void;
 }
 
-const WineSection = ({ wineInfo }: WineSectionProps) => {
+const WineSection = ({
+  wineInfo,
+  wishlist,
+  refetchWineWishlist,
+}: WineSectionProps) => {
   return (
     <div className="flex flex-col justify-center gap-20 px-20 mx-auto mt-20 md:flex-row md:px-40 md:max-w-1000 max-w-500">
       <WineImageBox image={wineInfo.image} ename={wineInfo.ename} />
@@ -29,7 +35,11 @@ const WineSection = ({ wineInfo }: WineSectionProps) => {
           kname={wineInfo.kname}
           abv={wineInfo.abv}
         />
-        <WineInteractionBox wineId={wineInfo.id} />
+        <WineInteractionBox
+          wineId={wineInfo.id}
+          wishlist={wishlist}
+          refetchWineWishlist={refetchWineWishlist}
+        />
       </div>
     </div>
   );

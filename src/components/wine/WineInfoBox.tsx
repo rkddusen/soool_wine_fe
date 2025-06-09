@@ -1,7 +1,10 @@
 import { WINETYPE_LOOKUP } from "@/data/Wine";
 import { COUNTRY_LOOKUP } from "@/data/Country";
 import { WineTypeKey } from "@/models/Wine";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { postWineWishlist } from "@/utils/api";
+import { useMutation } from "@tanstack/react-query";
+import { debounce } from "lodash";
 
 interface WineImageBoxProps {
   image: string | null;
@@ -90,30 +93,66 @@ export const WineNameBox = ({ ename, kname, abv }: WineNameBoxProps) => {
 
 interface WineWishlistBoxProps {
   wineId: number;
+  wishlist: boolean;
+  refetchWineWishlist: () => void;
 }
-export const WineInteractionBox = ({ wineId }: WineWishlistBoxProps) => {
+export const WineInteractionBox = ({
+  wineId,
+  wishlist,
+  refetchWineWishlist,
+}: WineWishlistBoxProps) => {
   return (
     <div className="flex gap-20 h-60">
-      <WineWishlistBox wineId={wineId} />
+      <WineWishlistBox
+        wineId={wineId}
+        wishlist={wishlist}
+        refetchWineWishlist={refetchWineWishlist}
+      />
       <WineShareBox />
     </div>
   );
 };
-const WineWishlistBox = ({ wineId }: WineWishlistBoxProps) => {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+const WineWishlistBox = ({
+  wineId,
+  wishlist: initailWishlist,
+  refetchWineWishlist,
+}: WineWishlistBoxProps) => {
+  const [wishlist, setWishlist] = useState<boolean>(initailWishlist);
+  const callPostWineWishlist = async (): Promise<void> => {
+    await postWineWishlist(wineId);
+  };
 
-  const handleClickWishlist = () => {};
+  // 위시리스트 post
+  const mutation = useMutation<void, Error, boolean>({
+    mutationFn: callPostWineWishlist,
+    onError: (error: Error) => {
+      console.log("Error postWishlist: ", error);
+      refetchWineWishlist();
+    },
+  });
+
+  const debounceMutateRef = useRef(
+    debounce((nextState: boolean) => {
+      mutation.mutate(nextState);
+    }, 500)
+  );
+
+  const handleClickWishlist = () => {
+    const nextState = !wishlist;
+    setWishlist(nextState);
+    debounceMutateRef.current(nextState);
+  };
 
   return (
     <div
       className={`flex items-center justify-center w-full gap-10 px-10 rounded-15 hover:cursor-pointer ${
-        isWishlisted ? "bg-(--main) text-white" : "bg-white"
+        wishlist ? "bg-(--main) text-white" : "bg-white"
       }`}
       onClick={handleClickWishlist}
     >
       <svg
         className={`w-18 h-18 shrink-0 ${
-          isWishlisted ? "stroke-white" : "stroke-(--main)"
+          wishlist ? "stroke-white" : "stroke-(--main)"
         }`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
