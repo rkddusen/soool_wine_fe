@@ -120,7 +120,6 @@ const WineWishlistBox = ({
   refetchWineWishlist,
 }: WineWishlistBoxProps) => {
   const [wishlist, setWishlist] = useState<boolean>(initialWishlist);
-  const prevWishlistRef = useRef<boolean>(initialWishlist);
   const callPostWineWishlist = async (): Promise<void> => {
     await postWineWishlist(wineId);
   };
@@ -131,12 +130,7 @@ const WineWishlistBox = ({
     onError: async (error: Error) => {
       // 위시리스트 post 오류 시 위시리스트 refetch
       console.log("Error postWishlist: ", error);
-      if (!prevWishlistRef.current)
-        toast.error("위시리스트에 담지 못했어요. 잠시 후 다시 시도해주세요.");
-      else
-        toast.error(
-          "위시리스트에서 제거하지 못했어요. 잠시 후 다시 시도해주세요."
-        );
+      toast.error("서버와 문제가 생겼어요. 잠시 후 다시 시도해주세요.");
 
       try {
         const result = await refetchWineWishlist();
@@ -158,7 +152,6 @@ const WineWishlistBox = ({
 
   const handleClickWishlist = () => {
     const nextState = !wishlist;
-    prevWishlistRef.current = wishlist;
     setWishlist(nextState);
     debounceMutateRef.current(nextState);
   };
@@ -166,18 +159,18 @@ const WineWishlistBox = ({
   return (
     <div
       className={`flex items-center justify-center w-full gap-10 px-10 rounded-15 hover:cursor-pointer ${
-        wishlist ? "bg-(--main) text-white" : "bg-white"
+        wishlist ? "bg-(--light-main) text-black" : "bg-white"
       }`}
       onClick={handleClickWishlist}
     >
       <svg
         className={`w-18 h-18 shrink-0 ${
-          wishlist ? "stroke-white" : "stroke-(--main)"
+          wishlist
+            ? "stroke-(--heart-fill) fill-(--heart-fill)"
+            : "stroke-black fill-none"
         }`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        fill="none"
-        stroke="#000000"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
