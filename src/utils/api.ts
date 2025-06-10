@@ -154,7 +154,7 @@ export const getWineWishlist = async (wineId: number): Promise<boolean> => {
     return data;
   } catch (error) {
     console.error("Error api getWishlist: ", error);
-    return false;
+    throw error;
   }
 };
 
