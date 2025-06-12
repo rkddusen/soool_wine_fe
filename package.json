@@ -19,6 +19,7 @@
     "embla-carousel": "^8.5.1",
     "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-react": "^8.5.1",
+    "framer-motion": "^12.17.0",
     "lodash": "^4.17.21",
     "pretendard": "^1.3.9",
     "qs": "^6.14.0",
@@ -26,6 +27,7 @@
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.5.2",
     "react-router-dom": "^7.1.1",
+    "react-use-measure": "^2.1.7",
     "tailwind-scrollbar-hide": "^2.0.0",
     "tailwindcss": "^4.1.4"
   },
