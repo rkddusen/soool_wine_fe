@@ -80,6 +80,7 @@ const WinePage = () => {
         memo={wineMemo ?? null}
         isWineMemoError={isWineMemoError}
         refetchWineMemo={refetchWineMemo}
+        isWineMemoLoading={isWineMemoLoading}
       />
     </>
   );
