@@ -1,6 +1,7 @@
+import WineMemoSection from "@/components/wine/WineMemoSection";
 import WineSection from "@/components/wine/WineSection";
 import { WineResponse } from "@/models/Api";
-import { getWine, getWineWishlist } from "@/utils/api";
+import { getWine, getWineMemo, getWineWishlist } from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -16,6 +17,10 @@ const WinePage = () => {
   };
   const callGetWineWishlist = async (id: number): Promise<boolean> => {
     const response: boolean = await getWineWishlist(id);
+    return response;
+  };
+  const callGetWineMemo = async (id: number): Promise<string[]> => {
+    const response: string[] = await getWineMemo(id);
     return response;
   };
 
@@ -41,11 +46,24 @@ const WinePage = () => {
     enabled: !isNaN(wineId),
   });
 
+  // 와인 메모 get
+  const {
+    data: wineMemo,
+    isError: isWineMemoError,
+    isLoading: isWineMemoLoading,
+    refetch: refetchWineMemo,
+  } = useQuery<string[]>({
+    queryKey: ["wine-memo", wineId],
+    queryFn: () => callGetWineMemo(wineId),
+    enabled: !isNaN(wineId),
+  });
+
   useEffect(() => {
     if (isInitialLoading) {
-      setIsInitialLoading(false);
+      if (!isWineInfoLoading && !isWishlistLoading && !isWineMemoLoading)
+        setIsInitialLoading(false);
     }
-  }, [isWineInfoLoading, isWishlistLoading]);
+  }, [isWineInfoLoading, isWishlistLoading, isWineMemoLoading]);
 
   if (isInitialLoading) return <div>로딩 중입니다.</div>;
   if (isWineInfoError) return <div>데이터 요청에 실패했습니다.</div>;
@@ -56,6 +74,12 @@ const WinePage = () => {
         wineInfo={wineInfo.content}
         wishlist={wishlist ?? false}
         refetchWineWishlist={refetchWineWishlist}
+      />
+      <WineMemoSection
+        wineId={wineInfo.content.id}
+        memo={wineMemo ?? null}
+        isWineMemoError={isWineMemoError}
+        refetchWineMemo={refetchWineMemo}
       />
     </>
   );

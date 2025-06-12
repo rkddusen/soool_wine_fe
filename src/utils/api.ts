@@ -166,3 +166,13 @@ export const postWineWishlist = async (wineId: number): Promise<void> => {
     throw error;
   }
 };
+
+export const getWineMemo = async (wineId: number): Promise<string[]> => {
+  try {
+    const { data } = await userInstance.get<string[]>(`/memos/${wineId}`);
+    return data;
+  } catch (error) {
+    console.error("Error api getWineMemo: ", error);
+    throw error;
+  }
+};

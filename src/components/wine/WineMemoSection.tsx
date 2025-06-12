@@ -5,8 +5,15 @@ import { motion } from "framer-motion";
 interface WineMemoSectionProps {
   wineId: number;
   memo: string[] | null;
+  isWineMemoError: boolean;
+  refetchWineMemo: () => void;
 }
-const WineMemoSection = ({ wineId, memo }: WineMemoSectionProps) => {
+const WineMemoSection = ({
+  wineId,
+  memo,
+  isWineMemoError,
+  refetchWineMemo,
+}: WineMemoSectionProps) => {
   const [isMemoOpen, setIsMemoOpen] = useState<boolean>(false);
   const [ref, { height }] = useMeasure();
 
@@ -69,7 +76,11 @@ const WineMemoSection = ({ wineId, memo }: WineMemoSectionProps) => {
                   ))}
                 </ul>
               ) : (
-                <p className="py-50">해당 와인에 작성된 메모가 없습니다!</p>
+                <p className="py-50">
+                  {isWineMemoError
+                    ? "오류가 발생했습니다. 잠시 후 다시 시도해 주세요."
+                    : "해당 와인에 작성된 메모가 없습니다!"}
+                </p>
               )}
             </div>
             <div className="mt-10 px-8 py-8 border border-(--gray-bb) rounded-5">
