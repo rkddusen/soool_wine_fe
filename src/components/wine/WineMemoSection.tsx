@@ -2,6 +2,9 @@ import { useState } from "react";
 import useMeasure from "react-use-measure";
 import { motion } from "framer-motion";
 import LoadingBlack from "@/assets/loading-black.svg?react";
+import { useMutation } from "@tanstack/react-query";
+import { postWineMemo } from "@/utils/api";
+import toast from "react-hot-toast";
 
 interface WineMemoSectionProps {
   wineId: number;
@@ -19,6 +22,30 @@ const WineMemoSection = ({
 }: WineMemoSectionProps) => {
   const [isMemoOpen, setIsMemoOpen] = useState<boolean>(false);
   const [ref, { height }] = useMeasure();
+  const [memoInput, setMemoInput] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const callPostWineMemo = async (memo: string): Promise<void> => {
+    await postWineMemo(wineId, memo);
+  };
+
+  const mutation = useMutation<void, Error, string>({
+    mutationFn: callPostWineMemo,
+    onMutate: () => setLoading(true),
+    onSuccess: () => setMemoInput(""),
+    onError: (error) => {
+      toast.error("서버와 문제가 생겼어요. 잠시 후 다시 시도해주세요.");
+      console.log("Error postWineMemo:", error);
+    },
+    onSettled: () => {
+      refetchWineMemo();
+      setLoading(false);
+    },
+  });
+
+  const handleSummitWineMemo = () => {
+    mutation.mutate(memoInput);
+  };
 
   return (
     <div className="px-20 mx-auto mt-20 md:px-40 md:max-w-1000 max-w-500">
@@ -49,7 +76,7 @@ const WineMemoSection = ({
         <div ref={ref} className="py-10">
           <div className="px-20 py-20 bg-white rounded-15">
             <div className="flex items-center justify-center">
-              {isWineMemoLoading ? (
+              {isWineMemoLoading || loading ? (
                 <div className="py-50">
                   <LoadingBlack stroke="black"></LoadingBlack>
                 </div>
@@ -120,10 +147,15 @@ const WineMemoSection = ({
               <textarea
                 rows={3}
                 className="w-full resize-none outline-0"
+                value={memoInput}
+                onChange={(e) => setMemoInput(e.target.value)}
                 placeholder="메모를 작성해주세요:)"
               ></textarea>
               <div className="flex justify-end mt-10">
-                <div className="bg-(--memo) px-20 py-10 rounded-5 select-none hover:cursor-pointer text-14">
+                <div
+                  onClick={handleSummitWineMemo}
+                  className="bg-(--memo) px-20 py-10 rounded-5 select-none hover:cursor-pointer text-14"
+                >
                   저장
                 </div>
               </div>
