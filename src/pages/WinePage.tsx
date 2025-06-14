@@ -1,5 +1,6 @@
 import WineMemoSection from "@/components/wine/WineMemoSection";
 import WineSection from "@/components/wine/WineSection";
+import WineStructureSection from "@/components/wine/WineStructureSection";
 import { WineResponse } from "@/models/Api";
 import { getWine, getWineMemo, getWineWishlist } from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
@@ -82,6 +83,7 @@ const WinePage = () => {
         refetchWineMemo={refetchWineMemo}
         isWineMemoLoading={isWineMemoLoading}
       />
+      <WineStructureSection structure={wineInfo.content.structure} />
     </>
   );
 };
