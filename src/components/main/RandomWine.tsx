@@ -3,7 +3,7 @@ import { RandomWineType, WineWithWinery } from "@/models/Wine";
 import { Link } from "react-router-dom";
 import { RandomWineResponse } from "@/models/Api";
 import { getRandomWines } from "@/utils/api";
-import { WINETYPE_ARRAY, WINETASTEDEGREE } from "@/data/Wine";
+import { WINETYPE_ARRAY, WINESTRUCTUREDEGREE } from "@/data/Wine";
 import { COUNTRY_LOOKUP } from "@/data/Country";
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
@@ -63,6 +63,7 @@ interface RandomWineBoxComponentProps {
 }
 
 const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
+  console.log(wine);
   const countryInfo =
     wine && (COUNTRY_LOOKUP[wine.country] ?? COUNTRY_LOOKUP["etc"]);
   const [isHover, setIsHover] = useState<boolean>(false);
@@ -103,10 +104,10 @@ const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
                     </p>
                   </div>
                   <div className="flex flex-col gap-10 mt-20">
-                    <WineTaste taste="당도" degree={wine.sweetness} />
-                    <WineTaste taste="산도" degree={wine.acidity} />
-                    <WineTaste taste="바디" degree={wine.body} />
-                    <WineTaste taste="타닌" degree={wine.tannin} />
+                    <WineTaste taste="당도" degree={wine.structure.sweetness} />
+                    <WineTaste taste="산도" degree={wine.structure.acidity} />
+                    <WineTaste taste="바디" degree={wine.structure.body} />
+                    <WineTaste taste="타닌" degree={wine.structure.tannin} />
                   </div>
                 </div>
                 <div className="absolute w-[30%] right-0 h-[calc(100%+50px)] bottom-0">
@@ -143,7 +144,7 @@ const WineTaste = ({ taste, degree }: WineTasteComponentProps) => {
           {Array.from({ length: degree }).map((_, i) => (
             <div
               key={i}
-              className={`shrink-0 rounded-full w-12 h-12 sm:w-14 sm:h-14 ${WINETASTEDEGREE[i]}`}
+              className={`shrink-0 rounded-full w-12 h-12 sm:w-14 sm:h-14 ${WINESTRUCTUREDEGREE[i]}`}
             ></div>
           ))}
         </div>
