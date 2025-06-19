@@ -45,10 +45,26 @@ export const WINETYPE_LOOKUP: Record<WineTypeKey, WineType> =
   }, {} as Record<WineTypeKey, WineType>);
 
 export const WINESTRUCTURE = {
-  sweetness: { title: "당도", rotation: "rotate-0" },
-  acidity: { title: "산도", rotation: "rotate-90" },
-  body: { title: "바디", rotation: "-rotate-90" },
-  tannin: { title: "타닌", rotation: "rotate-180" },
+  sweetness: {
+    title: "당도",
+    rotation: "rotate-0",
+    level: { low: "드라이", high: "스위트" },
+  },
+  acidity: {
+    title: "산도",
+    rotation: "rotate-90",
+    level: { low: "낮음", high: "높음" },
+  },
+  body: {
+    title: "바디",
+    rotation: "-rotate-90",
+    level: { low: "라이트", high: "풀바디" },
+  },
+  tannin: {
+    title: "타닌",
+    rotation: "rotate-180",
+    level: { low: "부드러움", high: "떫음" },
+  },
 };
 export const WINESTRUCTUREDEGREE = [
   "bg-(--very-light-degree)",
