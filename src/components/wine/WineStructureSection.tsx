@@ -16,7 +16,11 @@ const WineStructureSection = ({ structure }: StructureProps) => {
         )}
       </div>
       <div className="flex items-center justify-center w-full bg-white min-h-300 rounded-15">
-        <DetailView structure={structure} />
+        {structure ? (
+          <DetailView structure={structure} />
+        ) : (
+          <p>와인 정보를 불러오는 데 오류가 발생했습니다.</p>
+        )}
       </div>
     </div>
   );
@@ -26,7 +30,7 @@ export default WineStructureSection;
 
 const ChartView = ({ structure }: StructureProps) => {
   return (
-    <div className="p-40 grid grid-cols-[min-content_min-content_min-content] justify-center gap-2">
+    <div className="grid grid-cols-[min-content_min-content_min-content] justify-center gap-2">
       <div className="text-right">
         <span className="text-nowrap text-14 md:text-16">당도</span>
       </div>
