@@ -1,3 +1,11 @@
+export type WineStructureKey = "sweetness" | "acidity" | "body" | "tannin";
+export interface WineStructure {
+  sweetness: number | null;
+  acidity: number | null;
+  body: number | null;
+  tannin: number | null;
+}
+
 export interface Wine {
   id: number;
   ename: string;
@@ -5,10 +13,7 @@ export interface Wine {
   type: WineTypeKey;
   image: string | null;
   abv: number | null;
-  sweetness: number | null;
-  acidity: number | null;
-  body: number | null;
-  tannin: number | null;
+  structure: WineStructure;
   city: string | null;
   winery: string;
 }

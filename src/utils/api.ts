@@ -154,7 +154,7 @@ export const getWineWishlist = async (wineId: number): Promise<boolean> => {
     return data;
   } catch (error) {
     console.error("Error api getWishlist: ", error);
-    return false;
+    throw error;
   }
 };
 
@@ -163,6 +163,30 @@ export const postWineWishlist = async (wineId: number): Promise<void> => {
     await userInstance.post<void>(`/wishlists/${wineId}`);
   } catch (error) {
     console.error("Error api postWishlist: ", error);
+    throw error;
+  }
+};
+
+export const getWineMemo = async (wineId: number): Promise<string[]> => {
+  try {
+    const { data } = await userInstance.get<string[]>(`/memos/${wineId}`);
+    return data;
+  } catch (error) {
+    console.error("Error api getWineMemo: ", error);
+    throw error;
+  }
+};
+
+export const postWineMemo = async (
+  wineId: number,
+  memo: string
+): Promise<void> => {
+  try {
+    await userInstance.post<void>(`/memos/${wineId}`, {
+      memo,
+    });
+  } catch (error) {
+    console.error("Error api postWineMemo: ", error);
     throw error;
   }
 };

@@ -5,6 +5,8 @@ import { useRef, useState } from "react";
 import { postWineWishlist } from "@/utils/api";
 import { useMutation } from "@tanstack/react-query";
 import { debounce } from "lodash";
+import toast from "react-hot-toast";
+import type { QueryObserverResult } from "@tanstack/react-query";
 
 interface WineImageBoxProps {
   image: string | null;
@@ -94,7 +96,7 @@ export const WineNameBox = ({ ename, kname, abv }: WineNameBoxProps) => {
 interface WineWishlistBoxProps {
   wineId: number;
   wishlist: boolean;
-  refetchWineWishlist: () => void;
+  refetchWineWishlist: () => Promise<QueryObserverResult<boolean, Error>>;
 }
 export const WineInteractionBox = ({
   wineId,
@@ -114,10 +116,10 @@ export const WineInteractionBox = ({
 };
 const WineWishlistBox = ({
   wineId,
-  wishlist: initailWishlist,
+  wishlist: initialWishlist,
   refetchWineWishlist,
 }: WineWishlistBoxProps) => {
-  const [wishlist, setWishlist] = useState<boolean>(initailWishlist);
+  const [wishlist, setWishlist] = useState<boolean>(initialWishlist);
   const callPostWineWishlist = async (): Promise<void> => {
     await postWineWishlist(wineId);
   };
@@ -125,9 +127,20 @@ const WineWishlistBox = ({
   // 위시리스트 post
   const mutation = useMutation<void, Error, boolean>({
     mutationFn: callPostWineWishlist,
-    onError: (error: Error) => {
+    onError: async (error: Error) => {
+      // 위시리스트 post 오류 시 위시리스트 refetch
       console.log("Error postWishlist: ", error);
-      refetchWineWishlist();
+      toast.error("서버와 문제가 생겼어요. 잠시 후 다시 시도해주세요.");
+
+      try {
+        const result = await refetchWineWishlist();
+        // 만약 refetch 실패하면 가장 최근에 성공한 상태 가져오기
+        if (result.isError) {
+          setWishlist(initialWishlist);
+        }
+      } catch (err) {
+        setWishlist(initialWishlist);
+      }
     },
   });
 
@@ -146,18 +159,18 @@ const WineWishlistBox = ({
   return (
     <div
       className={`flex items-center justify-center w-full gap-10 px-10 rounded-15 hover:cursor-pointer ${
-        wishlist ? "bg-(--main) text-white" : "bg-white"
+        wishlist ? "bg-(--light-main) text-black" : "bg-white"
       }`}
       onClick={handleClickWishlist}
     >
       <svg
         className={`w-18 h-18 shrink-0 ${
-          wishlist ? "stroke-white" : "stroke-(--main)"
+          wishlist
+            ? "stroke-(--heart-fill) fill-(--heart-fill)"
+            : "stroke-black fill-none"
         }`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        fill="none"
-        stroke="#000000"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
