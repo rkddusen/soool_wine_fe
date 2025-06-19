@@ -7,20 +7,31 @@ interface StructureProps {
 
 const WineStructureSection = ({ structure }: StructureProps) => {
   return (
-    <div className="flex flex-col justify-center gap-20 px-20 mx-auto mt-20 md:flex-row md:px-40 md:max-w-1000 max-w-500">
-      <div className="flex items-center justify-center w-full bg-white min-h-300 rounded-15">
-        {structure ? (
-          <ChartView structure={structure} />
-        ) : (
-          <p>와인 정보를 불러오는 데 오류가 발생했습니다.</p>
-        )}
-      </div>
-      <div className="flex items-center justify-center w-full bg-white min-h-300 rounded-15">
-        {structure ? (
-          <DetailView structure={structure} />
-        ) : (
-          <p>와인 정보를 불러오는 데 오류가 발생했습니다.</p>
-        )}
+    <div className="px-20 mx-auto mt-20 md:px-40 md:max-w-1000 max-w-500">
+      <p className="text-48 md:text-54 text-(--main) text-center font-display pt-40 pb-20">
+        와인 구조
+      </p>
+      <div className="flex flex-col justify-center gap-20 md:flex-row">
+        <div className="flex items-center justify-center w-full bg-white min-h-200 rounded-15">
+          {structure ? (
+            <ChartView structure={structure} />
+          ) : (
+            // <p>와인 정보를 불러오는 데 오류가 발생했습니다.</p>
+            <ChartView
+              structure={{ sweetness: 5, acidity: 4, body: null, tannin: 2 }}
+            />
+          )}
+        </div>
+        <div className="flex items-center justify-center w-full bg-white min-h-200 rounded-15">
+          {structure ? (
+            <DetailView structure={structure} />
+          ) : (
+            // <p>와인 정보를 불러오는 데 오류가 발생했습니다.</p>
+            <DetailView
+              structure={{ sweetness: 5, acidity: 4, body: null, tannin: 2 }}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
