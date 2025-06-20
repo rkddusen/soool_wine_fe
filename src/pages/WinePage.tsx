@@ -41,9 +41,10 @@ const WinePage = () => {
   // 위시리스트 유무 get
   const {
     data: wishlist,
+    isError: isWishlistError,
     isLoading: isWishlistLoading,
     refetch: refetchWineWishlist,
-  } = useQuery<boolean, Error, boolean>({
+  } = useQuery<boolean>({
     queryKey: ["wine-wishlist", wineId],
     queryFn: () => callGetWineWishlist(wineId),
     enabled: !isNaN(wineId),
@@ -77,6 +78,7 @@ const WinePage = () => {
         wineInfo={wine.content}
         wishlist={wishlist ?? false}
         refetchWineWishlist={refetchWineWishlist}
+        isWishlistError={isWishlistError}
       />
       <WineMemoSection
         wineId={wine.content.id}
