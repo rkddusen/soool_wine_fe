@@ -27,9 +27,11 @@ const WinePage = () => {
 
   // 와인 정보 get
   const {
-    data: wineInfo,
-    isError: isWineInfoError,
-    isLoading: isWineInfoLoading,
+    data: wine,
+    isError: isWineError,
+    isLoading: isWineLoading,
+    refetch: refetchWine,
+    isRefetching: isWineRefetching,
   } = useQuery<WineResponse>({
     queryKey: ["wine", wineId],
     queryFn: () => callGetWine(wineId),
@@ -61,29 +63,32 @@ const WinePage = () => {
 
   useEffect(() => {
     if (isInitialLoading) {
-      if (!isWineInfoLoading && !isWishlistLoading && !isWineMemoLoading)
+      if (!isWineLoading && !isWishlistLoading && !isWineMemoLoading)
         setIsInitialLoading(false);
     }
-  }, [isWineInfoLoading, isWishlistLoading, isWineMemoLoading]);
+  }, [isWineLoading, isWishlistLoading, isWineMemoLoading]);
 
-  if (isInitialLoading) return <div>로딩 중입니다.</div>;
-  if (isWineInfoError) return <div>데이터 요청에 실패했습니다.</div>;
-  if (!wineInfo?.content) return <div>와인 정보가 없습니다.</div>;
+  if (isInitialLoading || isWineRefetching) return <div>로딩 중입니다.</div>;
+  if (isWineError) return <div>데이터 요청에 실패했습니다.</div>;
+  if (!wine?.content) return <div>와인 정보가 없습니다.</div>;
   return (
     <>
       <WineSection
-        wineInfo={wineInfo.content}
+        wineInfo={wine.content}
         wishlist={wishlist ?? false}
         refetchWineWishlist={refetchWineWishlist}
       />
       <WineMemoSection
-        wineId={wineInfo.content.id}
+        wineId={wine.content.id}
         memo={wineMemo ?? null}
         isWineMemoError={isWineMemoError}
         refetchWineMemo={refetchWineMemo}
         isWineMemoLoading={isWineMemoLoading}
       />
-      <WineStructureSection structure={wineInfo.content.structure} />
+      <WineStructureSection
+        structure={wine.content.structure}
+        refetchWine={refetchWine}
+      />
     </>
   );
 };

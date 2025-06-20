@@ -1,45 +1,55 @@
 import { WineStructure, WineStructureKey } from "@/models/Wine";
 import { WINESTRUCTURE, WINESTRUCTUREDEGREE } from "@/data/Wine";
 
-interface StructureProps {
+interface WineStructureSectionProps {
   structure: WineStructure;
+  refetchWine: () => void;
 }
 
-const WineStructureSection = ({ structure }: StructureProps) => {
+const WineStructureSection = ({
+  structure,
+  refetchWine,
+}: WineStructureSectionProps) => {
   return (
     <div className="px-20 mx-auto mt-20 md:px-40 md:max-w-1000 max-w-500">
       <p className="text-48 md:text-54 text-(--main) text-center font-display pt-40 pb-20">
         와인 구조
       </p>
-      <div className="flex flex-col justify-center gap-20 md:flex-row">
-        <div className="flex items-center justify-center w-full bg-white min-h-200 rounded-15">
-          {structure ? (
+      {structure ? (
+        <div className="flex flex-col justify-center gap-20 md:flex-row">
+          <div className="flex items-center justify-center w-full bg-white min-h-200 rounded-15">
             <ChartView structure={structure} />
-          ) : (
-            // <p>와인 정보를 불러오는 데 오류가 발생했습니다.</p>
-            <ChartView
-              structure={{ sweetness: 5, acidity: 4, body: null, tannin: 2 }}
-            />
-          )}
-        </div>
-        <div className="flex items-center justify-center w-full bg-white min-h-200 rounded-15">
-          {structure ? (
+          </div>
+          <div className="flex items-center justify-center w-full bg-white min-h-200 rounded-15">
             <DetailView structure={structure} />
-          ) : (
-            // <p>와인 정보를 불러오는 데 오류가 발생했습니다.</p>
-            <DetailView
-              structure={{ sweetness: 5, acidity: 4, body: null, tannin: 2 }}
-            />
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="text-center bg-white rounded-15 py-70">
+          <p className="mt-15">와인 구조를 불러오는 데 오류가 발생했습니다.</p>
+          <button
+            onClick={refetchWine}
+            className="text-14 bg-(--light-main) py-12 px-20 rounded-full mt-20 cursor-pointer"
+          >
+            페이지 새로고침
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
 export default WineStructureSection;
 
-const ChartView = ({ structure }: StructureProps) => {
+interface ViewProps {
+  structure: WineStructure;
+}
+interface ViewDegreeProps {
+  degree: number | null;
+  label: WineStructureKey;
+}
+
+const ChartView = ({ structure }: ViewProps) => {
   return (
     <div className="grid grid-cols-[min-content_min-content_min-content] justify-center gap-2">
       <div className="text-right">
@@ -77,11 +87,7 @@ const ChartView = ({ structure }: StructureProps) => {
     </div>
   );
 };
-interface StructureDegreeProps {
-  degree: number | null;
-  label: WineStructureKey;
-}
-const ChartViewDegree = ({ degree, label }: StructureDegreeProps) => {
+const ChartViewDegree = ({ degree, label }: ViewDegreeProps) => {
   return (
     <>
       <div
@@ -143,7 +149,7 @@ const ChartViewDegree = ({ degree, label }: StructureDegreeProps) => {
   );
 };
 
-const DetailView = ({ structure }: StructureProps) => {
+const DetailView = ({ structure }: ViewProps) => {
   return (
     <div className="py-40 px-20 flex flex-col justify-center w-[80%] gap-20">
       <DetailViewDegree
@@ -157,7 +163,7 @@ const DetailView = ({ structure }: StructureProps) => {
   );
 };
 
-const DetailViewDegree = ({ degree, label }: StructureDegreeProps) => {
+const DetailViewDegree = ({ degree, label }: ViewDegreeProps) => {
   return (
     <div>
       <p className="text-center">{WINESTRUCTURE[label].title}</p>
