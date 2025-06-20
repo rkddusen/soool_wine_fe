@@ -69,6 +69,7 @@ const WineMemoSection = ({
         </svg>
       </div>
       <motion.div
+        initial={{ height: 0 }}
         animate={{ height: isMemoOpen ? height : 0 }}
         transition={{ duration: 0.2 }}
         style={{ overflow: "hidden" }}

@@ -1,7 +1,7 @@
 import { WINETYPE_LOOKUP } from "@/data/Wine";
 import { COUNTRY_LOOKUP } from "@/data/Country";
 import { WineTypeKey } from "@/models/Wine";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { postWineWishlist } from "@/utils/api";
 import { useMutation } from "@tanstack/react-query";
 import { debounce } from "lodash";
@@ -96,12 +96,14 @@ export const WineNameBox = ({ ename, kname, abv }: WineNameBoxProps) => {
 interface WineWishlistBoxProps {
   wineId: number;
   wishlist: boolean;
-  refetchWineWishlist: () => Promise<QueryObserverResult<boolean, Error>>;
+  refetchWineWishlist: () => void;
+  isWishlistError: boolean;
 }
 export const WineInteractionBox = ({
   wineId,
   wishlist,
   refetchWineWishlist,
+  isWishlistError,
 }: WineWishlistBoxProps) => {
   return (
     <div className="flex gap-20 h-60">
@@ -109,6 +111,7 @@ export const WineInteractionBox = ({
         wineId={wineId}
         wishlist={wishlist}
         refetchWineWishlist={refetchWineWishlist}
+        isWishlistError={isWishlistError}
       />
       <WineShareBox />
     </div>
@@ -118,6 +121,7 @@ const WineWishlistBox = ({
   wineId,
   wishlist: initialWishlist,
   refetchWineWishlist,
+  isWishlistError,
 }: WineWishlistBoxProps) => {
   const [wishlist, setWishlist] = useState<boolean>(initialWishlist);
   const callPostWineWishlist = async (): Promise<void> => {
@@ -132,17 +136,14 @@ const WineWishlistBox = ({
       console.log("Error postWishlist: ", error);
       toast.error("서버와 문제가 생겼어요. 잠시 후 다시 시도해주세요.");
 
-      try {
-        const result = await refetchWineWishlist();
-        // 만약 refetch 실패하면 가장 최근에 성공한 상태 가져오기
-        if (result.isError) {
-          setWishlist(initialWishlist);
-        }
-      } catch (err) {
-        setWishlist(initialWishlist);
-      }
+      refetchWineWishlist();
     },
   });
+  useEffect(() => {
+    if (mutation.isError && isWishlistError) {
+      setWishlist(initialWishlist); // 이전 값으로 복구
+    }
+  }, [mutation.isError, isWishlistError]);
 
   const debounceMutateRef = useRef(
     debounce((nextState: boolean) => {

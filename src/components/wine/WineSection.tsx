@@ -12,12 +12,14 @@ interface WineSectionProps {
   wineInfo: WineWithWinery;
   wishlist: boolean;
   refetchWineWishlist: () => void;
+  isWishlistError: boolean;
 }
 
 const WineSection = ({
   wineInfo,
   wishlist,
   refetchWineWishlist,
+  isWishlistError,
 }: WineSectionProps) => {
   return (
     <div className="flex flex-col justify-center gap-20 px-20 mx-auto mt-20 md:flex-row md:px-40 md:max-w-1000 max-w-500">
@@ -39,6 +41,7 @@ const WineSection = ({
           wineId={wineInfo.id}
           wishlist={wishlist}
           refetchWineWishlist={refetchWineWishlist}
+          isWishlistError={isWishlistError}
         />
       </div>
     </div>
