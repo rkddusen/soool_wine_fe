@@ -158,7 +158,7 @@ const WineWishlistBox = ({
   };
 
   return (
-    <div
+    <button
       className={`flex items-center justify-center w-full gap-10 px-10 rounded-15 hover:cursor-pointer ${
         wishlist ? "bg-(--light-main) text-black" : "bg-white"
       }`}
@@ -179,12 +179,12 @@ const WineWishlistBox = ({
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
       </svg>
       <p>위시리스트</p>
-    </div>
+    </button>
   );
 };
 const WineShareBox = () => {
   return (
-    <div
+    <button
       className={`flex items-center justify-center w-full gap-10 px-10 rounded-15 hover:cursor-pointer bg-white`}
     >
       <svg
@@ -204,6 +204,6 @@ const WineShareBox = () => {
         <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
       </svg>
       <p>공유</p>
-    </div>
+    </button>
   );
 };

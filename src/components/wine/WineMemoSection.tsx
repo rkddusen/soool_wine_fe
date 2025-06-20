@@ -49,7 +49,7 @@ const WineMemoSection = ({
 
   return (
     <div className="px-20 mx-auto mt-20 md:px-40 md:max-w-1000 max-w-500">
-      <div
+      <button
         className="w-full h-50 bg-(--memo) rounded-15 flex gap-5 justify-center items-center select-none hover:cursor-pointer"
         onClick={() => setIsMemoOpen((prev) => !prev)}
       >
@@ -67,7 +67,7 @@ const WineMemoSection = ({
             <path d="M6 9l6 6 6-6" />
           )}
         </svg>
-      </div>
+      </button>
       <motion.div
         initial={{ height: 0 }}
         animate={{ height: isMemoOpen ? height : 0 }}
@@ -116,7 +116,7 @@ const WineMemoSection = ({
                     <>
                       {isWineMemoError ? (
                         <div className="py-50">
-                          <div
+                          <button
                             onClick={refetchWineMemo}
                             className="flex items-center justify-center w-36 h-36 mx-auto rounded-full bg-(--gray-e0) cursor-pointer"
                           >
@@ -129,7 +129,7 @@ const WineMemoSection = ({
                             >
                               <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38" />
                             </svg>
-                          </div>
+                          </button>
                           <p className="text-14 mt-15">
                             오류가 발생했습니다. 잠시 후 다시 시도해 주세요.
                           </p>
@@ -153,12 +153,12 @@ const WineMemoSection = ({
                 placeholder="메모를 작성해주세요:)"
               ></textarea>
               <div className="flex justify-end mt-10">
-                <div
+                <button
                   onClick={handleSummitWineMemo}
                   className="bg-(--memo) px-20 py-10 rounded-5 select-none hover:cursor-pointer text-14"
                 >
                   저장
-                </div>
+                </button>
               </div>
             </div>
           </div>
