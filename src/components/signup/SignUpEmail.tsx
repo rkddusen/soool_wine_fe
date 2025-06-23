@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { SignUpError } from "../../models/SignUpError";
 import { validEmail } from "../../utils/signUpValidators";
 import { postEmail } from "../../utils/api";
-import Loading from "/src/assets/loading.svg?react";
+import LoadingWhite from "/src/assets/LoadingWhite.svg?react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SignUp } from "../../models/User";
 import { EmailVerificationTokenResponse } from "../../models/Api";
@@ -178,7 +178,11 @@ const SignUpEmail = ({
           onClick={loading ? undefined : nextLevel}
           className="flex flex-3 items-center justify-center rounded-15 bg-(--gray-49) hover:cursor-pointer"
         >
-          {loading ? <Loading /> : <span className="text-white">다음</span>}
+          {loading ? (
+            <LoadingWhite />
+          ) : (
+            <span className="text-white">다음</span>
+          )}
         </div>
       </div>
     </>

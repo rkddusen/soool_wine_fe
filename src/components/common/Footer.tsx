@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import SooolLogoWine from "/src/assets/soool_logo_wine.svg?react";
+import SooolLogoWine from "/src/assets/SooolLogoWine.svg?react";
 
 const Footer = () => {
   return (

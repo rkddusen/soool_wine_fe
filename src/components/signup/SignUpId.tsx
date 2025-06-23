@@ -4,7 +4,8 @@ import { validId } from "../../utils/signUpValidators";
 import { SignUp } from "../../models/User";
 import { useMutation } from "@tanstack/react-query";
 import { getIdExists } from "../../utils/api";
-import Loading from "/src/assets/loading.svg?react";
+import LoadingWhite from "/src/assets/LoadingWhite.svg?react";
+import { UserIcon } from "@heroicons/react/24/outline";
 
 interface SignUpIdProps {
   inputValue: { id: string };
@@ -95,27 +96,11 @@ const SignUpId = ({
                 : "border-(--gray-78) border"
             } rounded-5`}
           >
-            <svg
-              className={`shrink-0 ${
-                idFocus ? "stroke-black" : "stroke-(--gray-78)"
+            <UserIcon
+              className={`w-20 h-20 shrink-0 ${
+                idFocus ? "stroke-black" : "stroke-(--gray-bb)"
               }`}
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10 9.33333C12.2091 9.33333 14 7.54247 14 5.33333C14 3.12419 12.2091 1.33333 10 1.33333C7.79086 1.33333 6 3.12419 6 5.33333C6 7.54247 7.79086 9.33333 10 9.33333Z"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M2.32262 15.1643C3.00942 12.5593 5.61393 11.3333 8.22314 11.3333H11.7768C14.3861 11.3333 16.9906 12.5593 17.6774 15.1643C17.8181 15.6986 17.9307 16.2766 17.9944 16.8906C18.0578 17.5008 17.5715 18 16.9786 18H3.02141C2.42847 18 1.94222 17.5008 2.00556 16.8906C2.06932 16.2766 2.18179 15.6986 2.32262 15.1643Z"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
+            />
             <input
               ref={inputRef}
               type="text"
@@ -143,7 +128,11 @@ const SignUpId = ({
           onClick={loading ? undefined : nextLevel}
           className="flex flex-3 items-center justify-center rounded-15 bg-(--gray-49) hover:cursor-pointer"
         >
-          {loading ? <Loading /> : <span className="text-white">다음</span>}
+          {loading ? (
+            <LoadingWhite />
+          ) : (
+            <span className="text-white">다음</span>
+          )}
         </div>
       </div>
     </>

@@ -6,7 +6,11 @@ import { postWineWishlist } from "@/utils/api";
 import { useMutation } from "@tanstack/react-query";
 import { debounce } from "lodash";
 import toast from "react-hot-toast";
-import type { QueryObserverResult } from "@tanstack/react-query";
+import {
+  HeartIcon as HeartIconEmpty,
+  ShareIcon,
+} from "@heroicons/react/24/outline";
+import { HeartIcon as HeartIconFill } from "@heroicons/react/24/solid";
 
 interface WineImageBoxProps {
   image: string | null;
@@ -164,20 +168,11 @@ const WineWishlistBox = ({
       }`}
       onClick={handleClickWishlist}
     >
-      <svg
-        className={`w-18 h-18 shrink-0 ${
-          wishlist
-            ? "stroke-(--heart-fill) fill-(--heart-fill)"
-            : "stroke-black fill-none"
-        }`}
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-      </svg>
+      {wishlist ? (
+        <HeartIconFill className="w-20 h-20 shrink-0 stroke-(--heart-fill) fill-(--heart-fill)" />
+      ) : (
+        <HeartIconEmpty className="w-20 h-20 shrink-0" />
+      )}
       <p>위시리스트</p>
     </button>
   );
@@ -187,22 +182,7 @@ const WineShareBox = () => {
     <button
       className={`flex items-center justify-center w-full gap-10 px-10 rounded-15 hover:cursor-pointer bg-white`}
     >
-      <svg
-        className={`w-18 h-18 shrink-0`}
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#000000"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="18" cy="5" r="3"></circle>
-        <circle cx="6" cy="12" r="3"></circle>
-        <circle cx="18" cy="19" r="3"></circle>
-        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-      </svg>
+      <ShareIcon className="w-20 h-20 shrink-0" />
       <p>공유</p>
     </button>
   );

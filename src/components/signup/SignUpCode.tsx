@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SignUpError } from "../../models/SignUpError";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import Loading from "/src/assets/loading.svg?react";
+import LoadingWhite from "/src/assets/LoadingWhite.svg?react";
 import { postCode } from "../../utils/api";
 import { SignUp } from "../../models/User";
 
@@ -172,7 +172,7 @@ const SignUpCode = ({
           } flex flex-3 items-center justify-center rounded-15 bg-(--gray-49)`}
         >
           {loading ? (
-            <Loading />
+            <LoadingWhite />
           ) : (
             <span className="text-white text-16">인증하기</span>
           )}

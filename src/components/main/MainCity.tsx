@@ -2,6 +2,12 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 import { CITY } from "@/data/City";
 import SideFlipCard from "../common/SideFlipCard";
 import { COUNTRY_LOOKUP } from "@/data/Country";
+import {
+  ArrowRightIcon,
+  ArrowsRightLeftIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
 
 const MainCity = () => {
   const [detailMap, setDetailMap] = useState<Record<string, boolean>>(
@@ -112,13 +118,21 @@ const MainCity = () => {
           handleClickEvent={() => scrollMove("left")}
           isActive={isScrollBtnActive.left}
         >
-          <path d="M15 18l-6-6 6-6" />
+          <ChevronLeftIcon
+            className={`w-20 h-20 ${
+              isScrollBtnActive.left ? "stroke-black" : "stroke-(--gray-c0)"
+            }`}
+          />
         </MoveBtn>
         <MoveBtn
           handleClickEvent={() => scrollMove("right")}
           isActive={isScrollBtnActive.right}
         >
-          <path d="M9 18l6-6-6-6" />
+          <ChevronRightIcon
+            className={`w-20 h-20 ${
+              isScrollBtnActive.right ? "stroke-black" : "stroke-(--gray-c0)"
+            }`}
+          />
         </MoveBtn>
       </div>
     </section>
@@ -146,37 +160,13 @@ const BtnArea = ({ handleOpenDetail }: BtnAreaProps) => {
     <div className="flex h-40 gap-10">
       <div className="w-full h-full rounded-20 flex gap-5 justify-center items-center bg-[#D3E6BC] hover:cursor-pointer hover:bg-[#C1D4AA]">
         <span className="text-nowrap text-14">이 지역 와인 보기</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-20 h-20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#000000"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M5 12h13M12 5l7 7-7 7" />
-        </svg>
+        <ArrowRightIcon className="w-16 h-16" />
       </div>
       <div
         onClick={handleOpenDetail}
         className="shrink-0 w-50 h-full rounded-20 bg-(--gray-f0) flex justify-center items-center hover:cursor-pointer hover:bg-(--gray-e0)"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-18 h-18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#000000"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M17 2.1l4 4-4 4" />
-          <path d="M3 12.2v-2a4 4 0 0 1 4-4h12.8M7 21.9l-4-4 4-4" />
-          <path d="M21 11.8v2a4 4 0 0 1-4 4H4.2" />
-        </svg>
+        <ArrowsRightLeftIcon className="w-18 h-18" />
       </div>
     </div>
   );
@@ -193,21 +183,11 @@ const MoveBtn = ({ children, handleClickEvent, isActive }: MoveBtnProps) => {
       onClick={handleClickEvent}
       className={`w-40 h-40   rounded-full flex justify-center items-center ${
         isActive
-          ? "bg-(--gray-e0) hover:bg-(--gray-c0) hover:cursor-pointer stroke-black"
-          : "bg-(--gray-f0) stroke-(--gray-c0)"
+          ? "bg-(--gray-e0) hover:bg-(--gray-c0) hover:cursor-pointer"
+          : "bg-(--gray-f0) "
       }`}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-24 h-24"
-        viewBox="0 0 24 24"
-        fill="none"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {children}
-      </svg>
+      {children}
     </div>
   );
 };

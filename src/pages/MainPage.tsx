@@ -8,7 +8,7 @@ const MainPage = () => {
     <main className="w-full">
       <SearchArea />
       <WineType />
-      <RandomWine />
+      {/* <RandomWine /> */}
       <MainCity />
     </main>
   );

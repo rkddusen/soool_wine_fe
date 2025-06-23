@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postUsers } from "../../utils/api";
 import { SignUp } from "../../models/User";
-import Loading from "/src/assets/loading.svg?react";
+import LoadingWhite from "/src/assets/LoadingWhite.svg?react";
 import { SignUpError } from "../../models/SignUpError";
 
 interface SignUpFinalProps {
@@ -70,7 +70,7 @@ const SignUpFinal = ({ user, setLevel, handlePrevLevel }: SignUpFinalProps) => {
           className="flex flex-3 items-center justify-center rounded-15 bg-(--gray-49) hover:cursor-pointer"
         >
           {loading ? (
-            <Loading />
+            <LoadingWhite />
           ) : (
             <span className="text-white">회원가입하기</span>
           )}

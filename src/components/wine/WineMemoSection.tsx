@@ -1,10 +1,16 @@
 import { useState } from "react";
 import useMeasure from "react-use-measure";
 import { motion } from "framer-motion";
-import LoadingBlack from "@/assets/loading-black.svg?react";
+import LoadingBlack from "@/assets/LoadingBlack.svg?react";
 import { useMutation } from "@tanstack/react-query";
 import { postWineMemo } from "@/utils/api";
 import toast from "react-hot-toast";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  ArrowPathIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 
 interface WineMemoSectionProps {
   wineId: number;
@@ -54,19 +60,11 @@ const WineMemoSection = ({
         onClick={() => setIsMemoOpen((prev) => !prev)}
       >
         <span>와인 메모</span>
-        <svg
-          className="w-20 h-20 fill-none stroke-black stroke-[1.5]"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          {isMemoOpen ? (
-            <path d="M18 15l-6-6-6 6" />
-          ) : (
-            <path d="M6 9l6 6 6-6" />
-          )}
-        </svg>
+        {isMemoOpen ? (
+          <ChevronUpIcon className="w-20 h-20" />
+        ) : (
+          <ChevronDownIcon className="w-20 h-20" />
+        )}
       </button>
       <motion.div
         initial={{ height: 0 }}
@@ -94,18 +92,7 @@ const WineMemoSection = ({
                             <p className="w-full px-10 py-20 leading-20">{v}</p>
                             <div className="h-full px-10">
                               <div className="flex items-center justify-center rounded-full cursor-pointer w-36 h-36 hover:bg-red-100">
-                                <svg
-                                  className="w-20 h-20 fill-none stroke-red-600 stroke-[1.5]"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 24 24"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <polyline points="3 6 5 6 21 6"></polyline>
-                                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                  <line x1="10" y1="11" x2="10" y2="17"></line>
-                                  <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg>
+                                <TrashIcon className="w-20 h-20 stroke-red-600" />
                               </div>
                             </div>
                           </div>
@@ -120,15 +107,7 @@ const WineMemoSection = ({
                             onClick={refetchWineMemo}
                             className="flex items-center justify-center w-36 h-36 mx-auto rounded-full bg-(--gray-e0) cursor-pointer"
                           >
-                            <svg
-                              className="w-16 h-16 fill-none stroke-black stroke-[1.5]"
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38" />
-                            </svg>
+                            <ArrowPathIcon className="w-18 h-18" />
                           </button>
                           <p className="text-14 mt-15">
                             오류가 발생했습니다. 잠시 후 다시 시도해 주세요.
