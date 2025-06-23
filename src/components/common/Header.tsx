@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
-import SooolLogoWine from "/src/assets/soool_logo_wine.svg?react";
+import SooolLogoWine from "/src/assets/SooolLogoWine.svg?react";
 import { Link } from "react-router-dom";
+import {
+  UserIcon,
+  Bars3Icon,
+  XMarkIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
 
 const Header = () => {
   const [isBorder, setIsBorder] = useState<boolean>(false);
@@ -69,22 +75,10 @@ const Header = () => {
               >
                 로그아웃
               </span>
-              <svg
+              <UserIcon
                 onClick={moveMyPage}
-                className="w-20 h-20 stroke-(--main) fill-none hover:cursor-pointer"
-                viewBox="0 0 22 22"
-                strokeLinecap="round"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeWidth="1.5"
-                  d="M11 10.2667C13.43 10.2667 15.4 8.29673 15.4 5.86667C15.4 3.43662 13.43 1.46667 11 1.46667C8.56992 1.46667 6.59998 3.43662 6.59998 5.86667C6.59998 8.29673 8.56992 10.2667 11 10.2667Z"
-                />
-                <path
-                  strokeWidth="1.5"
-                  d="M2.55483 16.6808C3.31031 13.8153 6.17527 12.4667 9.0454 12.4667H12.9545C15.8246 12.4667 18.6896 13.8153 19.4451 16.6808C19.5999 17.2684 19.7237 17.9042 19.7938 18.5796C19.8635 19.2509 19.3286 19.8 18.6764 19.8H3.3235C2.67126 19.8 2.13639 19.2509 2.20607 18.5796C2.2762 17.9042 2.39992 17.2684 2.55483 16.6808Z"
-                />
-              </svg>
+                className="w-20 h-20 stroke-(--main) hover:cursor-pointer"
+              />
             </>
           ) : (
             <span className="text-nowrap shrink-0 text-12 hover:cursor-pointer">
@@ -93,21 +87,10 @@ const Header = () => {
           )}
         </div>
         <div className="block md:hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
+          <Bars3Icon
             onClick={() => setIsMenuOpen(true)}
-            className="stroke-(--main) hover:cursor-pointer"
-            width="30"
-            height="30"
-            viewBox="0 0 24 24"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="3" y1="12" x2="21" y2="12" strokeWidth="1.5"></line>
-            <line x1="3" y1="6" x2="21" y2="6" strokeWidth="1.5"></line>
-            <line x1="3" y1="18" x2="21" y2="18" strokeWidth="1.5"></line>
-          </svg>
+            className="w-30 h-30 stroke-(--main) hover:cursor-pointer"
+          />
           <div
             className={`absolute overflow-y-auto overflow-x-hidden  md:hidden w-full h-[100vh] bg-white top-0 ${
               isMenuOpen ? "flex flex-col left-0" : "none left-full"
@@ -122,20 +105,10 @@ const Header = () => {
                 >
                   <SooolLogoWine className="h-full" />
                 </Link>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
+                <XMarkIcon
                   onClick={() => setIsMenuOpen(false)}
-                  className="stroke-(--main) hover:cursor-pointer"
-                  width="30"
-                  height="30"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18" strokeWidth="1.5"></line>
-                  <line x1="6" y1="6" x2="18" y2="18" strokeWidth="1.5"></line>
-                </svg>
+                  className="w-30 h-30 stroke-(--main) hover:cursor-pointer"
+                />
               </div>
             </div>
             <div className="h-full px-20">
@@ -143,21 +116,10 @@ const Header = () => {
                 {isLogin ? (
                   <div className="flex flex-wrap items-center justify-between w-full px-20 py-10 break-keep shrink-0 min-h-60 rounded-15 bg-(--light-main)">
                     <div className="flex items-center max-w-full py-10 shrink-0">
-                      <svg
-                        className="w-20 h-20 shrink-0 stroke-(--main) fill-none hover:cursor-pointer"
-                        viewBox="0 0 22 22"
-                        strokeLinecap="round"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M11 10.2667C13.43 10.2667 15.4 8.29673 15.4 5.86667C15.4 3.43662 13.43 1.46667 11 1.46667C8.56992 1.46667 6.59998 3.43662 6.59998 5.86667C6.59998 8.29673 8.56992 10.2667 11 10.2667Z"
-                          strokeWidth="1.5"
-                        />
-                        <path
-                          d="M2.55483 16.6808C3.31031 13.8153 6.17527 12.4667 9.0454 12.4667H12.9545C15.8246 12.4667 18.6896 13.8153 19.4451 16.6808C19.5999 17.2684 19.7237 17.9042 19.7938 18.5796C19.8635 19.2509 19.3286 19.8 18.6764 19.8H3.3235C2.67126 19.8 2.13639 19.2509 2.20607 18.5796C2.2762 17.9042 2.39992 17.2684 2.55483 16.6808Z"
-                          strokeWidth="1.5"
-                        />
-                      </svg>
+                      <UserIcon
+                        onClick={moveMyPage}
+                        className="w-20 h-20 stroke-(--main) hover:cursor-pointer"
+                      />
                       <span className="pl-5">"닉네임" 님 환영합니다.</span>
                     </div>
                     <div className="text-center text-12 shrink-0">
@@ -173,36 +135,14 @@ const Header = () => {
                   <Link to="/login">
                     <div className="flex items-center justify-between w-full px-20 shrink-0 min-h-60 rounded-15 bg-(--light-main) hover:cursor-pointer">
                       <div className="flex items-center">
-                        <svg
-                          className="w-20 h-20 stroke-(--main) fill-none hover:cursor-pointer"
-                          viewBox="0 0 22 22"
-                          strokeLinecap="round"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M11 10.2667C13.43 10.2667 15.4 8.29673 15.4 5.86667C15.4 3.43662 13.43 1.46667 11 1.46667C8.56992 1.46667 6.59998 3.43662 6.59998 5.86667C6.59998 8.29673 8.56992 10.2667 11 10.2667Z"
-                            strokeWidth="1.5"
-                          />
-                          <path
-                            d="M2.55483 16.6808C3.31031 13.8153 6.17527 12.4667 9.0454 12.4667H12.9545C15.8246 12.4667 18.6896 13.8153 19.4451 16.6808C19.5999 17.2684 19.7237 17.9042 19.7938 18.5796C19.8635 19.2509 19.3286 19.8 18.6764 19.8H3.3235C2.67126 19.8 2.13639 19.2509 2.20607 18.5796C2.2762 17.9042 2.39992 17.2684 2.55483 16.6808Z"
-                            strokeWidth="1.5"
-                          />
-                        </svg>
+                        <UserIcon
+                          onClick={moveMyPage}
+                          className="w-20 h-20 stroke-(--main) hover:cursor-pointer"
+                        />
                         <span className="ml-10">로그인이 필요합니다.</span>
                       </div>
                       <div>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="#000000"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M9 18l6-6-6-6" strokeWidth="2" />
-                        </svg>
+                        <ChevronRightIcon className="w-20 h-20" />
                       </div>
                     </div>
                   </Link>

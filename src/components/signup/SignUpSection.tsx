@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SooolLogo from "/src/assets/soool_logo.svg?react";
+import SooolLogo from "/src/assets/SooolLogo.svg?react";
 import SignUpPassword from "./SignUpPassword";
 import SignUpId from "./SignUpId";
 import SignUpEmail from "./SignUpEmail";
@@ -14,6 +14,7 @@ import SignUpFinal from "./SignUpFinal";
 import { useQueryClient } from "@tanstack/react-query";
 import { SignUp } from "../../models/User";
 import SignUpComplete from "./SignUpComplete";
+import { CheckIcon } from "@heroicons/react/24/outline";
 
 const SignUpSection = () => {
   const [inputValues, setInputValues] = useState<SignUp>({
@@ -124,21 +125,7 @@ const SignUpSection = () => {
                 } border rounded-full border-(--gray-49) text-12`}
               >
                 {level > i + 1 ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="white"
-                  >
-                    <polyline
-                      points="20 6 9 17 4 12"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    ></polyline>
-                  </svg>
+                  <CheckIcon className="w-16 h-16" />
                 ) : (
                   <span>{i + 1}</span>
                 )}

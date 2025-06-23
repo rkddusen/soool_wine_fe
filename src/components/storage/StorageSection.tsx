@@ -4,7 +4,7 @@ import { getWines } from "@/utils/api";
 import { WinesResponse } from "@/models/Api";
 import { useSearchParams } from "react-router-dom";
 import { Filter } from "@/models/Filter";
-import NoResultsFound from "/src/assets/noResultsFound.svg?react";
+import NoResultsFound from "/src/assets/NoResultsFound.svg?react";
 import {
   getFilterFromQueryParams,
   setQueryParamsFromFilter,
@@ -13,8 +13,8 @@ import { validateFilter } from "@/utils/validateFilter";
 import FilterSection from "./FilterSection";
 import WineListBox from "./WineListBox";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import Loading2 from "/src/assets/loading2.svg?react";
-import Loading3 from "/src/assets/loading3.svg?react";
+import LoadingWineFind from "/src/assets/LoadingWineFind.svg?react";
+import LoadingCircle from "/src/assets/LoadingCircle.svg?react";
 
 const initFilter: Filter = {
   type: null,
@@ -123,7 +123,7 @@ const StorageSection = () => {
                     </button>
                   ) : (
                     <div className="flex flex-col items-center mx-auto">
-                      <Loading3></Loading3>
+                      <LoadingCircle />
                     </div>
                   )}
                 </div>
@@ -131,7 +131,7 @@ const StorageSection = () => {
             </>
           ) : (
             <div className="flex flex-col items-center gap-10 mx-auto py-100">
-              <Loading2></Loading2>
+              <LoadingWineFind />
               <p className="text-(--gray-78) text-18">와인 가져오는 중...</p>
             </div>
           )}

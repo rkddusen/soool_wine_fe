@@ -5,6 +5,12 @@ import { useSearchParams } from "react-router-dom";
 import SearchFilter from "./SearchFilter";
 import { WINETYPE_ARRAY } from "@/data/Wine";
 import { COUNTRY_ARRAY } from "@/data/Country";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  ArrowPathIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 
 const FILTER_LABELS: Record<keyof Filter, (value: any) => React.ReactNode> = {
   type: (value) => `${WINETYPE_ARRAY.find((w) => w.type === value)?.title}`,
@@ -67,25 +73,14 @@ const FilterSection = ({ filterInfo }: FilterSectionProps) => {
     <div className="select-none">
       <div
         onClick={() => setFilterOpen((prev) => !prev)}
-        className="flex items-center justify-center mt-20 hover:cursor-pointer"
+        className="flex items-center justify-center gap-2 mt-20 hover:cursor-pointer"
       >
         <span className="text-14">필터</span>
-        <svg
-          className="w-16 h-16"
-          viewBox="0 0 22 22"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          stroke="#000000"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          {filterOpen ? (
-            <path d="M18 15l-6-6-6 6" />
-          ) : (
-            <path d="M6 9l6 6 6-6" />
-          )}
-        </svg>
+        {filterOpen ? (
+          <ChevronUpIcon className="w-14 h-14" />
+        ) : (
+          <ChevronDownIcon className="w-14 h-14" />
+        )}
       </div>
       {filterOpen ? <SearchFilter filterInfo={filterInfo} /> : null}
       {Object.entries(filterInfo).some(([_, arr]) => arr && arr.length > 0) && (
@@ -111,21 +106,7 @@ const FilterSection = ({ filterInfo }: FilterSectionProps) => {
               onClick={handleFilterReset}
               className="inline-flex gap-5 items-center justify-center px-20 py-10 bg-white border rounded-full border-(--gray-f0) hover:cursor-pointer hover:bg-(--gray-f0)"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#000000"
-              >
-                <path
-                  d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ArrowPathIcon className="w-14 h-14" />
               <span className="text-12 text-nowrap">필터 초기화</span>
             </div>
           </div>
@@ -144,23 +125,12 @@ const FilterInfoDiv = ({
   children,
 }: FilterInfoDivProps) => {
   return (
-    <div className="flex items-center justify-center px-12 py-8 border rounded-5 border-(--light-main) text-12">
+    <div className="flex items-center justify-center gap-5 px-12 py-8 border rounded-5 border-(--light-main) text-12">
       {children}
-      <svg
+      <XMarkIcon
         onClick={handleFilterDelete}
-        className="ml-5 stroke-(--gray-78) hover:stroke-black hover:cursor-pointer"
-        xmlns="http://www.w3.org/2000/svg"
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
+        className="w-14 h-14 stroke-(--gray-78) hover:stroke-black hover:cursor-pointer"
+      />
     </div>
   );
 };

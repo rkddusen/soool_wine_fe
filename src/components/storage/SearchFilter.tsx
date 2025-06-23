@@ -3,6 +3,8 @@ import { Filter } from "@/models/Filter";
 import { FILTER_TASTE, FILTER_TASTEDEGREE } from "@/data/Filter";
 import { WINETYPE_ARRAY } from "@/data/Wine";
 import { COUNTRY_ARRAY } from "@/data/Country";
+import WineIcon from "@/assets/WineIcon.svg?react";
+import { CheckIcon } from "@heroicons/react/24/outline";
 
 interface SearchFilterProps {
   filterInfo: Filter;
@@ -66,13 +68,7 @@ const FilterWineType = ({ check, handleCheck }: FilterWineTypeProps) => {
             className="relative flex flex-col gap-10 items-center justify-center overflow-hidden bg-white border border-(--gray-f0) sm:w-100 sm:h-100 w-80 h-80 rounded-15 hover:cursor-pointer"
           >
             {check?.includes(v.type) ? <CheckFilter /> : null}
-            <svg
-              className={`w-21 h-28 sm:w-24 sm:h-32 ${v.fill}`}
-              viewBox="0 0 36 48"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M35.8356 3.865V2C35.8356 1.46957 35.646 0.96086 35.3084 0.585787C34.9709 0.210714 34.5132 0 34.0359 0H1.96513C1.48782 0 1.03006 0.210714 0.692546 0.585787C0.355036 0.96086 0.165425 1.46957 0.165425 2V3.865C0.0012024 5.28625 -0.920022 15.2075 4.31937 21.9513C7.11678 25.5513 11.1088 27.5575 16.2008 27.9338V44H7.20227C6.72496 44 6.2672 44.2107 5.92969 44.5858C5.59218 44.9609 5.40257 45.4696 5.40257 46C5.40257 46.5304 5.59218 47.0391 5.92969 47.4142C6.2672 47.7893 6.72496 48 7.20227 48H28.7987C29.276 48 29.7338 47.7893 30.0713 47.4142C30.4088 47.0391 30.5984 46.5304 30.5984 46C30.5984 45.4696 30.4088 44.9609 30.0713 44.5858C29.7338 44.2107 29.276 44 28.7987 44H19.8002V27.9338C24.8922 27.5588 28.8842 25.5513 31.6816 21.9513C36.921 15.2075 35.9975 5.28625 35.8356 3.865ZM3.74459 4.29125C3.75808 4.19489 3.76485 4.09752 3.76483 4H32.2362C32.2361 4.09752 32.2429 4.19489 32.2564 4.29125C32.4507 6.18804 32.4507 8.10321 32.2564 10H3.75134C3.55709 8.10334 3.55483 6.18847 3.74459 4.29125Z" />
-            </svg>
+            <WineIcon className={`w-21 h-28 sm:w-24 sm:h-32 ${v.fill}`} />
             <p className="text-12 sm:text-14">{v.title.split(" ")[0]}</p>
           </li>
         ))}
@@ -148,22 +144,9 @@ const FilterCountry = ({ check, handleCheck }: FilterCountryProps) => {
 const CheckFilter = () => {
   return (
     <div className="absolute top-0 left-0 w-full h-full">
-      <div className="w-full h-full opacity-80 bg-(--gray-e0)"></div>
+      <div className="w-full h-full opacity-90 bg-(--gray-e0)"></div>
       <div className="absolute center-absolute">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-18 h-18 sm:w-24 sm:h-24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#000000"
-        >
-          <polyline
-            points="20 6 9 17 4 12"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <CheckIcon className="w-24 h-24 sm:w-28 sm:h-28" />
       </div>
     </div>
   );

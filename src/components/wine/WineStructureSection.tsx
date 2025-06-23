@@ -29,7 +29,7 @@ const WineStructureSection = ({
           <p className="mt-15">와인 구조를 불러오는 데 오류가 발생했습니다.</p>
           <button
             onClick={refetchWine}
-            className="text-14 bg-(--light-main) py-12 px-20 rounded-full mt-20 cursor-pointer"
+            className="text-12 bg-(--light-main) py-12 px-20 rounded-full mt-20 cursor-pointer"
           >
             페이지 새로고침
           </button>

@@ -63,7 +63,6 @@ interface RandomWineBoxComponentProps {
 }
 
 const RandomWineBox = ({ id, wine }: RandomWineBoxComponentProps) => {
-  console.log(wine);
   const countryInfo =
     wine && (COUNTRY_LOOKUP[wine.country] ?? COUNTRY_LOOKUP["etc"]);
   const [isHover, setIsHover] = useState<boolean>(false);
