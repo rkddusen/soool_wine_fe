@@ -1,6 +1,7 @@
+// pages/LayoutPage.tsx
+// 공통 페이지 라우팅
 import { Outlet } from "react-router-dom";
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
+import { Header, Footer } from "@/components";
 
 const LayoutPage = () => {
   return (

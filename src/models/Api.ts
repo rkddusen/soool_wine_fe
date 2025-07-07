@@ -1,7 +1,7 @@
-import { RandomWineType, WineryShortDescription, WineWithWinery } from "./Wine";
+import { TodayWineType, WineryShortDescription, WineWithWinery } from "./Wine";
 
-export interface RandomWineResponse {
-  content: RandomWineType;
+export interface TodayWineResponse {
+  content: TodayWineType;
 }
 
 export interface WineryApiResponse {

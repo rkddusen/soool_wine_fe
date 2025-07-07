@@ -1,19 +1,28 @@
-export type WineStructureKey = "sweetness" | "acidity" | "body" | "tannin";
-export interface WineStructure {
+export type StructureKey = "sweetness" | "acidity" | "body" | "tannin";
+export interface StructureInfo {
   sweetness: number | null;
   acidity: number | null;
   body: number | null;
   tannin: number | null;
+}
+export interface StructureLevel {
+  low: string;
+  high: string;
+}
+export interface Structure {
+  title: string;
+  structure: StructureKey;
+  level: StructureLevel;
 }
 
 export interface Wine {
   id: number;
   ename: string;
   kname: string;
-  type: WineTypeKey;
+  type: TypeKey;
   image: string | null;
   abv: number | null;
-  structure: WineStructure;
+  structure: StructureInfo;
   city: string | null;
   winery: string;
 }
@@ -23,18 +32,16 @@ export interface Winery {
   wineryImage: string | null;
 }
 
-export type WineTypeKey = "red" | "white" | "rose" | "sparkling" | "etc";
-export type WineTypeKeyMain = Exclude<WineTypeKey, "etc">;
+export type TypeKey = "red" | "white" | "rose" | "sparkling" | "etc";
+export type PrimaryTypeKey = Exclude<TypeKey, "etc">;
 
-export interface WineType {
+export interface Type {
   label: string;
   title: string;
-  type: WineTypeKey;
-  bg: string;
-  fill: string;
+  type: TypeKey;
 }
 
-export type RandomWineType = Record<WineTypeKeyMain, WineWithWinery>;
+export type TodayWineType = Record<PrimaryTypeKey, WineWithWinery>;
 
 export interface WineryShortDescription extends Winery {
   shortDescription: string;
