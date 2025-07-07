@@ -1,11 +1,9 @@
-import LoginSection from "../components/login/LoginSection";
+// pages/LoginPage.tsx
+// 로그인 페이지 라우팅
+import { Login } from "@/features/login";
 
 const LoginPage = () => {
-  return (
-    <div className="bg-(--lighter-main)">
-      <LoginSection />
-    </div>
-  );
+  return <Login />;
 };
 
 export default LoginPage;

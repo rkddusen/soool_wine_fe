@@ -1,7 +1,7 @@
 import { Filter } from "@/models/Filter";
-import { FILTER_TASTE } from "@/data/Filter";
-import { WINETYPE_ARRAY } from "@/data/Wine";
-import { COUNTRY_ARRAY } from "@/data/Country";
+import { FILTER_TASTE } from "@/constants/Filter";
+import { TYPE_ARRAY } from "@/constants/Wine";
+import { COUNTRY_ARRAY } from "@/constants/Country";
 
 export const validateFilterKey = (
   filter: Filter,
@@ -22,7 +22,7 @@ export const validateFilterKey = (
 
 type AllowedFilterKeys = keyof Filter;
 export const validateFilter = (filter: Filter): boolean => {
-  const WineTypeValues = WINETYPE_ARRAY.map((item) => item.type);
+  const WineTypeValues = TYPE_ARRAY.map((item) => item.type);
   const TasteValues = Object.keys(FILTER_TASTE[0].level);
   const CountryValues = COUNTRY_ARRAY.map((item) => item.code);
   const allowedValues: Record<AllowedFilterKeys, string[]> = {
