@@ -3,14 +3,14 @@
 import WineIcon from "@/assets/WineIcon.svg?react";
 import { TypeKey } from "@/models/Wine";
 
-interface Props {
+interface TypeBtnProps {
   // 와인 타입 라벨 (ex. Red Wine)
   label: string;
   // 와인 타입 (ex. red)
   type: TypeKey;
 }
 
-const TypeBtn = ({ label, type }: Props) => {
+const TypeBtn = ({ label, type }: TypeBtnProps) => {
   return (
     <>
       <div className="relative rounded-full w-full pb-[100%]">

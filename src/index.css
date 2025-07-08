@@ -52,11 +52,6 @@
   --gray-bb: #bbbbbb;
   --gray-78: #787878;
   --gray-49: #494949;
-  --very-light-degree: #ffd7d7;
-  --light-degree: #ffafaf;
-  --medium-degree: #ff8787;
-  --full-degree: #ff5f5f;
-  --very-full-degree: #ff3737;
   --transparent: #ffffffff;
   --heart-fill: #ff0000;
   --heart-empty: #aaaaaa;
@@ -77,6 +72,11 @@
   --white-wine: #b3b3b3;
   --rose-wine: #ffaca7;
   --sparkling-wine: #f9da37;
+  --very-light-degree: #ffd7d7;
+  --light-degree: #ffafaf;
+  --medium-degree: #ff8787;
+  --full-degree: #ff5f5f;
+  --very-full-degree: #ff3737;
 }
 
 @layer utilities {

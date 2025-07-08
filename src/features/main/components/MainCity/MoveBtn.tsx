@@ -2,7 +2,7 @@
 // 가로 스크롤 이동 버튼
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
-interface Props {
+interface MoveBtnProps {
   // 버튼 클릭 시 실행되는 핸들러
   onClick: () => void;
   // 버튼 활성화 여부
@@ -11,7 +11,7 @@ interface Props {
   direction: "left" | "right";
 }
 
-const MoveBtn = ({ onClick, isActive, direction }: Props) => {
+const MoveBtn = ({ onClick, isActive, direction }: MoveBtnProps) => {
   // direction에 따라 아이콘 결정
   const Icon = direction === "left" ? ChevronLeftIcon : ChevronRightIcon;
   return (

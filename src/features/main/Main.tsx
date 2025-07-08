@@ -8,7 +8,7 @@ const Main = () => {
     <main className="w-full">
       <SearchArea pageTitle={["What a Wonderful", "Wine"]} />
       <WineType />
-      {/* <TodayWine /> */}
+      <TodayWine />
       <MainCity />
     </main>
   );

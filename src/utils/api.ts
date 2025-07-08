@@ -1,7 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import qs from "qs";
 import {
-  RandomWineResponse,
   WinesResponse,
   WineResponse,
   EmailVerificationTokenResponse,
@@ -14,24 +13,14 @@ const HEADERS = {
   "Content-Type": "application/json",
 };
 
-const wineInstance: AxiosInstance = axios.create({
+export const wineInstance: AxiosInstance = axios.create({
   baseURL: BASEURL + "/wine",
   headers: HEADERS,
 });
-const userInstance: AxiosInstance = axios.create({
+export const userInstance: AxiosInstance = axios.create({
   baseURL: BASEURL + "/user",
   headers: HEADERS,
 });
-
-export const getRandomWines = async (): Promise<RandomWineResponse> => {
-  try {
-    const { data } = await wineInstance.get<RandomWineResponse>(`/random`);
-    return data;
-  } catch (error) {
-    console.error("Error api getRandomWines: ", error);
-    throw error;
-  }
-};
 
 export const getWines = async (
   pageIndex: number,
