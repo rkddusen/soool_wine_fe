@@ -5,11 +5,11 @@ import {
   ArrowsRightLeftIcon,
 } from "@heroicons/react/24/outline";
 
-interface Props {
+interface CardFooterProps {
   // 카드 앞/뒤 전환 핸들러
   onFlip(): void;
 }
-const CardFooter = ({ onFlip }: Props) => {
+const CardFooter = ({ onFlip }: CardFooterProps) => {
   return (
     <div className="flex h-40 gap-10">
       {/* '이 지역 와인 보기' 버튼 */}

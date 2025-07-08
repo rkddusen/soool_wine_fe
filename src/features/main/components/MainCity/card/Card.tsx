@@ -6,19 +6,16 @@ import CardFooter from "./CardFooter";
 import { City } from "@/models/Country";
 import { useState } from "react";
 
-interface Props {
+interface CardProps {
   // 도시 객체
   city: City;
 }
-const Card = ({ city }: Props) => {
+const Card = ({ city }: CardProps) => {
   // 카드가 뒤집혀 있는 상태인지 여부
   // true면 뒷면(설명), false면 앞면(도시 정보)
   const [flipped, setFlipped] = useState<boolean>(false);
   return (
-    <li
-      key={city.city}
-      className="overflow-hidden bg-white w-320 shrink-0 h-500 rounded-20"
-    >
+    <li className="overflow-hidden bg-white w-320 shrink-0 h-500 rounded-20">
       <SideFlipCard
         flipped={flipped}
         front={

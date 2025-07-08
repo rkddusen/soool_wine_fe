@@ -1,8 +1,4 @@
-import { TodayWineType, WineryShortDescription, WineWithWinery } from "./Wine";
-
-export interface TodayWineResponse {
-  content: TodayWineType;
-}
+import { WineryShortDescription, WineWithWinery } from "./Wine";
 
 export interface WineryApiResponse {
   content: WineryShortDescription[];
