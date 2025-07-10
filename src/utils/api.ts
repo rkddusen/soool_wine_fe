@@ -1,12 +1,9 @@
 import axios, { AxiosInstance } from "axios";
-import qs from "qs";
 import {
-  WinesResponse,
   WineResponse,
   EmailVerificationTokenResponse,
   LoginTokenResponse,
 } from "../models/Api";
-import { Filter } from "../models/Filter";
 
 const BASEURL = import.meta.env.VITE_API_BASE_URL;
 const HEADERS = {
@@ -21,32 +18,6 @@ export const userInstance: AxiosInstance = axios.create({
   baseURL: BASEURL + "/user",
   headers: HEADERS,
 });
-
-export const getWines = async (
-  pageIndex: number,
-  search: string | null,
-  filter: Filter
-): Promise<WinesResponse> => {
-  try {
-    const params: Record<string, any> = {
-      page: pageIndex - 1,
-      ...(search ? { search } : {}),
-      ...Object.fromEntries(
-        Object.entries(filter).filter(([_, v]) => v && v.length)
-      ),
-    };
-
-    const { data } = await wineInstance.get<WinesResponse>("/wines", {
-      params,
-      paramsSerializer: (params) =>
-        qs.stringify(params, { arrayFormat: "repeat" }),
-    });
-    return data;
-  } catch (error) {
-    console.error("Error api getWines: ", error);
-    throw error;
-  }
-};
 
 export const getWine = async (id: number): Promise<WineResponse> => {
   try {

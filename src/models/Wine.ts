@@ -1,14 +1,16 @@
-export type StructureKey = "sweetness" | "acidity" | "body" | "tannin";
-export interface StructureInfo {
-  sweetness: number | null;
-  acidity: number | null;
-  body: number | null;
-  tannin: number | null;
-}
-export interface StructureLevel {
-  low: string;
-  high: string;
-}
+export const STRUCTURE_KEYS = [
+  "sweetness",
+  "acidity",
+  "body",
+  "tannin",
+] as const;
+export type StructureKey = (typeof STRUCTURE_KEYS)[number];
+export type StructureInfo = Record<StructureKey, number | null>;
+
+export const STRUCTURE_LEVEL_KEYS = ["low", "medium", "high"] as const;
+export type StructureLevelKey = (typeof STRUCTURE_LEVEL_KEYS)[number];
+export type StructureLevel = Record<StructureLevelKey, string>;
+
 export interface Structure {
   title: string;
   structure: StructureKey;
@@ -32,7 +34,8 @@ export interface Winery {
   wineryImage: string | null;
 }
 
-export type TypeKey = "red" | "white" | "rose" | "sparkling" | "etc";
+export const TYPE_KEYS = ["red", "white", "rose", "sparkling", "etc"] as const;
+export type TypeKey = (typeof TYPE_KEYS)[number];
 export type PrimaryTypeKey = Exclude<TypeKey, "etc">;
 
 export interface Type {
