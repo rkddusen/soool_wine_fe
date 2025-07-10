@@ -4,17 +4,17 @@
 import { Link } from "react-router-dom";
 import { WineWithWinery } from "@/models/Wine";
 import { Filter } from "@/models/Filter";
-import { COUNTRY_LOOKUP } from "@/constants/Country";
 import { TYPE_LOOKUP } from "@/constants/Wine";
+import { COUNTRY_LOOKUP } from "@/constants/Country";
 
-interface Props {
+interface WineListBoxProps {
   // 보여줄 와인
   wine: WineWithWinery;
-  // Link의 state로 저장할 필터 객체
-  filterInfo: Filter;
+  // 필터 객체
+  filter: Filter;
 }
 
-const WineListBox = ({ wine, filterInfo }: Props) => {
+const WineListBox = ({ wine, filter }: WineListBoxProps) => {
   // 보여줄 와인 타입
   const nowType = TYPE_LOOKUP[wine.type] ?? TYPE_LOOKUP["etc"];
   // 보여줄 와인 국가
@@ -22,7 +22,7 @@ const WineListBox = ({ wine, filterInfo }: Props) => {
 
   return (
     <div className="max-w-700 w-full lg:w-[calc((100%/2)-20px)] bg-white rounded-15 h-200 hover:cursor-pointer hover:scale-102 duration-300">
-      <Link to={`/wine/${wine.id}`} state={{ filterInfo: filterInfo }}>
+      <Link to={`/wine/${wine.id}`} state={{ filter: filter }}>
         <div className="flex w-full h-full p-20">
           {/* 와인 이미지 영역 */}
           <div className="w-[30%] h-full">

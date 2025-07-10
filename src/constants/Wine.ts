@@ -40,22 +40,22 @@ export const STRUCTURE_ARRAY: Structure[] = [
   {
     title: "당도",
     structure: "sweetness",
-    level: { low: "드라이", high: "스위트" },
+    level: { low: "드라이", medium: "중간", high: "스위트" },
   },
   {
     title: "산도",
     structure: "acidity",
-    level: { low: "낮음", high: "높음" },
+    level: { low: "낮음", medium: "중간", high: "높음" },
   },
   {
     title: "바디",
     structure: "body",
-    level: { low: "라이트", high: "풀바디" },
+    level: { low: "라이트", medium: "중간", high: "풀바디" },
   },
   {
     title: "타닌",
     structure: "tannin",
-    level: { low: "부드러움", high: "떫음" },
+    level: { low: "부드러움", medium: "중간", high: "떫음" },
   },
 ];
 

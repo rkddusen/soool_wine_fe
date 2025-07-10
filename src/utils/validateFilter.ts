@@ -1,3 +1,4 @@
+// utils/validateFilter.ts
 import { Filter } from "@/models/Filter";
 import { FILTER_TASTE } from "@/constants/Filter";
 import { TYPE_ARRAY } from "@/constants/Wine";

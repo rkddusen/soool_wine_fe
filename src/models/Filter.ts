@@ -1,18 +1,8 @@
-export interface Filter {
-  type: string[] | null;
-  sweetness: string[] | null;
-  acidity: string[] | null;
-  body: string[] | null;
-  tannin: string[] | null;
-  country: string[] | null;
-}
+// models/Filter.ts
+import { STRUCTURE_KEYS } from "./Wine";
 
-export interface FilterTaste {
-  taste: keyof Filter;
-  kr: string;
-  level: {
-    low: string;
-    medium: string;
-    high: string;
-  };
-}
+export const FILTER_KEYS = ["type", ...STRUCTURE_KEYS, "country"] as const;
+export type FilterKey = (typeof FILTER_KEYS)[number];
+export type Filter = {
+  [key in FilterKey]: string[];
+};

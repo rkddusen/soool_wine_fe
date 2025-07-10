@@ -1,27 +1,55 @@
-import { FilterTaste } from "@/models/Filter";
+// constants/Filter.ts
+import { FILTER_KEYS, FilterKey, Filter } from "@/models/Filter";
+import {
+  STRUCTURE_LEVEL_KEYS,
+  StructureLevelKey,
+  TYPE_KEYS,
+} from "@/models/Wine";
+import { STRUCTURE_ARRAY, TYPE_ARRAY } from "./Wine";
+import { COUNTRY_ARRAY } from "./Country";
 
-export const FILTER_TASTE: FilterTaste[] = [
-  {
-    taste: "sweetness",
-    kr: "당도",
-    level: { low: "드라이", medium: "중간", high: "스위트" },
-  },
-  {
-    taste: "acidity",
-    kr: "산도",
-    level: { low: "낮음", medium: "중간", high: "높음" },
-  },
-  {
-    taste: "body",
-    kr: "바디",
-    level: { low: "라이트", medium: "중간", high: "풀바디" },
-  },
-  {
-    taste: "tannin",
-    kr: "타닌",
-    level: { low: "부드러움", medium: "중간", high: "떫음" },
-  },
-];
+// 초기 필터 값
+export const INIT_FILTER: Filter = FILTER_KEYS.reduce((acc, key) => {
+  acc[key] = [];
+  return acc;
+}, {} as Filter);
+
+// 허용되는 필터 값
+export const ALLOWED_FILTER: {
+  [K in FilterKey]: Set<string>;
+} = {
+  type: new Set(TYPE_KEYS),
+  sweetness: new Set(STRUCTURE_LEVEL_KEYS),
+  acidity: new Set(STRUCTURE_LEVEL_KEYS),
+  body: new Set(STRUCTURE_LEVEL_KEYS),
+  tannin: new Set(STRUCTURE_LEVEL_KEYS),
+  country: new Set(COUNTRY_ARRAY.map((c) => c.code)),
+} as const;
+
+export const FILTER_LABELS: Record<keyof Filter, (value: any) => string> = {
+  type: (value) => `${TYPE_ARRAY.find((w) => w.type === value)?.title}`,
+  sweetness: (value: StructureLevelKey) =>
+    `당도: ${
+      STRUCTURE_ARRAY.find((t) => t.structure === "sweetness")?.level[value]
+    }`,
+  acidity: (value: StructureLevelKey) =>
+    `산도: ${
+      STRUCTURE_ARRAY.find((t) => t.structure === "acidity")?.level[value]
+    }`,
+  body: (value: StructureLevelKey) =>
+    `바디: ${
+      STRUCTURE_ARRAY.find((t) => t.structure === "body")?.level[value]
+    }`,
+  tannin: (value: StructureLevelKey) =>
+    `타닌: ${
+      STRUCTURE_ARRAY.find((t) => t.structure === "tannin")?.level[value]
+    }`,
+  country: (value) =>
+    `${COUNTRY_ARRAY.find((c) => c.code === value)?.emoji} ${
+      COUNTRY_ARRAY.find((c) => c.code === value)?.kr
+    }`,
+};
+
 export const FILTER_TASTEDEGREE = [
   "text-(--light-degree)",
   "text-(--medium-degree)",

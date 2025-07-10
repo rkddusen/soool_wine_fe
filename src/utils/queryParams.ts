@@ -1,3 +1,4 @@
+// utils/queryParams.ts
 import { Filter } from "../models/Filter";
 
 export const getFilterFromQueryParams = (
