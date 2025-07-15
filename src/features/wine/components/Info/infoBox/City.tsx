@@ -1,11 +1,11 @@
 // Info/infoBox/City.tsx
 // 와인 생산 도시
-interface Props {
+interface CityProps {
   region: string;
   city: string | null;
   winery: string;
 }
-const City = ({ region, city, winery }: Props) => {
+const City = ({ region, city, winery }: CityProps) => {
   const wineryList = [region, city, winery].filter((v) => !!v);
   return (
     <div className="bg-white rounded-15 p-20 leading-[1.5]">

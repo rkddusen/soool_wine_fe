@@ -4,12 +4,11 @@
 import { StructureInfo } from "@/models/Wine";
 import { ChartView, DetailView } from "./views";
 
-interface Props {
+interface StructureProps {
   structure: StructureInfo;
-  refetchWine: () => void;
 }
 
-const Structure = ({ structure, refetchWine }: Props) => {
+const Structure = ({ structure }: StructureProps) => {
   return (
     <div className="px-20 mx-auto mt-20 md:px-40 md:max-w-1000 max-w-500">
       <p className="text-48 md:text-54 text-(--main) text-center font-display pt-40 pb-20">
@@ -28,7 +27,7 @@ const Structure = ({ structure, refetchWine }: Props) => {
         <div className="text-center bg-white rounded-15 py-70">
           <p className="mt-15">와인 구조를 불러오는 데 오류가 발생했습니다.</p>
           <button
-            onClick={refetchWine}
+            onClick={() => window.location.reload()}
             className="text-12 bg-(--light-main) py-12 px-20 rounded-full mt-20 cursor-pointer"
           >
             페이지 새로고침

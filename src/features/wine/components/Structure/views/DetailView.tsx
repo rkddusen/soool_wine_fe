@@ -3,20 +3,17 @@
 import { StructureInfo } from "@/models/Wine";
 import DetailViewDegree from "./DetailViewDegree";
 
-interface Props {
+interface DetailViewProps {
   structure: StructureInfo;
 }
 
-const DetailView = ({ structure }: Props) => {
+const DetailView = ({ structure }: DetailViewProps) => {
   return (
     <div className="py-40 px-20 flex flex-col justify-center w-[80%] gap-20">
-      <DetailViewDegree
-        degree={structure.sweetness ?? null}
-        label="sweetness"
-      />
-      <DetailViewDegree degree={structure.acidity ?? null} label="acidity" />
-      <DetailViewDegree degree={structure.body ?? null} label="body" />
-      <DetailViewDegree degree={structure.tannin ?? null} label="tannin" />
+      <DetailViewDegree degree={structure.sweetness} label="sweetness" />
+      <DetailViewDegree degree={structure.acidity} label="acidity" />
+      <DetailViewDegree degree={structure.body} label="body" />
+      <DetailViewDegree degree={structure.tannin} label="tannin" />
     </div>
   );
 };

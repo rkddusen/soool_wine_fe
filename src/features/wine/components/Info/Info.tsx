@@ -3,19 +3,11 @@
 import { WineWithWinery } from "@/models/Wine";
 import { Image, Type, Country, City, Name, Wishlist, Share } from "./infoBox";
 
-interface Props {
+interface InfoProps {
   wineInfo: WineWithWinery;
-  wishlist: boolean;
-  refetchWineWishlist: () => void;
-  isWishlistError: boolean;
 }
 
-const Info = ({
-  wineInfo,
-  wishlist,
-  refetchWineWishlist,
-  isWishlistError,
-}: Props) => {
+const Info = ({ wineInfo }: InfoProps) => {
   return (
     <div className="flex flex-col justify-center gap-20 px-20 mx-auto mt-20 md:flex-row md:px-40 md:max-w-1000 max-w-500">
       <Image image={wineInfo.image} ename={wineInfo.ename} />
@@ -33,12 +25,7 @@ const Info = ({
           abv={wineInfo.abv}
         />
         <div className="flex gap-20 h-60">
-          <Wishlist
-            wineId={wineInfo.id}
-            wishlist={wishlist}
-            refetchWineWishlist={refetchWineWishlist}
-            isWishlistError={isWishlistError}
-          />
+          <Wishlist wineId={wineInfo.id} />
           <Share />
         </div>
       </div>
