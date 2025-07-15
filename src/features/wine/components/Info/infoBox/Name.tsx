@@ -1,11 +1,11 @@
 // Info/infoBox/Name.tsx
 // 와인 이름
-interface Props {
+interface NameProps {
   ename: string;
   kname: string;
   abv: number | null;
 }
-const Name = ({ ename, kname, abv }: Props) => {
+const Name = ({ ename, kname, abv }: NameProps) => {
   return (
     <div className="bg-white rounded-15 p-20 leading-[1.5]">
       <p className="text-24">{ename}</p>

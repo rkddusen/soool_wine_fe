@@ -1,10 +1,7 @@
-import { WineryShortDescription, WineWithWinery } from "./Wine";
+import { WineryShortDescription } from "./Wine";
 
 export interface WineryApiResponse {
   content: WineryShortDescription[];
-}
-export interface WineResponse {
-  content: WineWithWinery;
 }
 
 export interface EmailVerificationTokenResponse {

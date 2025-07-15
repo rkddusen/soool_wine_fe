@@ -3,10 +3,10 @@
 import { TYPE_LOOKUP } from "@/constants/Wine";
 import { TypeKey } from "@/models/Wine";
 
-interface Props {
+interface TypeProps {
   type: TypeKey;
 }
-const Type = ({ type }: Props) => {
+const Type = ({ type }: TypeProps) => {
   const nowWineType = TYPE_LOOKUP[type] ?? TYPE_LOOKUP["etc"];
   return (
     <div

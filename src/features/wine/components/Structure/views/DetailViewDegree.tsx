@@ -3,12 +3,12 @@
 import { STRUCTURE_DEGREE_ARRAY, STRUCTURE_LOOKUP } from "@/constants/Wine";
 import { StructureKey } from "@/models/Wine";
 
-interface Props {
+interface DetailViewDegreeProps {
   degree: number | null;
   label: StructureKey;
 }
 
-const DetailViewDegree = ({ degree, label }: Props) => {
+const DetailViewDegree = ({ degree, label }: DetailViewDegreeProps) => {
   return (
     <div>
       <p className="text-center">{STRUCTURE_LOOKUP[label].title}</p>
@@ -19,36 +19,51 @@ const DetailViewDegree = ({ degree, label }: Props) => {
               {degree >= 1 && (
                 <div
                   className={`absolute top-0 left-0 w-1/5 h-full ${
-                    STRUCTURE_DEGREE_ARRAY[0]
-                  } ${degree <= 1 && "rounded-r-full"}`}
+                    degree <= 1 && "rounded-r-full"
+                  }`}
+                  style={{
+                    backgroundColor: `var(--${STRUCTURE_DEGREE_ARRAY[0]}`,
+                  }}
                 />
               )}
               {degree >= 2 && (
                 <div
                   className={`absolute top-0 left-1/5 w-1/5 h-full ${
-                    STRUCTURE_DEGREE_ARRAY[1]
-                  } ${degree <= 2 && "rounded-r-full"}`}
+                    degree <= 2 && "rounded-r-full"
+                  }`}
+                  style={{
+                    backgroundColor: `var(--${STRUCTURE_DEGREE_ARRAY[1]}`,
+                  }}
                 />
               )}
               {degree >= 3 && (
                 <div
                   className={`absolute top-0 left-2/5 w-1/5 h-full ${
-                    STRUCTURE_DEGREE_ARRAY[2]
-                  } ${degree <= 3 && "rounded-r-full"}`}
+                    degree <= 3 && "rounded-r-full"
+                  }`}
+                  style={{
+                    backgroundColor: `var(--${STRUCTURE_DEGREE_ARRAY[2]}`,
+                  }}
                 />
               )}
               {degree >= 4 && (
                 <div
                   className={`absolute top-0 left-3/5 w-1/5 h-full ${
-                    STRUCTURE_DEGREE_ARRAY[3]
-                  } ${degree <= 4 && "rounded-r-full"}`}
+                    degree <= 4 && "rounded-r-full"
+                  }`}
+                  style={{
+                    backgroundColor: `var(--${STRUCTURE_DEGREE_ARRAY[3]}`,
+                  }}
                 />
               )}
               {degree >= 5 && (
                 <div
                   className={`absolute top-0 left-4/5 w-1/5 h-full ${
-                    STRUCTURE_DEGREE_ARRAY[4]
-                  } ${degree <= 5 && "rounded-r-full"}`}
+                    degree <= 5 && "rounded-r-full"
+                  }`}
+                  style={{
+                    backgroundColor: `var(--${STRUCTURE_DEGREE_ARRAY[4]}`,
+                  }}
                 />
               )}
             </>

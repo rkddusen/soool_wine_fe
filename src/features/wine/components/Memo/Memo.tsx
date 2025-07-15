@@ -5,55 +5,38 @@ import { useState } from "react";
 import useMeasure from "react-use-measure";
 import { motion } from "framer-motion";
 import LoadingBlack from "@/assets/LoadingBlack.svg?react";
-import { useMutation } from "@tanstack/react-query";
-import { postWineMemo } from "@/utils/api";
-import toast from "react-hot-toast";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   ArrowPathIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
+import { useWineMemo } from "../../hooks/useWineMemo";
 
-interface Props {
+interface MemoProps {
+  // 와인 아이디
   wineId: number;
-  memo: string[] | null;
-  isWineMemoError: boolean;
-  refetchWineMemo: () => void;
-  isWineMemoLoading: boolean;
 }
-const Memo = ({
-  wineId,
-  memo,
-  isWineMemoError,
-  refetchWineMemo,
-  isWineMemoLoading,
-}: Props) => {
+const Memo = ({ wineId }: MemoProps) => {
   const [isMemoOpen, setIsMemoOpen] = useState<boolean>(false);
   const [ref, { height }] = useMeasure();
-  const [memoInput, setMemoInput] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [input, setInput] = useState<string>("");
 
-  const callPostWineMemo = async (memo: string): Promise<void> => {
-    await postWineMemo(wineId, memo);
-  };
+  const {
+    data: memo,
+    isLoading,
+    isError,
+    refetch,
+    WineMemoMutation,
+  } = useWineMemo(wineId);
 
-  const mutation = useMutation<void, Error, string>({
-    mutationFn: callPostWineMemo,
-    onMutate: () => setLoading(true),
-    onSuccess: () => setMemoInput(""),
-    onError: (error) => {
-      toast.error("서버와 문제가 생겼어요. 잠시 후 다시 시도해주세요.");
-      console.log("Error postWineMemo:", error);
-    },
-    onSettled: () => {
-      refetchWineMemo();
-      setLoading(false);
-    },
-  });
-
-  const handleSummitWineMemo = () => {
-    mutation.mutate(memoInput);
+  // 메모 등록
+  const onSummitWineMemo = () => {
+    if (!input.trim()) {
+      return;
+    }
+    WineMemoMutation(input);
+    setInput("");
   };
 
   return (
@@ -78,7 +61,7 @@ const Memo = ({
         <div ref={ref} className="py-10">
           <div className="px-20 py-20 bg-white rounded-15">
             <div className="flex items-center justify-center">
-              {isWineMemoLoading || loading ? (
+              {isLoading ? (
                 <div className="py-50">
                   <LoadingBlack stroke="black"></LoadingBlack>
                 </div>
@@ -104,10 +87,10 @@ const Memo = ({
                     </ul>
                   ) : (
                     <>
-                      {isWineMemoError ? (
+                      {isError ? (
                         <div className="py-50">
                           <button
-                            onClick={refetchWineMemo}
+                            onClick={() => refetch()}
                             className="flex items-center justify-center w-36 h-36 mx-auto rounded-full bg-(--gray-e0) cursor-pointer"
                           >
                             <ArrowPathIcon className="w-18 h-18" />
@@ -130,13 +113,14 @@ const Memo = ({
               <textarea
                 rows={3}
                 className="w-full resize-none outline-0"
-                value={memoInput}
-                onChange={(e) => setMemoInput(e.target.value)}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
                 placeholder="메모를 작성해주세요:)"
               ></textarea>
               <div className="flex justify-end mt-10">
                 <button
-                  onClick={handleSummitWineMemo}
+                  onClick={onSummitWineMemo}
+                  disabled={!input.trim()}
                   className="bg-(--memo) px-20 py-10 rounded-5 select-none hover:cursor-pointer text-14"
                 >
                   저장

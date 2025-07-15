@@ -2,10 +2,10 @@
 // 와인 생산 국가
 import { COUNTRY_LOOKUP } from "@/constants/Country";
 
-interface Props {
+interface CountryProps {
   country: string;
 }
-const Country = ({ country }: Props) => {
+const Country = ({ country }: CountryProps) => {
   const nowCountry = COUNTRY_LOOKUP[country] ?? COUNTRY_LOOKUP["etc"];
   return (
     <div className="flex gap-20 h-80">
