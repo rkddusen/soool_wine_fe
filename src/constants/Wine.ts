@@ -2,29 +2,34 @@ import { Structure, StructureKey, Type, TypeKey } from "@/models/Wine";
 
 export const TYPE_ARRAY: Type[] = [
   {
-    label: "Red Wine",
-    title: "레드 와인",
     type: "red",
+    label: "Red Wine",
+    name: "레드 와인",
+    shortName: "레드",
   },
   {
-    label: "White Wine",
-    title: "화이트 와인",
     type: "white",
+    label: "White Wine",
+    name: "화이트 와인",
+    shortName: "화이트",
   },
   {
-    label: "Rose Wine",
-    title: "로제 와인",
     type: "rose",
+    label: "Rose Wine",
+    name: "로제 와인",
+    shortName: "로제",
   },
   {
-    label: "Sparkling Wine",
-    title: "스파클링 와인",
     type: "sparkling",
+    label: "Sparkling Wine",
+    name: "스파클링 와인",
+    shortName: "스파클링",
   },
   {
-    label: "Etc Wine",
-    title: "기타 와인",
     type: "etc",
+    label: "Etc Wine",
+    name: "기타 와인",
+    shortName: "기타",
   },
 ];
 

@@ -27,7 +27,7 @@ export const ALLOWED_FILTER: {
 } as const;
 
 export const FILTER_LABELS: Record<keyof Filter, (value: any) => string> = {
-  type: (value) => `${TYPE_ARRAY.find((w) => w.type === value)?.title}`,
+  type: (value) => `${TYPE_ARRAY.find((w) => w.type === value)?.name}`,
   sweetness: (value: StructureLevelKey) =>
     `당도: ${
       STRUCTURE_ARRAY.find((t) => t.structure === "sweetness")?.level[value]

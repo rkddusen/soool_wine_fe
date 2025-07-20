@@ -3,6 +3,7 @@
 import { useParams } from "react-router-dom";
 import { Info, Memo, Structure } from "./components";
 import { useWine } from "./hooks/useWine";
+import Relation from "./components/Relation";
 
 const Wine = () => {
   const { id } = useParams();
@@ -19,6 +20,7 @@ const Wine = () => {
       <Info wineInfo={wine} />
       <Memo wineId={wine.id} />
       <Structure structure={wine.structure} />
+      <Relation wineId={wine.id} type={wine.type} country={wine.country} />
     </>
   );
 };

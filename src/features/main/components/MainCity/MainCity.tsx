@@ -3,8 +3,8 @@
 import { useRef } from "react";
 import { CITY } from "@/constants/City";
 import { Card } from "./card";
-import MoveBtn from "./MoveBtn";
-import { useHorizontalScroll } from "@/features/main/hooks/useHorizontalScroll";
+import HorizontalMoveBtn from "@/components/HorizontalMoveBtn";
+import { useHorizontalScroll } from "@/hooks/useHorizontalScroll";
 
 // 카드 하나의 가로 길이 (320px) + 카드 간 gap (30px) = 350px
 const SCROLL_UNIT = 350;
@@ -34,12 +34,12 @@ const MainCity = () => {
       </div>
       {/* 가로 스크롤 이동 버튼 영역 */}
       <div className="flex justify-end px-20 mx-auto gap-15 md:px-40 max-w-1280">
-        <MoveBtn
+        <HorizontalMoveBtn
           onClick={() => scrollMove("left")}
           isActive={isScrollBtnActive.left}
           direction="left"
         />
-        <MoveBtn
+        <HorizontalMoveBtn
           onClick={() => scrollMove("right")}
           isActive={isScrollBtnActive.right}
           direction="right"

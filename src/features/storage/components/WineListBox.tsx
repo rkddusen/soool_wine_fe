@@ -35,10 +35,10 @@ const WineListBox = ({ wine, filter }: WineListBoxProps) => {
           <div className="w-[70%] break-keep shrink-0 px-10 flex flex-col gap-5">
             <div>
               <span
-                className={`inline-block text-12 text-white py-6 px-8 rounded-5`}
+                className={`text-12 type-box`}
                 style={{ backgroundColor: `var(--${nowType.type}-wine)` }}
               >
-                {nowType.title}
+                {nowType.name}
               </span>
             </div>
             <div>

@@ -22,7 +22,7 @@ export const getWines = async (
     ),
   };
 
-  const { data } = await wineInstance.get<WinesResponse>("/wines", {
+  const { data } = await wineInstance.get<WinesResponse>("/", {
     params,
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: "repeat" }),
