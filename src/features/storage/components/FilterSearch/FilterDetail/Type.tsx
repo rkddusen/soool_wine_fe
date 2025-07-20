@@ -28,7 +28,7 @@ const Type = ({ check, selectFilter }: TypeProps) => {
               className={`w-21 h-28 sm:w-24 sm:h-32`}
               style={{ fill: `var(--${v.type}-wine)` }}
             />
-            <p className="text-12 sm:text-14">{v.title.split(" ")[0]}</p>
+            <p className="text-12 sm:text-14">{v.name}</p>
           </li>
         ))}
       </ul>

@@ -93,6 +93,12 @@
     left: 50%;
     transform: translateX(-50%);
   }
+  .type-box {
+    display: inline-block;
+    color: white;
+    padding: 6px 8px;
+    border-radius: 5px;
+  }
 }
 
 @font-face {

@@ -1,5 +1,5 @@
 /**
- * features/main/hooks/useWineMemo.ts
+ * features/wine/hooks/useWineMemo.ts
  * 와인 아이디로 해당 와인의 메모를 가져오고 저장하는 커스텀 훅
  * - 캐시 키: ["wine-memo"]
  * - get 요청 성공 시 string[] 반환

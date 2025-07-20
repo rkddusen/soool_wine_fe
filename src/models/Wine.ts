@@ -39,9 +39,10 @@ export type TypeKey = (typeof TYPE_KEYS)[number];
 export type PrimaryTypeKey = Exclude<TypeKey, "etc">;
 
 export interface Type {
-  label: string;
-  title: string;
   type: TypeKey;
+  label: string;
+  name: string;
+  shortName: string;
 }
 
 export type TodayWineType = Record<PrimaryTypeKey, WineWithWinery>;
