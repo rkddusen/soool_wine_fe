@@ -7,7 +7,3 @@ export interface WineryApiResponse {
 export interface EmailVerificationTokenResponse {
   token: string;
 }
-
-export interface LoginTokenResponse {
-  token: string;
-}
