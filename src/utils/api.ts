@@ -1,8 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import {
-  EmailVerificationTokenResponse,
-  LoginTokenResponse,
-} from "../models/Api";
+import { EmailVerificationTokenResponse } from "../models/Api";
 
 const BASEURL = import.meta.env.VITE_API_BASE_URL;
 const HEADERS = {
@@ -74,25 +71,6 @@ export const postUsers = async (
     });
   } catch (error) {
     console.error("Error api postUsers: ", error);
-    throw error;
-  }
-};
-
-export const postLogin = async (
-  id: string,
-  password: string
-): Promise<LoginTokenResponse> => {
-  try {
-    const { data } = await userInstance.post<LoginTokenResponse>(
-      `/auth/login`,
-      {
-        id,
-        password,
-      }
-    );
-    return data;
-  } catch (error) {
-    console.error("Error api postLogin: ", error);
     throw error;
   }
 };
