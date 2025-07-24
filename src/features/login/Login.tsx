@@ -2,7 +2,8 @@
 // 로그인 페이지
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LoginFooter, IdInput, LoginHelp, PasswordInput } from "./components";
+import { IdInput, LoginHelp, PasswordInput } from "./components";
+import { LoginFooter, NextBtn } from "@/components";
 import { useLogin } from "./hooks/useLogin";
 import { useLoginform } from "./hooks/useLoginForm";
 import SooolLogo from "/src/assets/SooolLogo.svg?react";
@@ -134,13 +135,13 @@ const Login = () => {
               {error && <p className="text-red-500 text-14">{error}</p>}
             </div>
             {/* 로그인 버튼 */}
-            <button
-              disabled={isLoading}
-              onClick={handleLogin}
-              className="flex items-center justify-center w-full mt-10 h-50 rounded-15 bg-(--gray-49) hover:cursor-pointer"
-            >
-              <span className="text-white text-16">로그인</span>
-            </button>
+            <div className="w-full flex gap-10 mt-20 h-50">
+              <NextBtn
+                isLoading={isLoading}
+                onClick={handleLogin}
+                text="로그인"
+              />
+            </div>
           </div>
           {/* 아이디 찾기, 비밀번호 찾기, 회원가입 메뉴 */}
           <LoginHelp />
