@@ -9,7 +9,7 @@ const City = ({ region, city, winery }: CityProps) => {
   const wineryList = [region, city, winery].filter((v) => !!v);
   return (
     <div className="bg-white rounded-15 p-20 leading-[1.5]">
-      <p className="font-bold">와이너리</p>
+      <p className="font-medium">와이너리</p>
       <p className="flex flex-wrap">
         {wineryList.map((v, i) => (
           <span key={i}>

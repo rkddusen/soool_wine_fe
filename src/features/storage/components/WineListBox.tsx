@@ -48,10 +48,10 @@ const WineListBox = ({ wine, filter }: WineListBoxProps) => {
                 {wine.region ? " > " + wine.region : null}
               </span>
             </div>
-            <p className="truncate-2 text-16 leading-[120%]">{wine.ename}</p>
-            <p className="truncate-2 text-14 text-(--gray-78) leading-[120%]">
-              {wine.kname}
+            <p className="truncate-2 text-16 leading-[120%] font-light">
+              {wine.ename}
             </p>
+            <p className="truncate-2 text-14 leading-[120%]">{wine.kname}</p>
           </div>
         </div>
       </Link>

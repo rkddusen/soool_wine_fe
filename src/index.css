@@ -10,6 +10,7 @@
   }
   body {
     font-family: "Pretendard";
+    font-weight: 100;
     line-height: 1;
     color: black;
     overflow-x: hidden;
@@ -19,7 +20,8 @@
   }
 }
 @theme {
-  --font-display: "iceJaram-Rg", "sans-serif";
+  --font-sans: "GmarketSansLight", "sans-serif";
+  --font-serif: "Italiana", "serif";
   --spacing: 1px;
   --radius-5: 5px;
   --radius-10: 10px;
@@ -32,13 +34,12 @@
   --text-18: 18px;
   --text-20: 20px;
   --text-24: 24px;
-  --text-28: 28px;
   --text-32: 32px;
   --text-40: 40px;
-  --text-48: 48px;
   --text-54: 54px;
-  --text-64: 64px;
   --text-84: 84px;
+  --text-96: 96px;
+  --text-128: 128px;
   --bg-linear: #ffeeee, #f6f6f6;
   --main: #ff8080;
   --dark-main: #ee6c6c;
@@ -102,9 +103,9 @@
 }
 
 @font-face {
-  font-family: "iceJaram-Rg";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/iceJaram-Rg.woff2")
-    format("woff2");
+  font-family: "GmarketSansLight";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }

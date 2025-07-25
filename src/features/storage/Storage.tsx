@@ -3,8 +3,7 @@
 import NoResultsFound from "@/assets/NoResultsFound.svg?react";
 import LoadingWineFind from "@/assets/LoadingWineFind.svg?react";
 import LoadingCircle from "@/assets/LoadingCircle.svg?react";
-import { SearchArea } from "@/components";
-import { FilterSearch, WineListBox } from "./components";
+import { SearchArea, FilterSearch, WineListBox } from "./components";
 import { useSearchQuery } from "./hooks/useSearchQuery";
 import { useFilterQuery } from "./hooks/useFilterQuery";
 import { useWines } from "./hooks/useWines";
@@ -20,7 +19,7 @@ const Storage = () => {
   return (
     <section>
       <div className="px-20 mx-auto md:px-40 max-w-1280">
-        <SearchArea pageTitle={["와인창고"]} />
+        <SearchArea />
         <FilterSearch filter={filter} />
       </div>
       {!isError ? (
@@ -28,7 +27,7 @@ const Storage = () => {
           {!isLoading ? (
             <>
               <div className="flex items-center px-10 h-60">
-                <p className="text-14 text-(--gray-78)">
+                <p className="text-14 text-(--gray-78) font-medium">
                   {totalElements} Wines
                 </p>
               </div>

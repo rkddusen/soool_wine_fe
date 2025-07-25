@@ -13,7 +13,7 @@ interface CountryProps {
 const Country = ({ check, selectFilter }: CountryProps) => {
   return (
     <div className="mt-40 text-center">
-      <p className="mb-20 font-bold text-25">Country</p>
+      <p className="mb-20 font-medium text-25">Country</p>
       <ul className="flex flex-wrap justify-center gap-10 px-10">
         {COUNTRY_ARRAY.map((v, i) => (
           <li

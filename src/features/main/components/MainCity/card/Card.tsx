@@ -23,7 +23,9 @@ const Card = ({ city }: CardProps) => {
           <div className="flex flex-col justify-between w-full h-full p-20">
             <CardHeader country={city.country} />
             <div>
-              <p className="tracking-wider text-center text-24">{city.city}</p>
+              <p className="tracking-wider text-center text-24 font-serif">
+                {city.city}
+              </p>
               <p className="mt-10 text-center">{city.kname}</p>
               <img
                 className="object-cover w-full my-20 h-200 rounded-20"

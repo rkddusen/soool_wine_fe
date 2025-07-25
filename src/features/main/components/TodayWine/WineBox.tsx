@@ -28,12 +28,12 @@ const WineBox = ({ type, wine }: WineBoxProps) => {
           className={`shrink-0 w-[45%] max-w-200 h-50 flex flex-row justify-center items-center rounded-15 text-white`}
           style={{ backgroundColor: `var(--${type}-wine)` }}
         >
-          <span className="text-center text-14 sm:text-16">
+          <span className="text-center text-14 sm:text-16 font-light">
             {TYPE_LOOKUP[type].label}
           </span>
         </div>
         {/* 와인 정보 영역 */}
-        <div className="relative flex items-center justify-center w-full h-full p-10">
+        <div className="relative flex items-center justify-start w-full h-full p-10">
           {wine ? (
             <>
               <div className="pr-[30%] h-full break-keep z-10">
@@ -44,7 +44,7 @@ const WineBox = ({ type, wine }: WineBoxProps) => {
                   <span className="ml-5 text-12 sm:text-14">{wine.region}</span>
                 </div>
                 <div className="mt-5">
-                  <p className="break-words text-14 sm:text-16 line-clamp-2 leading-[120%]">
+                  <p className="break-words text-14 sm:text-16 line-clamp-2 leading-[120%] font-light">
                     {wine.ename}
                   </p>
                   <p className="mt-5 text-12 sm:text-14 text-(--gray-78) line-clamp-2 leading-[120%]">

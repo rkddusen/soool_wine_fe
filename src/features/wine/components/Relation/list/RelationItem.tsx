@@ -27,10 +27,10 @@ const RelationItem = ({ wine }: RelationItemProps) => {
           <span>{country.emoji}</span>
           <span>{country.en}</span>
         </div>
-        <p className="line-clamp-2 text-14 leading-[18px] mt-5">{wine.ename}</p>
-        <p className="line-clamp-2 text-12 leading-[16px] mt-5 text-78-gray">
-          {wine.kname}
+        <p className="line-clamp-2 text-14 leading-[18px] mt-5 font-light">
+          {wine.ename}
         </p>
+        <p className="line-clamp-2 text-12 leading-[16px] mt-5">{wine.kname}</p>
       </div>
     </Link>
   );
