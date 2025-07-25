@@ -15,7 +15,7 @@ interface TypeProps {
 const Type = ({ check, selectFilter }: TypeProps) => {
   return (
     <div className="text-center">
-      <p className="mb-20 font-bold text-25">Wine Type</p>
+      <p className="mb-20 font-medium text-25">Wine Type</p>
       <ul className="flex flex-wrap justify-center w-full gap-10 px-10">
         {TYPE_ARRAY.map((v, i) => (
           <li

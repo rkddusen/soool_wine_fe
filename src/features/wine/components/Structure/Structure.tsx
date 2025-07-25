@@ -11,7 +11,7 @@ interface StructureProps {
 const Structure = ({ structure }: StructureProps) => {
   return (
     <div className="px-20 mx-auto mt-20 md:px-40 md:max-w-1000 max-w-500">
-      <p className="text-48 md:text-54 text-(--main) text-center font-display pt-40 pb-20">
+      <p className="text-32 md:text-40 text-(--main) text-center font-display pt-40 pb-20">
         와인 구조
       </p>
       {structure ? (

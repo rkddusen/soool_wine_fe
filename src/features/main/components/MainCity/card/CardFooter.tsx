@@ -22,7 +22,7 @@ const CardFooter = ({ onFlip }: CardFooterProps) => {
         onClick={onFlip}
         className="shrink-0 w-50 h-full rounded-20 bg-(--gray-f0) flex justify-center items-center cursor-pointer hover:bg-(--gray-e0)"
       >
-        <ArrowsRightLeftIcon className="w-18 h-18" />
+        <ArrowsRightLeftIcon className="w-16 h-16" />
       </button>
     </div>
   );

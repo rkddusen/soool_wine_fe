@@ -4,13 +4,13 @@ import WineIcon from "@/assets/WineIcon.svg?react";
 import { TypeKey } from "@/models/Wine";
 
 interface TypeBtnProps {
-  // 와인 타입 라벨 (ex. Red Wine)
-  label: string;
+  // 와인 타입 이름 (ex. 레드 와인)
+  name: string;
   // 와인 타입 (ex. red)
   type: TypeKey;
 }
 
-const TypeBtn = ({ label, type }: TypeBtnProps) => {
+const TypeBtn = ({ name, type }: TypeBtnProps) => {
   return (
     <>
       <div className="relative rounded-full w-full pb-[100%]">
@@ -23,8 +23,8 @@ const TypeBtn = ({ label, type }: TypeBtnProps) => {
           />
         </div>
       </div>
-      <p className="flex justify-center mt-10 mb-5 text-12 sm:text-14 md:text-16 group-hover:font-medium">
-        {label}
+      <p className="flex justify-center mt-10 mb-5 text-12 sm:text-14 md:text-16 group-hover:font-extralight">
+        {name}
       </p>
     </>
   );

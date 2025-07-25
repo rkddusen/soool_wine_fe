@@ -14,11 +14,11 @@ interface StructureProps {
 const Structure = ({ check, selectFilter }: StructureProps) => {
   return (
     <div className="mt-40 text-center">
-      <p className="mb-20 font-bold text-25">Wine Taste</p>
+      <p className="mb-20 font-medium text-25">Wine Structure</p>
       <ul className="flex flex-col items-center justify-center grid-cols-2 px-10 md:inline-grid gap-x-60">
         {STRUCTURE_ARRAY.map((v, i) => (
           <li key={i} className="px-10 text-center mb-50">
-            <p className="mb-5 text-14">[{v.title}]</p>
+            <p className="mb-10 text-14">[{v.title}]</p>
             <div className="flex flex-wrap justify-center gap-10">
               {Object.entries(v.level).map(([levelKey, label], i2) => (
                 <div

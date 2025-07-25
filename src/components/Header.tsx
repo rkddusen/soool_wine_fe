@@ -66,6 +66,7 @@ const Header = () => {
         <Link to="/" className="h-20">
           <SooolLogoWine className="h-full" />
         </Link>
+        {/* 768 <= */}
         <div className="items-center justify-end hidden h-40 md:flex">
           {isLogin ? (
             <>
@@ -86,6 +87,7 @@ const Header = () => {
             </span>
           )}
         </div>
+        {/* < 768 */}
         <div className="block md:hidden">
           <Bars3Icon
             onClick={() => setIsMenuOpen(true)}

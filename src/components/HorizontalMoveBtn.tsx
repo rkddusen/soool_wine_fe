@@ -30,7 +30,7 @@ const HorizontalMoveBtn = ({
     >
       {/* 방향에 맞는 icon */}
       <Icon
-        className={`w-20 h-20 ${
+        className={`w-18 h-18 ${
           isActive ? "stroke-black" : "stroke-(--gray-c0)"
         }`}
       />

@@ -17,7 +17,7 @@ const WineType = () => {
             >
               <div className="mx-auto cursor-pointer group">
                 <Link to={`/storage?type=${v.type}`}>
-                  <TypeBtn label={v.label} type={v.type} />
+                  <TypeBtn name={v.name} type={v.type} />
                 </Link>
               </div>
             </div>
