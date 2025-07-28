@@ -3,14 +3,14 @@
 // 사용자 등록 성공하면 Complete로 이동
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { User } from "@/models/User";
+import { SignUp } from "@/models/User";
 import { useSignUp } from "../../hooks/useSignUp";
 import { AxiosError } from "axios";
 import NextBtn from "@/components/NextBtn";
 import PrevBtn from "@/components/PrevBtn";
 
 interface FinalLevelProps {
-  user: User;
+  user: SignUp;
   onPrevLevel: () => void;
   onNextLevel: () => void;
 }

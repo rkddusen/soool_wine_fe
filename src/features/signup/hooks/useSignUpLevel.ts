@@ -6,13 +6,13 @@
  */
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { User } from "@/models/User";
+import { SignUp } from "@/models/User";
 import { useNavigate } from "react-router-dom";
 import { useValidForm } from "./useValidForm";
 
 export const useSignUpLevel = (
-  inputValues: User,
-  setInputValues: React.Dispatch<React.SetStateAction<User>>
+  inputValues: SignUp,
+  setInputValues: React.Dispatch<React.SetStateAction<SignUp>>
 ) => {
   const [level, setLevel] = useState<number>(1);
   const navigate = useNavigate();

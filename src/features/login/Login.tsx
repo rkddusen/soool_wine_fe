@@ -1,7 +1,7 @@
 // features/login/Login.tsx
 // 로그인 페이지
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { IdInput, LoginHelp, PasswordInput } from "./components";
 import { LoginFooter, NextBtn } from "@/components";
 import { useLogin } from "./hooks/useLogin";
@@ -9,15 +9,16 @@ import { useLoginform } from "./hooks/useLoginForm";
 import SooolLogo from "/src/assets/SooolLogo.svg?react";
 import { CheckCircleIcon as CheckCircleIconEmpty } from "@heroicons/react/24/outline";
 import { CheckCircleIcon as CheckCircleIconFill } from "@heroicons/react/24/solid";
+import { AxiosError } from "axios";
 
 const Login = () => {
   const idInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const [checkAutoLogin, setCheckAutoLogin] = useState<boolean>(false);
-  // 로그인 버튼을 눌렀을 때 입력창 막기
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectPath = searchParams.get("url") || "/";
   const { isLoading, loginMutation } = useLogin();
   const { idInput, handleChangeId, passwordInput, handleChangePassword } =
     useLoginform();
@@ -33,35 +34,32 @@ const Login = () => {
   }, [idInput, passwordInput]);
 
   const handleLogin = () => {
-    // 입력 잠금
-    setIsDisabled(true);
     setError(null);
 
     // 아이디 비밀번호 빈 값 검증
     if (idInput === "") {
       setError("아이디를 입력해주세요.");
-      setIsDisabled(false);
       return;
     }
-
     if (passwordInput === "") {
       setError("비밀번호를 입력해주세요.");
-      setIsDisabled(false);
       return;
     }
 
     loginMutation(
       { id: idInput, password: passwordInput },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           // 로그인
+          navigate(redirectPath, { replace: true });
         },
-        onError: (error) => {
+        onError: (error: AxiosError) => {
+          if (error.status === 401) {
+            setError("아이디 또는 비밀번호가 잘못됐습니다.");
+            return;
+          }
           console.log("Error postLogin:", error);
           setError("문제가 발생했습니다. 다시 시도해주세요.");
-        },
-        onSettled: () => {
-          setIsDisabled(false);
         },
       }
     );
@@ -98,11 +96,7 @@ const Login = () => {
           >
             <SooolLogo />
           </div>
-          <div
-            className={`mt-30 text-start ${
-              isDisabled && "pointer-events-none"
-            }`}
-          >
+          <div className="mt-30 text-start">
             {/* 로그인 폼 */}
             <div className="mt-10">
               <IdInput
@@ -139,6 +133,7 @@ const Login = () => {
               <NextBtn
                 isLoading={isLoading}
                 onClick={handleLogin}
+                isActive={idInput !== "" && passwordInput !== ""}
                 text="로그인"
               />
             </div>

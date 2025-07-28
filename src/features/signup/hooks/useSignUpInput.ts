@@ -4,10 +4,10 @@
  * - 폼의 onChange 함수와 폼 데이터 반환
  */
 import { useState } from "react";
-import { User } from "@/models/User";
+import { SignUp } from "@/models/User";
 
 export const useSignUpInput = () => {
-  const [inputValues, setInputValues] = useState<User>({
+  const [inputValues, setInputValues] = useState<SignUp>({
     id: "",
     password: "",
     email: "",
@@ -16,7 +16,7 @@ export const useSignUpInput = () => {
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    name: keyof User
+    name: keyof SignUp
   ) => {
     const { value, type } = event.target;
     setInputValues((prev) => ({

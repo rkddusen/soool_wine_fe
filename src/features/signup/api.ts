@@ -1,4 +1,4 @@
-import { User } from "@/models/User";
+import { SignUp } from "@/models/User";
 import { userInstance } from "@/utils/api";
 
 interface EmailVerificationResponse {
@@ -30,7 +30,7 @@ export const postCode = async (
   });
 };
 
-export const postUsers = async (user: User): Promise<void> => {
+export const postUsers = async (user: SignUp): Promise<void> => {
   await userInstance.post<void>(`/`, {
     id: user.id,
     password: user.password,

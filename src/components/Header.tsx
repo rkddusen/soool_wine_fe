@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import SooolLogoWine from "/src/assets/SooolLogoWine.svg?react";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "@/stores/authStore";
+import SooolLogoWine from "/src/assets/SooolLogoWine.svg?react";
 import {
   UserIcon,
   Bars3Icon,
@@ -10,8 +11,8 @@ import {
 
 const Header = () => {
   const [isBorder, setIsBorder] = useState<boolean>(false);
-  const [isLogin, setIsLogin] = useState<boolean>(false); // 로그인 변수는 최상위 컴포넌트에서 props로 받기
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     if (window.scrollY === 0) {
@@ -42,14 +43,8 @@ const Header = () => {
     }
   }, [isMenuOpen]);
 
-  ////////////
-  useEffect(() => {
-    setIsLogin(true);
-  }, []);
-  ////////////
-
-  const moveLogout = (): void => {
-    setIsLogin(false);
+  const handleLogout = () => {
+    // 로그아웃
   };
 
   const moveMyPage = (): void => {
@@ -68,10 +63,10 @@ const Header = () => {
         </Link>
         {/* 768 <= */}
         <div className="items-center justify-end hidden h-40 md:flex">
-          {isLogin ? (
+          {user ? (
             <>
               <span
-                onClick={moveLogout}
+                onClick={handleLogout}
                 className="mr-15 text-nowrap shrink-0 text-12 hover:cursor-pointer"
               >
                 로그아웃
@@ -89,17 +84,16 @@ const Header = () => {
         </div>
         {/* < 768 */}
         <div className="block md:hidden">
-          <Bars3Icon
-            onClick={() => setIsMenuOpen(true)}
-            className="w-30 h-30 stroke-(--main) hover:cursor-pointer"
-          />
+          <button onClick={() => setIsMenuOpen(true)}>
+            <Bars3Icon className="w-30 h-30 stroke-(--main) hover:cursor-pointer" />
+          </button>
           <div
-            className={`absolute overflow-y-auto overflow-x-hidden  md:hidden w-full h-[100vh] bg-white top-0 ${
-              isMenuOpen ? "flex flex-col left-0" : "none left-full"
-            } transition-left duration-500`}
+            className={`absolute overflow-y-auto overflow-x-hidden w-full h-[100vh] left-0 top-0 ${
+              isMenuOpen ? "translate-x-0" : "translate-x-full"
+            } transition-transform duration-500`}
           >
-            <div className="shrink-0 h-80">
-              <div className="flex flex-row items-center justify-between w-full h-full px-20 mx-auto md:px-40 xl:w-1280">
+            <div className={`flex flex-col w-full h-full bg-white`}>
+              <div className="shrink-0 h-80 flex flex-row items-center justify-between w-full px-20 mx-auto md:px-40 xl:w-1280">
                 <Link
                   to="/"
                   className="h-20"
@@ -107,31 +101,23 @@ const Header = () => {
                 >
                   <SooolLogoWine className="h-full" />
                 </Link>
-                <XMarkIcon
-                  onClick={() => setIsMenuOpen(false)}
-                  className="w-30 h-30 stroke-(--main) hover:cursor-pointer"
-                />
+                <button onClick={() => setIsMenuOpen(false)}>
+                  <XMarkIcon className="w-30 h-30 stroke-(--main) hover:cursor-pointer" />
+                </button>
               </div>
-            </div>
-            <div className="h-full px-20">
-              <div className="flex flex-col w-full h-full">
-                {isLogin ? (
+              <div className="h-full px-20 flex flex-col w-full">
+                {user ? (
                   <div className="flex flex-wrap items-center justify-between w-full px-20 py-10 break-keep shrink-0 min-h-60 rounded-15 bg-(--light-main)">
-                    <div className="flex items-center max-w-full py-10 shrink-0">
-                      <UserIcon
-                        onClick={moveMyPage}
-                        className="w-20 h-20 stroke-(--main) hover:cursor-pointer"
-                      />
-                      <span className="pl-5">"닉네임" 님 환영합니다.</span>
+                    <div className="flex items-center gap-10 max-w-full py-10 shrink-0">
+                      <UserIcon className="w-20 h-20 stroke-(--main)" />
+                      <span>"닉네임" 님 환영합니다.</span>
                     </div>
-                    <div className="text-center text-12 shrink-0">
-                      <span
-                        onClick={moveLogout}
-                        className="hover:cursor-pointer"
-                      >
-                        로그아웃
-                      </span>
-                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="text-12 shrink-0 hover:cursor-pointer"
+                    >
+                      로그아웃
+                    </button>
                   </div>
                 ) : (
                   <Link to="/login">
@@ -160,7 +146,7 @@ const Header = () => {
                       <span>주변와인</span>
                     </li>
                   </Link>
-                  {isLogin ? (
+                  {user ? (
                     <Link to={"/place"} onClick={() => setIsMenuOpen(false)}>
                       <li className="py-10 mt-30 hover:text-(--main)">
                         <span>마이페이지</span>
