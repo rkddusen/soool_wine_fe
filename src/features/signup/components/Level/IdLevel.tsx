@@ -3,7 +3,7 @@
 // 아이디 검증에 성공하면 PasswordLevel로 이동
 import { useEffect, useState } from "react";
 import { useIdExists } from "../../hooks/useIdExists";
-import { User } from "@/models/User";
+import { SignUp } from "@/models/User";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { AxiosError } from "axios";
 import { useValidForm } from "../../hooks/useValidForm";
@@ -14,7 +14,7 @@ interface IdLevelProps {
   value: string;
   onChange: (
     event: React.ChangeEvent<HTMLInputElement>,
-    name: keyof User
+    name: keyof SignUp
   ) => void;
   onPrevLevel: () => void;
   onNextLevel: () => void;

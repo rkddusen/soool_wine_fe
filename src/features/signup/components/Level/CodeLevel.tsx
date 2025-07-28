@@ -3,7 +3,7 @@
 // 코드는 3분안에 입력해야 하며, 코드 검증에 성공하면 FinalLevel로 이동
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { User } from "@/models/User";
+import { SignUp } from "@/models/User";
 import { useCode } from "../../hooks/useCode";
 import { AxiosError } from "axios";
 import { useCodeTimer } from "../../hooks/useCodeTimer";
@@ -15,7 +15,7 @@ interface CodeLevelProps {
   value: number | "";
   onChange: (
     event: React.ChangeEvent<HTMLInputElement>,
-    name: keyof User
+    name: keyof SignUp
   ) => void;
   onPrevLevel: () => void;
   onNextLevel: () => void;

@@ -3,7 +3,7 @@
 // 이메일 검증에 성공하면 CodeLevel로 이동
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { User } from "@/models/User";
+import { SignUp } from "@/models/User";
 import { AxiosError } from "axios";
 import { useEmail } from "../../hooks/useEmail";
 import { useAutoEmail } from "../../hooks/useAutoEmail";
@@ -15,7 +15,7 @@ interface EmailLevelProps {
   value: string;
   onChange: (
     event: React.ChangeEvent<HTMLInputElement>,
-    name: keyof User
+    name: keyof SignUp
   ) => void;
   onSelectEmail: (email: string) => void;
   onPrevLevel: () => void;

@@ -2,7 +2,7 @@
 // 사용자의 비밀번호를 등록하기 위한 레벨
 // 비밀번호 검증에 성공하면 EmailLevel로 이동
 import { useEffect, useState } from "react";
-import { User } from "@/models/User";
+import { SignUp } from "@/models/User";
 import {
   LockClosedIcon,
   EyeSlashIcon,
@@ -16,7 +16,7 @@ interface PasswordLevelProps {
   value: string;
   onChange: (
     event: React.ChangeEvent<HTMLInputElement>,
-    name: keyof User
+    name: keyof SignUp
   ) => void;
   onPrevLevel: () => void;
   onNextLevel: () => void;

@@ -4,7 +4,8 @@
  * - post 함수 반환
  */
 import { useMutation } from "@tanstack/react-query";
-import { postLogin } from "../api";
+import { useAuthStore } from "@/stores/authStore";
+import { AxiosError } from "axios";
 
 interface loginInput {
   id: string;
@@ -12,9 +13,11 @@ interface loginInput {
 }
 
 export const useLogin = () => {
+  const login = useAuthStore((state) => state.login);
+
   // POST 로그인
-  const mutation = useMutation<string, Error, loginInput>({
-    mutationFn: ({ id, password }) => postLogin(id, password),
+  const mutation = useMutation<void, AxiosError, loginInput>({
+    mutationFn: ({ id, password }) => login(id, password),
   });
 
   return {
