@@ -1,5 +1,5 @@
 /**
- * features/signup/hooks/useValidForm.ts
+ * hooks/useValidForm.ts
  * 회원가입 폼의 유효성 검사를 진행하는 커스텀 훅
  * - 각 폼의 유효성 검사 함수 반환
  */

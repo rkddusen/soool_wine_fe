@@ -6,7 +6,7 @@ import { useIdExists } from "../../hooks/useIdExists";
 import { SignUp } from "@/models/User";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { AxiosError } from "axios";
-import { useValidForm } from "../../hooks/useValidForm";
+import { useValidForm } from "@/hooks/useValidForm";
 import NextBtn from "@/components/NextBtn";
 import PrevBtn from "@/components/PrevBtn";
 

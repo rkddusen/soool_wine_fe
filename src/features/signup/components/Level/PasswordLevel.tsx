@@ -8,7 +8,7 @@ import {
   EyeSlashIcon,
   EyeIcon,
 } from "@heroicons/react/24/outline";
-import { useValidForm } from "../../hooks/useValidForm";
+import { useValidForm } from "@/hooks/useValidForm";
 import NextBtn from "@/components/NextBtn";
 import PrevBtn from "@/components/PrevBtn";
 

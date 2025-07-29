@@ -6,8 +6,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { SignUp } from "@/models/User";
 import { useCode } from "../../hooks/useCode";
 import { AxiosError } from "axios";
-import { useCodeTimer } from "../../hooks/useCodeTimer";
-import { useEmail } from "../../hooks/useEmail";
+import { useCodeTimer } from "@/hooks/useCodeTimer";
+import { useEmailVerification } from "@/hooks/useEmailVerification";
 import NextBtn from "@/components/NextBtn";
 import PrevBtn from "@/components/PrevBtn";
 
@@ -36,7 +36,7 @@ const CodeLevel = ({
     if (error) setError(null);
   }, [value]);
 
-  const { seconds, reset } = useCodeTimer();
+  const { seconds, reset } = useCodeTimer(true);
 
   useEffect(() => {
     if (seconds === 0) {
@@ -80,18 +80,19 @@ const CodeLevel = ({
   };
 
   // 인증 코드 재전송
-  const { mutate: emailMutation, isPending: emailIsPending } = useEmail({
-    onSuccess: (data: string) => {
-      console.log("Email code sent successfully");
-      queryClient.setQueryData(["emailToken"], data);
-      setError(null);
-      reset();
-    },
-    onError: (error: AxiosError) => {
-      console.log("Error post email:", error);
-      setError("문제가 발생했습니다. 다시 시도해주세요.");
-    },
-  });
+  const { mutate: emailMutation, isPending: emailIsPending } =
+    useEmailVerification({
+      onSuccess: (data: string) => {
+        console.log("Email code sent successfully");
+        queryClient.setQueryData(["emailToken"], data);
+        setError(null);
+        reset();
+      },
+      onError: (error: AxiosError) => {
+        console.log("Error post email:", error);
+        setError("문제가 발생했습니다. 다시 시도해주세요.");
+      },
+    });
   const handleReSend = () => {
     if (email === undefined) {
       setError("문제가 발생했습니다. 다시 시도해주세요.");

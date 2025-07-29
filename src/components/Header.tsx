@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/authStore";
 import SooolLogoWine from "/src/assets/SooolLogoWine.svg?react";
 import {
@@ -9,9 +9,14 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 
-const Header = () => {
+interface HeaderProp {
+  noBorder?: boolean;
+}
+
+const Header = ({ noBorder }: HeaderProp) => {
   const [isBorder, setIsBorder] = useState<boolean>(false);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
@@ -54,35 +59,44 @@ const Header = () => {
   return (
     <div
       className={`${
-        isBorder ? "shadow-sm" : "shadow-none"
+        isBorder && !noBorder ? "shadow-sm" : "shadow-none"
       } z-99 fixed top-0 left-0 w-full bg-white h-80`}
     >
       <div className="flex flex-row items-center justify-between w-full h-full px-20 mx-auto md:px-40 max-w-1280">
         <Link to="/" className="h-20">
           <SooolLogoWine className="h-full" />
         </Link>
-        {/* 768 <= */}
+        <div className="absolute top-0 hidden h-full md:block x-center-absolute">
+          <ul className="flex flex-row h-full text-18">
+            <HeaderNav text="와인창고" link="storage" />
+            <HeaderNav text="주변와인" link="map" />
+          </ul>
+        </div>
+        {/* 768 ~ */}
         <div className="items-center justify-end hidden h-40 md:flex">
           {user ? (
             <>
-              <span
+              <Link
+                to="#"
                 onClick={handleLogout}
                 className="mr-15 text-nowrap shrink-0 text-12 hover:cursor-pointer"
               >
                 로그아웃
-              </span>
-              <UserIcon
-                onClick={moveMyPage}
-                className="w-20 h-20 stroke-(--main) hover:cursor-pointer"
-              />
+              </Link>
+              <button onClick={() => navigate("/mypage")}>
+                <UserIcon className="w-20 h-20 stroke-(--main) hover:cursor-pointer" />
+              </button>
             </>
           ) : (
-            <span className="text-nowrap shrink-0 text-12 hover:cursor-pointer">
-              <Link to="/login">로그인</Link>
-            </span>
+            <Link
+              to="/login"
+              className="text-nowrap shrink-0 text-12 hover:cursor-pointer"
+            >
+              로그인
+            </Link>
           )}
         </div>
-        {/* < 768 */}
+        {/* ~ 768 */}
         <div className="block md:hidden">
           <button onClick={() => setIsMenuOpen(true)}>
             <Bars3Icon className="w-30 h-30 stroke-(--main) hover:cursor-pointer" />
@@ -112,12 +126,13 @@ const Header = () => {
                       <UserIcon className="w-20 h-20 stroke-(--main)" />
                       <span>"닉네임" 님 환영합니다.</span>
                     </div>
-                    <button
+                    <Link
+                      to="#"
                       onClick={handleLogout}
                       className="text-12 shrink-0 hover:cursor-pointer"
                     >
                       로그아웃
-                    </button>
+                    </Link>
                   </div>
                 ) : (
                   <Link to="/login">
@@ -147,7 +162,7 @@ const Header = () => {
                     </li>
                   </Link>
                   {user ? (
-                    <Link to={"/place"} onClick={() => setIsMenuOpen(false)}>
+                    <Link to={"/mypage"} onClick={() => setIsMenuOpen(false)}>
                       <li className="py-10 mt-30 hover:text-(--main)">
                         <span>마이페이지</span>
                       </li>
@@ -158,12 +173,6 @@ const Header = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="absolute top-0 hidden h-full md:block x-center-absolute">
-        <ul className="flex flex-row h-full text-18">
-          <HeaderNav text="와인창고" link="storage" />
-          <HeaderNav text="주변와인" link="map" />
-        </ul>
       </div>
     </div>
   );

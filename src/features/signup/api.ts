@@ -1,21 +1,9 @@
 import { SignUp } from "@/models/User";
 import { userInstance } from "@/utils/api";
 
-interface EmailVerificationResponse {
-  token: string;
-}
-
 export const getIdExists = async (id: string): Promise<boolean> => {
   const { data } = await userInstance.get<boolean>(`/id-exists?id=${id}`);
   return data;
-};
-
-export const postEmail = async (email: string): Promise<string> => {
-  const { data } = await userInstance.post<EmailVerificationResponse>(
-    `/email-verification`,
-    { email }
-  );
-  return data.token;
 };
 
 export const postCode = async (

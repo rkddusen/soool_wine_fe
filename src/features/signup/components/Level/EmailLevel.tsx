@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { SignUp } from "@/models/User";
 import { AxiosError } from "axios";
-import { useEmail } from "../../hooks/useEmail";
+import { useEmailVerification } from "@/hooks/useEmailVerification";
 import { useAutoEmail } from "../../hooks/useAutoEmail";
-import { useValidForm } from "../../hooks/useValidForm";
+import { useValidForm } from "@/hooks/useValidForm";
 import NextBtn from "@/components/NextBtn";
 import PrevBtn from "@/components/PrevBtn";
 
@@ -52,7 +52,7 @@ const EmailLevel = ({
 
   const { addressList } = useAutoEmail(value);
 
-  const { mutate, isPending } = useEmail({
+  const { mutate, isPending } = useEmailVerification({
     onSuccess: (data: string) => {
       console.log("Email code sent successfully");
       queryClient.setQueryData(["emailToken"], data);
