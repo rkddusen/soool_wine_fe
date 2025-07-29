@@ -8,6 +8,7 @@ import {
   StoragePage,
   MapPage,
   WinePage,
+  MyPage,
 } from "@/pages";
 
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUpPage />,
+  },
+  {
+    path: `/mypage`,
+    element: <MyPage />,
   },
 ]);
 
