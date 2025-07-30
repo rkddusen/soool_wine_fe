@@ -55,8 +55,16 @@ const Login = () => {
         },
         onError: (error: AxiosError) => {
           if (error.status === 401) {
-            setError("아이디 또는 비밀번호가 잘못됐습니다.");
-            return;
+            if (error.message === "INVALID_CREDENTIALS") {
+              setError("아이디 또는 비밀번호가 잘못됐습니다.");
+              return;
+            }
+            if (error.message === "USER_FETCH_FAILED") {
+              setError(
+                "사용자 정보를 가져오는 데 실패했습니다. 다시 시도해주세요."
+              );
+              return;
+            }
           }
           console.log("Error postLogin:", error);
           setError("문제가 발생했습니다. 다시 시도해주세요.");

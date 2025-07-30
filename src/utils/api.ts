@@ -5,12 +5,31 @@ const HEADERS = {
   "Content-Type": "application/json",
 };
 
-export const wineInstance: AxiosInstance = axios.create({
-  baseURL: BASEURL + "/wines",
-  headers: HEADERS,
-});
-export const userInstance: AxiosInstance = axios.create({
-  baseURL: BASEURL + "/users",
-  headers: HEADERS,
-  withCredentials: true,
-});
+const createInstance = (
+  path: string,
+  isPrivate: boolean = false
+): AxiosInstance => {
+  const instance = axios.create({
+    baseURL: `${BASEURL}/${path}`,
+    headers: HEADERS,
+    withCredentials: isPrivate,
+  });
+
+  if (isPrivate) {
+    instance.interceptors.request.use((config) => {
+      const token = sessionStorage.getItem("accessToken");
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    });
+  }
+
+  return instance;
+};
+
+export const wineInstance = createInstance("wines");
+export const userInstance = createInstance("users");
+export const privateUserInstance = createInstance("users", true);
+export const authInstance = createInstance("auth");
+export const privateAuthInstance = createInstance("auth", true);

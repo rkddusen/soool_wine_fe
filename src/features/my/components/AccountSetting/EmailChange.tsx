@@ -8,7 +8,7 @@ import { useValidForm } from "@/hooks/useValidForm";
 import { useEmailVerification } from "@/hooks/useEmailVerification";
 import { useQueryClient } from "@tanstack/react-query";
 import { useInputs } from "../../hooks/useInputs";
-import { useChangeEmail } from "../../hooks/useChangeEmail";
+import { usePatchEmail } from "../../hooks/usePatchEmail";
 import LoadingWhite from "/src/assets/LoadingWhite.svg?react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { AxiosError } from "axios";
@@ -36,10 +36,10 @@ const EmailChange = () => {
     isPending: emailIsPending,
     isSuccess: codeSended,
   } = useEmailVerification({
-    onSuccess: (data: string) => {
+    onSuccess: () => {
       console.log("Email code sent successfully");
-      queryClient.setQueryData(["emailToken"], data);
       setEmailError(null);
+      setUpdatingError(null);
       // 인증 코드 타이머 시작
       reset();
     },
@@ -67,9 +67,7 @@ const EmailChange = () => {
 
   useEffect(() => {
     if (seconds === 0) {
-      setUpdatingError(
-        "유효시간이 지났습니다. '인증 코드 재전송'을 눌러주세요."
-      );
+      setUpdatingError("유효시간이 지났습니다. 다시 인증해주세요.");
     }
   }, [seconds]);
 
@@ -80,31 +78,31 @@ const EmailChange = () => {
     }
   };
 
-  const { mutate: codeMutate, isPending: codeIsPending } = useChangeEmail({
-    onSuccess: () => {
-      window.location.reload();
-    },
-    onError: (error: AxiosError) => {
-      // 인증 코드가 잘못된 경우
-      if (error.status === 400) {
-        setUpdatingError("올바른 인증 코드가 아닙니다.");
-        return;
-      }
-      console.log("Error post code:", error);
-      setUpdatingError("문제가 발생했습니다. 다시 시도해주세요.");
-    },
-  });
+  const { mutate: updatingMutate, isPending: updatingIsPending } =
+    usePatchEmail({
+      onSuccess: () => {
+        window.location.reload();
+      },
+      onError: (error: AxiosError) => {
+        // 인증 코드가 잘못된 경우
+        if (error.status === 400) {
+          setUpdatingError("올바른 인증 코드가 아닙니다.");
+          return;
+        }
+        console.log("Error post code:", error);
+        setUpdatingError("문제가 발생했습니다. 다시 시도해주세요.");
+      },
+    });
   // 변경하기 버튼 클릭
   const handleChangeClick = () => {
-    const token = queryClient.getQueryData<string>(["emailToken"]);
     const email = queryClient.getQueryData<string>(["email"]);
 
-    if (!token || !email) {
+    if (!email) {
       setUpdatingError("문제가 발생했습니다. 다시 시도해주세요.");
       return;
     }
     if (seconds > 0 && codeValue && !isNaN(Number(codeValue))) {
-      codeMutate({ code: codeValue, token, email });
+      updatingMutate({ code: codeValue, email });
     }
   };
 
@@ -146,7 +144,7 @@ const EmailChange = () => {
             </div>
             <button
               onClick={handleVerifyClick}
-              disabled={emailIsPending || codeIsPending}
+              disabled={emailIsPending || updatingIsPending}
               className={`flex justify-center items-center px-20 shrink-0 h-full text-white rounded-5 text-14 ${
                 emailValue !== ""
                   ? "bg-(--gray-49) hover:cursor-pointer"
@@ -184,7 +182,7 @@ const EmailChange = () => {
             </div>
             <button
               onClick={handleChangeClick}
-              disabled={codeValue === "" || !codeSended}
+              disabled={seconds === 0 || codeValue === "" || !codeSended}
               className={`flex justify-center items-center px-20 shrink-0 h-full text-white rounded-5 text-14 ${
                 seconds && codeValue !== "" && codeSended
                   ? "bg-(--gray-49) hover:cursor-pointer"

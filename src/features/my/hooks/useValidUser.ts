@@ -7,13 +7,14 @@ import { User } from "@/models/User";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export const useValidUser = (user: User | null) => {
+export const useValidUser = (user: User | null, isAuthLoading: boolean) => {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
+    if (isAuthLoading) return;
     if (!user) {
       const currentPath = location.pathname + location.search;
       navigate(`/login?url=${encodeURIComponent(currentPath)}`);
     }
-  }, [user, location, navigate]);
+  }, [user, isAuthLoading, location, navigate]);
 };

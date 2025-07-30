@@ -1,5 +1,5 @@
 import { User } from "@/models/User";
-import { userInstance } from "@/utils/api";
+import { authInstance, privateAuthInstance } from "@/utils/api";
 
 interface LoginResponse {
   accessToken: string;
@@ -9,7 +9,7 @@ export const postLogin = async (
   id: string,
   password: string
 ): Promise<LoginResponse> => {
-  const { data } = await userInstance.post<LoginResponse>(`/auth/login`, {
+  const { data } = await authInstance.post<LoginResponse>(`/login`, {
     id,
     password,
   });
@@ -17,6 +17,6 @@ export const postLogin = async (
 };
 
 export const getMe = async (): Promise<User> => {
-  const { data } = await userInstance.get<User>(`/auth/me`);
+  const { data } = await privateAuthInstance.get<User>(`/me`);
   return data;
 };

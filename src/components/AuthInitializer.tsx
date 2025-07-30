@@ -2,14 +2,11 @@ import { useEffect } from "react";
 import { useAuthStore } from "@/stores/authStore";
 
 const AuthInitializer = () => {
-  // 첫 렌더링 시 accessToken 가져오기
+  // 첫 렌더링 시 로그인 확인
+  const initializeAuth = useAuthStore((state) => state.initializeAuth);
   useEffect(() => {
-    const accessToken = sessionStorage.getItem("accessToken");
-    if (accessToken) {
-      useAuthStore.getState().setAccessToken(accessToken);
-      useAuthStore.getState()._fetchUser();
-    }
-  }, []);
+    initializeAuth();
+  }, [initializeAuth]);
   return null;
 };
 

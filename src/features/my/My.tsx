@@ -9,12 +9,12 @@ import { MYPAGE_MENU } from "@/constants/Menu";
 
 const MyPage = () => {
   const user = useAuthStore((state) => state.user);
+  const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
+  useValidUser(user, isAuthLoading);
+  const { mode, handleClickMenu } = useMode(MYPAGE_MENU.length);
 
   // 로그인되어 있지 않으면
-  useValidUser(user);
-  if (!user) return null;
-
-  const { mode, handleClickMenu } = useMode(MYPAGE_MENU.length);
+  if (isAuthLoading || !user) return null;
   return (
     <div>
       <div className="w-full min-h-[calc(100dvh-200px)]">

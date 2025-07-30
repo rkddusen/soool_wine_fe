@@ -1,12 +1,10 @@
-import { userInstance } from "@/utils/api";
+import { privateUserInstance } from "@/utils/api";
 
 export const patchEmail = async (
   code: number,
-  token: string,
   email: string
 ): Promise<void> => {
-  await userInstance.patch<void>(`/email`, {
-    token,
+  await privateUserInstance.patch<void>(`me/email`, {
     email,
     code,
   });

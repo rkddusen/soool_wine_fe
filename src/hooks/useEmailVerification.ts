@@ -12,7 +12,7 @@ export const useEmailVerification = ({
   onSuccess,
   onError,
 }: {
-  onSuccess: (token: string) => void;
+  onSuccess: () => void;
   onError: (err: AxiosError) => void;
 }) => {
   return useMutation<string, AxiosError, string>({
