@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useMeasure from "react-use-measure";
 import { useAuthStore } from "@/stores/authStore";
-import { useOpenForm } from "../../hooks/useOpenForm";
+import { useToggle } from "@/hooks/useToggle";
 import { useCodeTimer } from "@/hooks/useCodeTimer";
 import { useValidForm } from "@/hooks/useValidForm";
 import { useEmailVerification } from "@/hooks/useEmailVerification";
 import { useQueryClient } from "@tanstack/react-query";
-import { useInputs } from "../../hooks/useInputs";
+import { useEmailInputs } from "../../hooks/useEmailInputs";
 import { usePatchEmail } from "../../hooks/usePatchEmail";
 import LoadingWhite from "/src/assets/LoadingWhite.svg?react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
@@ -16,20 +16,26 @@ import { AxiosError } from "axios";
 const EmailChange = () => {
   const queryClient = useQueryClient();
   const { user } = useAuthStore();
-  const { isOpen, handleIsOpen } = useOpenForm();
+  const { isOpen, toggle } = useToggle();
   const [ref, { height }] = useMeasure();
   const { seconds, reset } = useCodeTimer(false);
-  const { emailValue, codeValue, handleInputChange } = useInputs();
+  const {
+    email,
+    code,
+    handleEmailChange,
+    handleCodeChange,
+    handleCodeKeyDown,
+  } = useEmailInputs();
   const [emailError, setEmailError] = useState<string | null>(null);
   const [updatingError, setUpdatingError] = useState<string | null>(null);
 
   // error상태일 때 폼 변경 시 초기화
   useEffect(() => {
     if (emailError) setEmailError(null);
-  }, [emailValue]);
+  }, [email]);
   useEffect(() => {
     if (updatingError) setUpdatingError(null);
-  }, [codeValue]);
+  }, [code]);
 
   const {
     mutate: emailMutate,
@@ -56,12 +62,12 @@ const EmailChange = () => {
   const { validEmail } = useValidForm();
   // 인증하기 버튼 클릭
   const handleVerifyClick = () => {
-    const _error = validEmail(emailValue);
+    const _error = validEmail(email);
     if (_error) {
       setEmailError(_error);
     } else {
-      queryClient.setQueryData<string>(["email"], emailValue);
-      emailMutate(emailValue);
+      queryClient.setQueryData<string>(["email"], email);
+      emailMutate(email);
     }
   };
 
@@ -70,13 +76,6 @@ const EmailChange = () => {
       setUpdatingError("유효시간이 지났습니다. 다시 인증해주세요.");
     }
   }, [seconds]);
-
-  // 숫자 input특성 상 지수 표기법이나 +/- 기호가 허용되기 때문에 이를 막음
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (["e", "E", "+", "-"].includes(e.key)) {
-      e.preventDefault();
-    }
-  };
 
   const { mutate: updatingMutate, isPending: updatingIsPending } =
     usePatchEmail({
@@ -101,15 +100,15 @@ const EmailChange = () => {
       setUpdatingError("문제가 발생했습니다. 다시 시도해주세요.");
       return;
     }
-    if (seconds > 0 && codeValue && !isNaN(Number(codeValue))) {
-      updatingMutate({ code: codeValue, email });
+    if (seconds > 0 && code && !isNaN(Number(code))) {
+      updatingMutate({ code, email });
     }
   };
 
   return (
     <div className="border border-(--gray-e0) rounded-15 mt-20">
       <div
-        onClick={handleIsOpen}
+        onClick={toggle}
         className="flex justify-between items-center p-30 hover:cursor-pointer"
       >
         <div>
@@ -136,8 +135,8 @@ const EmailChange = () => {
             <div className="w-full h-50 px-15 border border-(--gray-78) focus-within:border-black rounded-5">
               <input
                 type="text"
-                value={emailValue}
-                onChange={handleInputChange}
+                value={email}
+                onChange={handleEmailChange}
                 placeholder="이메일"
                 className="w-full h-full outline-hidden"
               />
@@ -146,7 +145,7 @@ const EmailChange = () => {
               onClick={handleVerifyClick}
               disabled={emailIsPending || updatingIsPending}
               className={`flex justify-center items-center px-20 shrink-0 h-full text-white rounded-5 text-14 ${
-                emailValue !== ""
+                email !== ""
                   ? "bg-(--gray-49) hover:cursor-pointer"
                   : "bg-(--gray-e0)"
               }`}
@@ -162,12 +161,13 @@ const EmailChange = () => {
           <div className="h-50 mt-10 flex gap-10 items-center">
             <div className="w-full flex items-center h-50 px-15 border border-(--gray-78) focus-within:border-black rounded-5">
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
                 pattern="\d*"
-                value={codeValue}
+                value={code}
+                onChange={handleCodeChange}
+                onKeyDown={handleCodeKeyDown}
                 disabled={!codeSended}
-                onKeyDown={handleKeyDown}
-                onChange={handleInputChange}
                 placeholder="인증 코드 6자리"
                 className="w-full h-full border-none outline-hidden"
               />
@@ -182,9 +182,9 @@ const EmailChange = () => {
             </div>
             <button
               onClick={handleChangeClick}
-              disabled={seconds === 0 || codeValue === "" || !codeSended}
+              disabled={seconds === 0 || code === "" || !codeSended}
               className={`flex justify-center items-center px-20 shrink-0 h-full text-white rounded-5 text-14 ${
-                seconds && codeValue !== "" && codeSended
+                seconds && code !== "" && codeSended
                   ? "bg-(--gray-49) hover:cursor-pointer"
                   : "bg-(--gray-e0)"
               }`}

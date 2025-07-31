@@ -1,7 +1,7 @@
 import { privateUserInstance } from "@/utils/api";
 
 export const patchEmail = async (
-  code: number,
+  code: string,
   email: string
 ): Promise<void> => {
   await privateUserInstance.patch<void>(`me/email`, {

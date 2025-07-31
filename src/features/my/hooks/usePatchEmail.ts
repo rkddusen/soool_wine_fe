@@ -10,7 +10,7 @@ import { AxiosError } from "axios";
 
 interface VerifyRequestData {
   email: string;
-  code: number;
+  code: string;
 }
 
 export const usePatchEmail = ({
