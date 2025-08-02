@@ -9,3 +9,12 @@ export const patchEmail = async (
     code,
   });
 };
+export const patchPassword = async (
+  oldPassword: string,
+  newPassword: string
+): Promise<void> => {
+  await privateUserInstance.patch<void>(`me/password`, {
+    oldPassword,
+    newPassword,
+  });
+};

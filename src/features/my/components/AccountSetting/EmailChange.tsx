@@ -130,71 +130,75 @@ const EmailChange = () => {
       >
         <div ref={ref} className="p-30 border-t border-(--gray-e0)">
           {/* 이메일 변경 폼 */}
-          <p className="font-medium">변경할 이메일</p>
-          <div className="h-50 mt-10 flex gap-10 items-center">
-            <div className="w-full h-50 px-15 border border-(--gray-78) focus-within:border-black rounded-5">
-              <input
-                type="text"
-                value={email}
-                onChange={handleEmailChange}
-                placeholder="이메일"
-                className="w-full h-full outline-hidden"
-              />
-            </div>
-            <button
-              onClick={handleVerifyClick}
-              disabled={emailIsPending || updatingIsPending}
-              className={`flex justify-center items-center px-20 shrink-0 h-full text-white rounded-5 text-14 ${
-                email !== ""
-                  ? "bg-(--gray-49) hover:cursor-pointer"
-                  : "bg-(--gray-e0)"
-              }`}
-            >
-              {emailIsPending ? <LoadingWhite /> : "인증하기"}
-            </button>
-          </div>
-          {emailError && (
-            <p className="mt-10 text-red-500 text-14">{emailError}</p>
-          )}
-          {/* 인증 코드 입력 폼 */}
-          <p className="font-medium mt-30">인증 코드</p>
-          <div className="h-50 mt-10 flex gap-10 items-center">
-            <div className="w-full flex items-center h-50 px-15 border border-(--gray-78) focus-within:border-black rounded-5">
-              <input
-                type="text"
-                inputMode="numeric"
-                pattern="\d*"
-                value={code}
-                onChange={handleCodeChange}
-                onKeyDown={handleCodeKeyDown}
-                disabled={!codeSended}
-                placeholder="인증 코드 6자리"
-                className="w-full h-full border-none outline-hidden"
-              />
-              <span
-                className={`text-red-500 text-14 shrink-0 text-nowrap ${
-                  !codeSended && "hidden"
+          <div>
+            <p className="font-medium">변경할 이메일</p>
+            <div className="h-50 mt-10 flex gap-10 items-center">
+              <div className="w-full h-50 px-15 border border-(--gray-78) focus-within:border-black rounded-5">
+                <input
+                  type="text"
+                  value={email}
+                  onChange={handleEmailChange}
+                  placeholder="이메일"
+                  className="w-full h-full outline-hidden"
+                />
+              </div>
+              <button
+                onClick={handleVerifyClick}
+                disabled={emailIsPending || updatingIsPending}
+                className={`flex justify-center items-center px-20 shrink-0 h-full text-white rounded-5 text-14 ${
+                  email !== ""
+                    ? "bg-(--gray-49) hover:cursor-pointer"
+                    : "bg-(--gray-e0)"
                 }`}
               >
-                {String(Math.floor(seconds / 60)).padStart(2, "0")}:
-                {String(seconds % 60).padStart(2, "0")}
-              </span>
+                {emailIsPending ? <LoadingWhite /> : "인증하기"}
+              </button>
             </div>
-            <button
-              onClick={handleChangeClick}
-              disabled={seconds === 0 || code === "" || !codeSended}
-              className={`flex justify-center items-center px-20 shrink-0 h-full text-white rounded-5 text-14 ${
-                seconds && code !== "" && codeSended
-                  ? "bg-(--gray-49) hover:cursor-pointer"
-                  : "bg-(--gray-e0)"
-              }`}
-            >
-              변경하기
-            </button>
+            {emailError && (
+              <p className="mt-10 text-red-500 text-14">{emailError}</p>
+            )}
           </div>
-          {updatingError && (
-            <p className="mt-10 text-red-500 text-14">{updatingError}</p>
-          )}
+          {/* 인증 코드 입력 폼 */}
+          <div>
+            <p className="font-medium mt-30">인증 코드</p>
+            <div className="h-50 mt-10 flex gap-10 items-center">
+              <div className="w-full flex items-center h-50 px-15 border border-(--gray-78) focus-within:border-black rounded-5">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  pattern="\d*"
+                  value={code}
+                  onChange={handleCodeChange}
+                  onKeyDown={handleCodeKeyDown}
+                  disabled={!codeSended}
+                  placeholder="인증 코드 6자리"
+                  className="w-full h-full border-none outline-hidden"
+                />
+                <span
+                  className={`text-red-500 text-14 shrink-0 text-nowrap ${
+                    !codeSended && "hidden"
+                  }`}
+                >
+                  {String(Math.floor(seconds / 60)).padStart(2, "0")}:
+                  {String(seconds % 60).padStart(2, "0")}
+                </span>
+              </div>
+              <button
+                onClick={handleChangeClick}
+                disabled={seconds === 0 || code === "" || !codeSended}
+                className={`flex justify-center items-center px-20 shrink-0 h-full text-white rounded-5 text-14 ${
+                  seconds && code !== "" && codeSended
+                    ? "bg-(--gray-49) hover:cursor-pointer"
+                    : "bg-(--gray-e0)"
+                }`}
+              >
+                변경하기
+              </button>
+            </div>
+            {updatingError && (
+              <p className="mt-10 text-red-500 text-14">{updatingError}</p>
+            )}
+          </div>
         </div>
       </motion.div>
     </div>

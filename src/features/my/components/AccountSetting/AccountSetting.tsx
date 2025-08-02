@@ -1,6 +1,7 @@
 import { useAuthStore } from "@/stores/authStore";
 import EmailChange from "./EmailChange";
-import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import PasswordChange from "./PasswordChange";
 
 const AccountSetting = () => {
   const { user } = useAuthStore();
@@ -12,14 +13,7 @@ const AccountSetting = () => {
       {/* 이메일 수정 */}
       <EmailChange />
       {/* 비밀번호 수정 */}
-      <div className="border border-(--gray-e0) rounded-15 p-30 mt-20 hover:cursor-pointer">
-        <div className="flex justify-between items-center">
-          <div>
-            <p className="font-medium">비밀번호 수정</p>
-          </div>
-          <ChevronDownIcon className="w-24 h-24" />
-        </div>
-      </div>
+      <PasswordChange />
       {/* 회원 탈퇴 */}
       <div className="mt-20 pl-20 inline-flex items-center hover:cursor-pointer">
         <p className="text-14">회원 탈퇴</p>
