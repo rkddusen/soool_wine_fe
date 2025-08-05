@@ -1,5 +1,5 @@
 import { User } from "@/models/User";
-import { authInstance, privateAuthInstance } from "@/utils/api";
+import { privateAuthInstance } from "@/utils/api";
 
 interface LoginResponse {
   accessToken: string;
@@ -9,7 +9,7 @@ export const postLogin = async (
   id: string,
   password: string
 ): Promise<LoginResponse> => {
-  const { data } = await authInstance.post<LoginResponse>(`/login`, {
+  const { data } = await privateAuthInstance.post<LoginResponse>(`/login`, {
     id,
     password,
   });
