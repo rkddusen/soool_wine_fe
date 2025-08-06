@@ -1,5 +1,8 @@
-import { userInstance } from "@/utils/api";
+// apis/userApi.ts
+// 사용자 관련 공통 API 호출을 담당
+import { authInstance, userInstance } from "@/utils/api";
 
+// 이메일 인증 요청
 interface EmailVerificationResponse {
   token: string;
 }
@@ -9,4 +12,9 @@ export const postEmailVerification = async (email: string): Promise<string> => {
     { email }
   );
   return data.token;
+};
+
+// 사용자 로그아웃
+export const postLogout = async (): Promise<void> => {
+  await authInstance.post(`/logout`, {}, { withCredentials: true });
 };

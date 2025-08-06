@@ -8,6 +8,9 @@ import {
   XMarkIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
+import { useLogout } from "@/hooks/useLogout";
+import toast from "react-hot-toast";
+import { set } from "lodash";
 
 interface HeaderProp {
   noBorder?: boolean;
@@ -18,14 +21,21 @@ const Header = ({ noBorder }: HeaderProp) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
+  const { logoutMutation } = useLogout();
 
+  // 스크롤 위치가 0이면 그림자 효과 제거, 그렇지 않으면 그림자 효과 적용
   useEffect(() => {
     if (window.scrollY === 0) {
       setIsBorder(false);
     } else {
       setIsBorder(true);
     }
+  }, []);
 
+  // 스크롤 시 헤더의 그림자 효과를 적용
+  // 스크롤 위치에 따라 헤더의 그림자 효과를 적용
+  // 스크롤 위치가 0이면 그림자 효과 제거, 그렇지 않으면 그림자 효과 적용
+  useEffect(() => {
     const handleScroll = (): void => {
       if (window.scrollY === 0) {
         setIsBorder(false);
@@ -40,6 +50,8 @@ const Header = ({ noBorder }: HeaderProp) => {
     };
   }, []);
 
+  // 스크롤 시 body의 overflow를 hidden으로 설정하여 스크롤바 숨김
+  // 메뉴가 열려있을 때만 적용
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -48,12 +60,19 @@ const Header = ({ noBorder }: HeaderProp) => {
     }
   }, [isMenuOpen]);
 
+  // 로그아웃 처리
+  // 로그아웃 후 메인 페이지로 리다이렉트
   const handleLogout = () => {
-    // 로그아웃
-  };
-
-  const moveMyPage = (): void => {
-    // 마이페이지 이동
+    logoutMutation(undefined, {
+      onSuccess: () => {
+        setIsMenuOpen(false);
+        navigate("/", { replace: true });
+      },
+      onError: (error) => {
+        console.log("Error postLogout:", error);
+        toast.error("로그아웃 중 문제가 발생했습니다. 다시 시도해주세요.");
+      },
+    });
   };
 
   return (
@@ -138,10 +157,7 @@ const Header = ({ noBorder }: HeaderProp) => {
                   <Link to="/login">
                     <div className="flex items-center justify-between w-full px-20 shrink-0 min-h-60 rounded-15 bg-(--light-main) hover:cursor-pointer">
                       <div className="flex items-center">
-                        <UserIcon
-                          onClick={moveMyPage}
-                          className="w-20 h-20 stroke-(--main) hover:cursor-pointer"
-                        />
+                        <UserIcon className="w-20 h-20 stroke-(--main) hover:cursor-pointer" />
                         <span className="ml-10">로그인이 필요합니다.</span>
                       </div>
                       <div>
