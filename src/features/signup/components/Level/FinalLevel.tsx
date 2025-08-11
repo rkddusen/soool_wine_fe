@@ -8,6 +8,7 @@ import { useSignUp } from "../../hooks/useSignUp";
 import { AxiosError } from "axios";
 import NextBtn from "@/components/NextBtn";
 import PrevBtn from "@/components/PrevBtn";
+import { ApiErrorResponse } from "@/models/ApiError";
 
 interface FinalLevelProps {
   user: SignUp;
@@ -23,13 +24,14 @@ const FinalLevel = ({ user, onPrevLevel, onNextLevel }: FinalLevelProps) => {
       queryClient.setQueryData(["isSignUpSuccess"], true);
       onNextLevel();
     },
-    onError: (error: AxiosError) => {
-      if (error.status === 409) {
-        if (error.response?.data === "duplicate-id") {
+    onError: (error: AxiosError<ApiErrorResponse>) => {
+      if (error.response?.data.status === 409) {
+        const errorMsg = error.response?.data.message;
+        if (errorMsg === "DUPLICATE_ID") {
           setError("이미 등록된 아이디입니다.");
           return;
         }
-        if (error.response?.data === "duplicate-email") {
+        if (errorMsg === "DUPLICATE_EMAIL") {
           setError("이미 등록된 이메일입니다.");
           return;
         }

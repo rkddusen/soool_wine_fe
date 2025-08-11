@@ -7,15 +7,16 @@
 import { useMutation } from "@tanstack/react-query";
 import { postEmailVerification } from "@/apis/userApi";
 import { AxiosError } from "axios";
+import { ApiErrorResponse } from "@/models/ApiError";
 
 export const useEmailVerification = ({
   onSuccess,
   onError,
 }: {
-  onSuccess: () => void;
-  onError: (err: AxiosError) => void;
+  onSuccess: (data: string) => void;
+  onError: (err: AxiosError<ApiErrorResponse>) => void;
 }) => {
-  return useMutation<string, AxiosError, string>({
+  return useMutation<string, AxiosError<ApiErrorResponse>, string>({
     mutationFn: postEmailVerification,
     onSuccess,
     onError,

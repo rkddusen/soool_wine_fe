@@ -6,6 +6,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "@/stores/authStore";
 import { AxiosError } from "axios";
+import { ApiErrorResponse } from "@/models/ApiError";
 
 interface loginInput {
   id: string;
@@ -16,7 +17,7 @@ export const useLogin = () => {
   const login = useAuthStore((state) => state.login);
 
   // POST 로그인
-  const mutation = useMutation<void, AxiosError, loginInput>({
+  const mutation = useMutation<void, AxiosError<ApiErrorResponse>, loginInput>({
     mutationFn: ({ id, password }) => login(id, password),
   });
 

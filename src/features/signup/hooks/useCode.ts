@@ -6,6 +6,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { postCode } from "../api";
 import { AxiosError } from "axios";
+import { ApiErrorResponse } from "@/models/ApiError";
 
 interface VerifyRequestData {
   token: string;
@@ -18,9 +19,9 @@ export const useCode = ({
   onError,
 }: {
   onSuccess: () => void;
-  onError: (err: AxiosError) => void;
+  onError: (err: AxiosError<ApiErrorResponse>) => void;
 }) => {
-  return useMutation<void, AxiosError, VerifyRequestData>({
+  return useMutation<void, AxiosError<ApiErrorResponse>, VerifyRequestData>({
     mutationFn: ({ code, token, email }) => postCode(code, token, email),
     onSuccess,
     onError,

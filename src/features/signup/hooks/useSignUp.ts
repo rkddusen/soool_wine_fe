@@ -7,15 +7,16 @@ import { useMutation } from "@tanstack/react-query";
 import { postUsers } from "../api";
 import { AxiosError } from "axios";
 import { SignUp } from "@/models/User";
+import { ApiErrorResponse } from "@/models/ApiError";
 
 export const useSignUp = ({
   onSuccess,
   onError,
 }: {
   onSuccess: () => void;
-  onError: (err: AxiosError) => void;
+  onError: (err: AxiosError<ApiErrorResponse>) => void;
 }) => {
-  return useMutation<void, AxiosError, SignUp>({
+  return useMutation<void, AxiosError<ApiErrorResponse>, SignUp>({
     mutationFn: postUsers,
     onSuccess,
     onError,

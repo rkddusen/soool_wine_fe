@@ -10,6 +10,7 @@ import { useCodeTimer } from "@/hooks/useCodeTimer";
 import { useEmailVerification } from "@/hooks/useEmailVerification";
 import NextBtn from "@/components/NextBtn";
 import PrevBtn from "@/components/PrevBtn";
+import { ApiErrorResponse } from "@/models/ApiError";
 
 interface CodeLevelProps {
   value: number | "";
@@ -56,9 +57,9 @@ const CodeLevel = ({
       queryClient.setQueryData(["isVerifySuccess"], true);
       onNextLevel();
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<ApiErrorResponse>) => {
       // 인증 코드가 잘못된 경우
-      if (error.status === 400) {
+      if (error.response?.data.status === 400) {
         setError("올바른 인증 코드가 아닙니다.");
         return;
       }

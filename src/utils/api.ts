@@ -1,9 +1,5 @@
-// lib/axios.ts
-import axios, {
-  AxiosInstance,
-  AxiosError,
-  InternalAxiosRequestConfig,
-} from "axios";
+// utils/axios.ts
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
 const BASEURL = import.meta.env.VITE_API_BASE_URL;
 const HEADERS = {
@@ -32,11 +28,79 @@ const subscribeTokenRefresh = (cb: (token: string) => void) => {
   refreshSubscribers.push(cb);
 };
 
+const refreshInstance = axios.create({
+  baseURL: `${BASEURL}/auth`,
+  headers: HEADERS,
+  withCredentials: true,
+});
+
 // refresh 요청
 const refreshAccessToken = async (): Promise<string> => {
   console.log("Refreshing access token...");
-  const response = await privateAuthInstance.post("/refresh");
+  const response = await refreshInstance.post("/refresh");
   return response.data.accessToken;
+};
+
+const setRequestInterceptor = (instance: AxiosInstance) => {
+  instance.interceptors.request.use((config) => {
+    const token = sessionStorage.getItem("accessToken");
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  });
+};
+
+const setResponseInterceptor = (instance: AxiosInstance) => {
+  instance.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      const originalRequest = error.config as CustomAxiosRequestConfig;
+      // accessToken 만료 시 처리
+      if (error.response?.status === 401 && !originalRequest._retry) {
+        // 중복 요청 방지
+        if (isRefreshing) {
+          return new Promise((resolve) => {
+            subscribeTokenRefresh((newToken) => {
+              // 요청 헤더에 새로운 토큰 삽입
+              if (originalRequest.headers) {
+                originalRequest.headers.Authorization = `Bearer ${newToken}`;
+              }
+              resolve(instance(originalRequest));
+            });
+          });
+        }
+
+        originalRequest._retry = true;
+        isRefreshing = true;
+
+        try {
+          const newToken = await refreshAccessToken();
+          sessionStorage.setItem("accessToken", newToken);
+          onRefreshed(newToken);
+
+          // 요청 헤더에 새로운 토큰 삽입
+          if (originalRequest.headers) {
+            originalRequest.headers.Authorization = `Bearer ${newToken}`;
+          }
+
+          return instance(originalRequest);
+        } catch (refreshError) {
+          // refresh 실패 시 처리
+          console.error("토큰 갱신 실패:", refreshError);
+          sessionStorage.removeItem("accessToken");
+          // 로그인 페이지로 리다이렉트
+          window.location.href = "/login";
+          return Promise.reject(refreshError);
+        } finally {
+          isRefreshing = false;
+        }
+      }
+
+      // 기타 에러는 그대로 전달
+      return Promise.reject(error);
+    }
+  );
 };
 
 // 인스턴스 생성 함수
@@ -50,67 +114,9 @@ const createInstance = (
     withCredentials: isPrivate,
   });
 
-  // 요청 시 accessToken 삽입
   if (isPrivate) {
-    instance.interceptors.request.use((config) => {
-      const token = sessionStorage.getItem("accessToken");
-      if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    });
-
-    // 응답에서 401 감지 시 refresh 로직 실행
-    instance.interceptors.response.use(
-      (response) => response,
-      async (error: AxiosError) => {
-        const originalRequest = error.config as CustomAxiosRequestConfig;
-
-        // accessToken 만료 시 처리
-        if (error.response?.status === 401 && !originalRequest._retry) {
-          // 중복 요청 방지
-          if (isRefreshing) {
-            return new Promise((resolve) => {
-              subscribeTokenRefresh((newToken) => {
-                // 요청 헤더에 새로운 토큰 삽입
-                if (originalRequest.headers) {
-                  originalRequest.headers.Authorization = `Bearer ${newToken}`;
-                }
-                resolve(instance(originalRequest));
-              });
-            });
-          }
-
-          originalRequest._retry = true;
-          isRefreshing = true;
-
-          try {
-            const newToken = await refreshAccessToken();
-            sessionStorage.setItem("accessToken", newToken);
-            onRefreshed(newToken);
-
-            // 요청 헤더에 새로운 토큰 삽입
-            if (originalRequest.headers) {
-              originalRequest.headers.Authorization = `Bearer ${newToken}`;
-            }
-
-            return instance(originalRequest);
-          } catch (refreshError) {
-            // refresh 실패 시 처리
-            console.error("토큰 갱신 실패:", refreshError);
-            sessionStorage.removeItem("accessToken");
-            // 로그인 페이지로 리다이렉트
-            window.location.href = "/login";
-            return Promise.reject(refreshError);
-          } finally {
-            isRefreshing = false;
-          }
-        }
-
-        // 기타 에러는 그대로 전달
-        return Promise.reject(error);
-      }
-    );
+    setRequestInterceptor(instance);
+    setResponseInterceptor(instance);
   }
 
   return instance;

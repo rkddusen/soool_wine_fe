@@ -10,6 +10,7 @@ import { useAutoEmail } from "../../hooks/useAutoEmail";
 import { useValidForm } from "@/hooks/useValidForm";
 import NextBtn from "@/components/NextBtn";
 import PrevBtn from "@/components/PrevBtn";
+import { ApiErrorResponse } from "@/models/ApiError";
 
 interface EmailLevelProps {
   value: string;
@@ -59,8 +60,8 @@ const EmailLevel = ({
       queryClient.setQueryData(["email"], value);
       onNextLevel();
     },
-    onError: (error: AxiosError) => {
-      if (error.status === 409) {
+    onError: (error: AxiosError<ApiErrorResponse>) => {
+      if (error.response?.data.status === 409) {
         setError("이미 등록된 이메일입니다.");
       } else {
         console.log("Error post email:", error);
