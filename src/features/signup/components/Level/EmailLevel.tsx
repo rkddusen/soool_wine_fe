@@ -1,23 +1,20 @@
 // EmailLevel.tsx
 // 사용자의 이메일을 등록하기 위한 레벨
 // 이메일 검증에 성공하면 CodeLevel로 이동
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { SignUp } from "@/models/User";
 import { AxiosError } from "axios";
+import { EmailInput, NextBtn, PrevBtn } from "@/components";
 import { useEmailVerification } from "@/hooks/useEmailVerification";
-import { useAutoEmail } from "../../hooks/useAutoEmail";
 import { useValidForm } from "@/hooks/useValidForm";
-import NextBtn from "@/components/NextBtn";
-import PrevBtn from "@/components/PrevBtn";
+import { SignUp } from "@/models/User";
 import { ApiErrorResponse } from "@/models/ApiError";
 
 interface EmailLevelProps {
   value: string;
   onChange: (
-    event: React.ChangeEvent<HTMLInputElement>,
     name: keyof SignUp
-  ) => void;
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectEmail: (email: string) => void;
   onPrevLevel: () => void;
   onNextLevel: () => void;
@@ -30,6 +27,7 @@ const EmailLevel = ({
   onPrevLevel,
   onNextLevel,
 }: EmailLevelProps) => {
+  const emailInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
   const queryClient = useQueryClient();
   useQuery({
@@ -46,12 +44,15 @@ const EmailLevel = ({
     gcTime: Infinity,
   });
 
+  // 초기 렌더링 시 포커스
+  useEffect(() => {
+    emailInputRef.current?.focus();
+  }, []);
+
   // error상태일 때 폼 변경 시 초기화
   useEffect(() => {
     if (error) setError(null);
   }, [value]);
-
-  const { addressList } = useAutoEmail(value);
 
   const { mutate, isPending } = useEmailVerification({
     onSuccess: (data: string) => {
@@ -84,38 +85,15 @@ const EmailLevel = ({
     <>
       <div className="w-full mb-15">
         <div className="mb-15">
-          <p className="mb-10 font-bold text-20">이메일을 입력해주세요!</p>
-          <div className="relative w-full">
-            <div className="px-15 h-50 rounded-5 border-(--gray-78) border focus-within:border-black focus-within:border-[1.5px] peer">
-              <input
-                type="text"
-                value={value}
-                onChange={(e) => onChange(e, "email")}
-                placeholder="이메일"
-                className="w-full h-full border-none outline-hidden"
-              />
-            </div>
-            <ul
-              className={`absolute w-full bg-white z-1 max-h-100 overflow-y-auto shadow-(--shadow-base) ${
-                addressList.length !== 0
-                  ? "peer-focus-within:block hidden"
-                  : "hidden"
-              }`}
-            >
-              {addressList.map((v) => (
-                <li
-                  key={v}
-                  onMouseDown={() => {
-                    onSelectEmail(v);
-                  }}
-                  className="p-12 hover:cursor-pointer hover:bg-(--gray-f0) text-14"
-                >
-                  {v}
-                </li>
-              ))}
-            </ul>
-          </div>
-          {error && <p className="mt-10 text-red-500 text-14">{error}</p>}
+          <p className="font-bold text-20">이메일을 입력해주세요!</p>
+          <EmailInput
+            ref={emailInputRef}
+            value={value}
+            onChange={onChange("email")}
+            onSelectEmail={onSelectEmail}
+            placeholder="이메일"
+          />
+          {error && <p className="text-red-500 text-14">{error}</p>}
         </div>
       </div>
       <div className="flex gap-10 mt-20 h-50">

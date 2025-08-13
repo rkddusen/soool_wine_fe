@@ -14,16 +14,14 @@ export const useSignUpInput = () => {
     code: "",
   });
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    name: keyof SignUp
-  ) => {
-    const { value, type } = event.target;
-    setInputValues((prev) => ({
-      ...prev,
-      [name]: type === "number" ? (value === "" ? "" : Number(value)) : value,
-    }));
-  };
+  const handleInputChange =
+    (name: keyof SignUp) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { value, type } = event.target;
+      setInputValues((prev) => ({
+        ...prev,
+        [name]: type === "number" ? (value === "" ? "" : Number(value)) : value,
+      }));
+    };
 
   const handleEmailSelect = (email: string) => {
     setInputValues((prev) => ({

@@ -9,19 +9,19 @@ export const useLoginform = () => {
   const [idInput, setIdInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
 
-  const handleChangeId = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const _input = event.target.value;
     setIdInput(_input);
   };
-  const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const _input = event.target.value;
     setPasswordInput(_input);
   };
 
   return {
     idInput,
-    handleChangeId,
+    handleIdChange,
     passwordInput,
-    handleChangePassword,
+    handlePasswordChange,
   };
 };

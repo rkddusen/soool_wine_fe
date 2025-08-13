@@ -4,14 +4,14 @@ import { Footer, Header } from "@/components";
 import { AccountSetting, Nav } from "./components";
 import { useAuthStore } from "@/stores/authStore";
 import { useRequireLogin } from "./hooks/useRequireLogin";
-import { useMyPageTab } from "./hooks/useMyPageTab";
+import { useTab } from "@/hooks/useTab";
 import { MYPAGE_MENU } from "@/constants/Menu";
 
 const MyPage = () => {
   const user = useAuthStore((state) => state.user);
   const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
   useRequireLogin(user, isAuthLoading);
-  const { tab, handleClickMenu } = useMyPageTab(MYPAGE_MENU.length);
+  const { tab, handleClickMenu } = useTab("mTab", MYPAGE_MENU.length);
 
   // 로그인되어 있지 않으면
   if (isAuthLoading || !user) return null;

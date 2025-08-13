@@ -1,23 +1,21 @@
 // CodeLevel.tsx
 // 사용자의 이메일로 보낸 코드를 확인하기 위한 레벨
 // 코드는 3분안에 입력해야 하며, 코드 검증에 성공하면 FinalLevel로 이동
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { SignUp } from "@/models/User";
 import { useCode } from "../../hooks/useCode";
 import { AxiosError } from "axios";
+import { CodeInput, NextBtn, PrevBtn } from "@/components";
 import { useCodeTimer } from "@/hooks/useCodeTimer";
 import { useEmailVerification } from "@/hooks/useEmailVerification";
-import NextBtn from "@/components/NextBtn";
-import PrevBtn from "@/components/PrevBtn";
 import { ApiErrorResponse } from "@/models/ApiError";
 
 interface CodeLevelProps {
   value: number | "";
   onChange: (
-    event: React.ChangeEvent<HTMLInputElement>,
     name: keyof SignUp
-  ) => void;
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   onPrevLevel: () => void;
   onNextLevel: () => void;
 }
@@ -28,9 +26,15 @@ const CodeLevel = ({
   onPrevLevel,
   onNextLevel,
 }: CodeLevelProps) => {
+  const codeInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
   const queryClient = useQueryClient();
   const email: string | undefined = queryClient.getQueryData(["email"]);
+
+  // 초기 렌더링 시 포커스
+  useEffect(() => {
+    codeInputRef.current?.focus();
+  }, []);
 
   // error상태일 때 폼 변경 시 초기화
   useEffect(() => {
@@ -44,13 +48,6 @@ const CodeLevel = ({
       setError("유효시간이 지났습니다. '인증 코드 재전송'을 눌러주세요.");
     }
   }, [seconds]);
-
-  // 숫자 input특성 상 지수 표기법이나 +/- 기호가 허용되기 때문에 이를 막음
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (["e", "E", "+", "-"].includes(e.key)) {
-      e.preventDefault();
-    }
-  };
 
   const { mutate, isPending } = useCode({
     onSuccess: () => {
@@ -102,6 +99,14 @@ const CodeLevel = ({
     emailMutation(email);
   };
 
+  // 각 입력 폼에서 "Enter"키를 눌렀을 때 넘어가기
+  const handleKeyDownEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const _key = event.key;
+    if (_key === "Enter") {
+      handleNextClick();
+    }
+  };
+
   return (
     <>
       <div className="w-full">
@@ -110,21 +115,14 @@ const CodeLevel = ({
           <p className="mt-10 text-(--gray-78) text-14">
             인증 코드를 입력해주세요.
           </p>
-          <div className="flex items-center w-full px-15 mt-10 h-50 rounded-5 border-(--gray-78) border focus-within:border-black focus-within:border-[1.5px]">
-            <input
-              type="number"
-              pattern="\d*"
-              value={value}
-              onKeyDown={handleKeyDown}
-              onChange={(e) => onChange(e, "code")}
-              placeholder="인증 코드 6자리"
-              className="w-full h-full border-none outline-hidden"
-            />
-            <span className="text-red-500 text-14 shrink-0 text-nowrap">
-              {String(Math.floor(seconds / 60)).padStart(2, "0")}:
-              {String(seconds % 60).padStart(2, "0")}
-            </span>
-          </div>
+          <CodeInput
+            ref={codeInputRef}
+            value={value}
+            onChange={onChange("code")}
+            handleKeyDownEnter={handleKeyDownEnter}
+            placeholder="인증 코드 6자리"
+            seconds={seconds}
+          />
           {error && <p className="mt-10 text-red-500 text-14">{error}</p>}
         </div>
       </div>

@@ -1,21 +1,18 @@
 // IdLevel.tsx
 // 사용자의 아이디를 등록하기 위한 레벨
 // 아이디 검증에 성공하면 PasswordLevel로 이동
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useIdExists } from "../../hooks/useIdExists";
 import { SignUp } from "@/models/User";
-import { UserIcon } from "@heroicons/react/24/outline";
 import { AxiosError } from "axios";
 import { useValidForm } from "@/hooks/useValidForm";
-import NextBtn from "@/components/NextBtn";
-import PrevBtn from "@/components/PrevBtn";
+import { IdInput, NextBtn, PrevBtn } from "@/components";
 
 interface IdLevelProps {
   value: string;
   onChange: (
-    event: React.ChangeEvent<HTMLInputElement>,
     name: keyof SignUp
-  ) => void;
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   onPrevLevel: () => void;
   onNextLevel: () => void;
 }
@@ -26,7 +23,13 @@ const IdLevel = ({
   onPrevLevel,
   onNextLevel,
 }: IdLevelProps) => {
+  const idInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // 초기 렌더링 시 포커스
+  useEffect(() => {
+    idInputRef.current?.focus();
+  }, []);
 
   // error상태일 때 폼 변경 시 초기화
   useEffect(() => {
@@ -57,6 +60,18 @@ const IdLevel = ({
     mutate(value);
   };
 
+  // 각 입력 폼에서 "Enter"키를 눌렀을 때 넘어가기
+  const handleKeyDownEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const _key = event.key;
+    if (_key === "Enter") {
+      // input에서 한글을 입력할 때 마지막 글자가 중복되는 현상 방지
+      if (event.nativeEvent.isComposing) {
+        return;
+      }
+      handleNextClick();
+    }
+  };
+
   return (
     <>
       <div className="w-full">
@@ -65,17 +80,14 @@ const IdLevel = ({
           <p className="mt-10 text-14 text-(--gray-78)">
             4~16자의 영문, 숫자, -, _ 만 사용 가능합니다.
           </p>
-          <div className="flex flex-row-reverse items-center w-full px-15 mt-10 h-50 rounded-5 border-(--gray-78) border focus-within:border-black focus-within:border-[1.5px]">
-            <input
-              type="text"
-              value={value}
-              onChange={(e) => onChange(e, "id")}
-              placeholder="아이디"
-              className="w-full h-full mx-10 border-none outline-hidden peer"
-            />
-            <UserIcon className="w-20 h-20 shrink-0 peer-focus:stroke-black stroke-(--gray-bb)" />
-          </div>
-          {error && <p className="mt-10 text-red-500 text-14">{error}</p>}
+          <IdInput
+            ref={idInputRef}
+            value={value}
+            onChange={onChange("id")}
+            onKeyDown={handleKeyDownEnter}
+            placeholder="아이디"
+          />
+          {error && <p className="text-red-500 text-14">{error}</p>}
         </div>
       </div>
       <div className="w-full flex gap-10 mt-20 h-50">

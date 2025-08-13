@@ -8,17 +8,31 @@ import LoadingWhite from "/src/assets/LoadingWhite.svg?react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { AxiosError } from "axios";
 import { usePatchPassword } from "../../hooks/usePatchPassword";
+import { PasswordInput } from "@/components";
 
 const PasswordChange = () => {
   const { isOpen, toggle } = useToggle();
   const [ref, { height }] = useMeasure();
-  const { oldPassword, newPassword, newPasswordCheck, handlePasswordChange } =
-    usePasswordInputs();
+  const {
+    oldPasswordInputRef,
+    newPasswordInputRef,
+    newPasswordCheckInputRef,
+    oldPassword,
+    newPassword,
+    newPasswordCheck,
+    handlePasswordChange,
+  } = usePasswordInputs();
   const [oldPasswordError, setOldPasswordError] = useState<string | null>(null);
   const [newPasswordError, setNewPasswordError] = useState<string | null>(null);
   const [newPasswordCheckError, setNewPasswordCheckError] = useState<
     string | null
   >(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      oldPasswordInputRef.current?.focus();
+    }
+  }, [isOpen, oldPasswordInputRef]);
 
   // error상태일 때 폼 변경 시 초기화
   useEffect(() => {
@@ -91,7 +105,20 @@ const PasswordChange = () => {
       mutate({ oldPassword, newPassword });
     }
   };
-
+  const handleKeyDownEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      if (e.currentTarget.name === "oldPassword") {
+        oldPasswordInputRef.current?.blur();
+        newPasswordInputRef.current?.focus();
+      } else if (e.currentTarget.name === "newPassword") {
+        newPasswordInputRef.current?.blur();
+        newPasswordCheckInputRef.current?.focus();
+      } else if (e.currentTarget.name === "newPasswordCheck") {
+        newPasswordCheckInputRef.current?.blur();
+        handleChangeClick();
+      }
+    }
+  };
   return (
     <div className="border border-(--gray-e0) rounded-15 mt-20">
       <div
@@ -121,16 +148,14 @@ const PasswordChange = () => {
           {/* 기존 비밀번호 입력 폼 */}
           <div>
             <p className="font-medium">기존 비밀번호</p>
-            <div className="w-full h-50 px-15 mt-10 border border-(--gray-78) focus-within:border-black rounded-5">
-              <input
-                type="password"
-                value={oldPassword}
-                onChange={handlePasswordChange}
-                name="oldPassword"
-                placeholder="기존 비밀번호"
-                className="w-full h-full outline-hidden"
-              />
-            </div>
+            <PasswordInput
+              ref={oldPasswordInputRef}
+              value={oldPassword}
+              onChange={handlePasswordChange}
+              name="oldPassword"
+              onKeyDown={handleKeyDownEnter}
+              placeholder="기존 비밀번호"
+            />
             {oldPasswordError && (
               <p className="mt-10 text-red-500 text-14">{oldPasswordError}</p>
             )}
@@ -139,33 +164,29 @@ const PasswordChange = () => {
           <div>
             <div>
               <p className="font-medium mt-30">새 비밀번호</p>
-              <div className="w-full h-50 px-15 mt-10 border border-(--gray-78) focus-within:border-black rounded-5">
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={handlePasswordChange}
-                  onBlur={handleBlurPassword}
-                  name="newPassword"
-                  placeholder="새 비밀번호"
-                  className="w-full h-full outline-hidden"
-                />
-              </div>
+              <PasswordInput
+                ref={newPasswordInputRef}
+                value={newPassword}
+                onChange={handlePasswordChange}
+                name="newPassword"
+                onKeyDown={handleKeyDownEnter}
+                onBlur={handleBlurPassword}
+                placeholder="새 비밀번호"
+              />
               {newPasswordError && (
                 <p className="mt-10 text-red-500 text-14">{newPasswordError}</p>
               )}
             </div>
             <div>
-              <div className="w-full h-50 px-15 mt-10 border border-(--gray-78) focus-within:border-black rounded-5">
-                <input
-                  type="password"
-                  value={newPasswordCheck}
-                  onChange={handlePasswordChange}
-                  onBlur={handleBlurPassword}
-                  name="newPasswordCheck"
-                  placeholder="새 비밀번호 확인"
-                  className="w-full h-full outline-hidden"
-                />
-              </div>
+              <PasswordInput
+                ref={newPasswordCheckInputRef}
+                value={newPasswordCheck}
+                onChange={handlePasswordChange}
+                name="newPasswordCheck"
+                onKeyDown={handleKeyDownEnter}
+                onBlur={handleBlurPassword}
+                placeholder="새 비밀번호 확인"
+              />
               {newPasswordCheckError && (
                 <p className="mt-10 text-red-500 text-14">
                   {newPasswordCheckError}

@@ -2,15 +2,15 @@
 // 로그인 페이지
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { IdInput, LoginHelp, PasswordInput } from "./components";
-import { LoginFooter, NextBtn } from "@/components";
+import { LoginHelp } from "./components";
+import { LoginFooter, NextBtn, IdInput, PasswordInput } from "@/components";
 import { useLogin } from "./hooks/useLogin";
 import { useLoginform } from "./hooks/useLoginForm";
+import { AxiosError } from "axios";
+import { ApiErrorResponse } from "@/models/ApiError";
 import SooolLogo from "/src/assets/SooolLogo.svg?react";
 import { CheckCircleIcon as CheckCircleIconEmpty } from "@heroicons/react/24/outline";
 import { CheckCircleIcon as CheckCircleIconFill } from "@heroicons/react/24/solid";
-import { AxiosError } from "axios";
-import { ApiErrorResponse } from "@/models/ApiError";
 
 const Login = () => {
   const idInputRef = useRef<HTMLInputElement>(null);
@@ -21,10 +21,10 @@ const Login = () => {
   const [searchParams] = useSearchParams();
   const redirectPath = searchParams.get("url") || "/";
   const { isLoading, loginMutation } = useLogin();
-  const { idInput, handleChangeId, passwordInput, handleChangePassword } =
+  const { idInput, handleIdChange, passwordInput, handlePasswordChange } =
     useLoginform();
 
-  // 초기 렌더링 시 아이디 폼 포커스
+  // 초기 렌더링 시 포커스
   useEffect(() => {
     idInputRef.current?.focus();
   }, []);
@@ -76,25 +76,24 @@ const Login = () => {
   };
 
   // 각 입력 폼에서 "Enter"키를 눌렀을 때 넘어가기
-  const handleKeyDownEnter = (
-    event: React.KeyboardEvent<HTMLInputElement>,
-    field: "id" | undefined
-  ) => {
-    const _key = event.key;
-    if (_key === "Enter") {
-      // input에서 한글을 입력할 때 마지막 글자가 중복되는 현상 방지
-      if (event.nativeEvent.isComposing) {
-        return;
+  const handleKeyDownEnter =
+    (field: "id" | "password") =>
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const _key = event.key;
+      if (_key === "Enter") {
+        // input에서 한글을 입력할 때 마지막 글자가 중복되는 현상 방지
+        if (event.nativeEvent.isComposing) {
+          return;
+        }
+        // id input일 때와 password input일 때 분리
+        if (field === "id") {
+          if (idInput === "") return;
+          passwordInputRef.current?.focus();
+        } else {
+          handleLogin();
+        }
       }
-      // id input일 때와 password input일 때 분리
-      if (field === "id") {
-        if (idInput === "") return;
-        passwordInputRef.current?.focus();
-      } else {
-        handleLogin();
-      }
-    }
-  };
+    };
 
   return (
     <div className="bg-(--lighter-main)">
@@ -111,15 +110,17 @@ const Login = () => {
             <div className="mt-10">
               <IdInput
                 ref={idInputRef}
-                idInput={idInput}
-                onChangeId={handleChangeId}
-                onKeyDown={handleKeyDownEnter}
+                value={idInput}
+                onChange={handleIdChange}
+                onKeyDown={handleKeyDownEnter("id")}
+                placeholder="아이디"
               />
               <PasswordInput
                 ref={passwordInputRef}
-                passwordInput={passwordInput}
-                onChangePassword={handleChangePassword}
-                onKeyDown={handleKeyDownEnter}
+                value={passwordInput}
+                onChange={handlePasswordChange}
+                onKeyDown={handleKeyDownEnter("password")}
+                placeholder="비밀번호"
               />
             </div>
             {/* 자동 로그인 */}

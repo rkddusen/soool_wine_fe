@@ -36,7 +36,6 @@ const refreshInstance = axios.create({
 
 // refresh 요청
 const refreshAccessToken = async (): Promise<string> => {
-  console.log("Refreshing access token...");
   const response = await refreshInstance.post("/refresh");
   return response.data.accessToken;
 };
@@ -123,6 +122,7 @@ const createInstance = (
 };
 
 // 인스턴스들 생성
+// private 인스턴스는 인증이 필요한 요청에 사용(accessToken 필요)
 export const wineInstance = createInstance("wines");
 export const userInstance = createInstance("users");
 export const privateUserInstance = createInstance("users", true);

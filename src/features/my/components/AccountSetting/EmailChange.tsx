@@ -12,6 +12,7 @@ import { usePatchEmail } from "../../hooks/usePatchEmail";
 import LoadingWhite from "/src/assets/LoadingWhite.svg?react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { AxiosError } from "axios";
+import { CodeInput, EmailInput } from "@/components";
 
 const EmailChange = () => {
   const queryClient = useQueryClient();
@@ -20,14 +21,23 @@ const EmailChange = () => {
   const [ref, { height }] = useMeasure();
   const { seconds, reset } = useCodeTimer(false);
   const {
+    emailInputRef,
+    codeInputRef,
     email,
     code,
     handleEmailChange,
+    handleEmailSelect,
     handleCodeChange,
-    handleCodeKeyDown,
   } = useEmailInputs();
   const [emailError, setEmailError] = useState<string | null>(null);
   const [updatingError, setUpdatingError] = useState<string | null>(null);
+
+  // 초기 렌더링 시 포커스
+  useEffect(() => {
+    if (isOpen) {
+      emailInputRef.current?.focus();
+    }
+  }, [isOpen, emailInputRef]);
 
   // error상태일 때 폼 변경 시 초기화
   useEffect(() => {
@@ -58,6 +68,11 @@ const EmailChange = () => {
       }
     },
   });
+  useEffect(() => {
+    if (codeSended) {
+      codeInputRef.current?.focus();
+    }
+  }, [codeSended]);
 
   const { validEmail } = useValidForm();
   // 인증하기 버튼 클릭
@@ -105,6 +120,26 @@ const EmailChange = () => {
     }
   };
 
+  // 각 입력 폼에서 "Enter"키를 눌렀을 때 넘어가기
+  const handleKeyDownEnter =
+    (field: "email" | "code") =>
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const _key = event.key;
+      if (_key === "Enter") {
+        // input에서 한글을 입력할 때 마지막 글자가 중복되는 현상 방지
+        if (event.nativeEvent.isComposing) {
+          return;
+        }
+        // email input일 때와 code input일 때 분리
+        if (field === "email") {
+          emailInputRef.current?.blur();
+          handleVerifyClick();
+        } else {
+          handleChangeClick();
+        }
+      }
+    };
+
   return (
     <div className="border border-(--gray-e0) rounded-15 mt-20">
       <div
@@ -133,15 +168,14 @@ const EmailChange = () => {
           <div>
             <p className="font-medium">변경할 이메일</p>
             <div className="h-50 mt-10 flex gap-10 items-center">
-              <div className="w-full h-50 px-15 border border-(--gray-78) focus-within:border-black rounded-5">
-                <input
-                  type="text"
-                  value={email}
-                  onChange={handleEmailChange}
-                  placeholder="이메일"
-                  className="w-full h-full outline-hidden"
-                />
-              </div>
+              <EmailInput
+                ref={emailInputRef}
+                value={email}
+                onChange={handleEmailChange}
+                onSelectEmail={handleEmailSelect}
+                onKeyDown={handleKeyDownEnter("email")}
+                placeholder="이메일"
+              />
               <button
                 onClick={handleVerifyClick}
                 disabled={emailIsPending || updatingIsPending}
@@ -162,27 +196,15 @@ const EmailChange = () => {
           <div>
             <p className="font-medium mt-30">인증 코드</p>
             <div className="h-50 mt-10 flex gap-10 items-center">
-              <div className="w-full flex items-center h-50 px-15 border border-(--gray-78) focus-within:border-black rounded-5">
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  pattern="\d*"
-                  value={code}
-                  onChange={handleCodeChange}
-                  onKeyDown={handleCodeKeyDown}
-                  disabled={!codeSended}
-                  placeholder="인증 코드 6자리"
-                  className="w-full h-full border-none outline-hidden"
-                />
-                <span
-                  className={`text-red-500 text-14 shrink-0 text-nowrap ${
-                    !codeSended && "hidden"
-                  }`}
-                >
-                  {String(Math.floor(seconds / 60)).padStart(2, "0")}:
-                  {String(seconds % 60).padStart(2, "0")}
-                </span>
-              </div>
+              <CodeInput
+                ref={codeInputRef}
+                seconds={seconds}
+                value={code}
+                onChange={handleCodeChange}
+                handleKeyDownEnter={handleKeyDownEnter("code")}
+                placeholder="인증 코드 6자리"
+                isDisabled={seconds === 0 || !codeSended}
+              />
               <button
                 onClick={handleChangeClick}
                 disabled={seconds === 0 || code === "" || !codeSended}
@@ -192,7 +214,7 @@ const EmailChange = () => {
                     : "bg-(--gray-e0)"
                 }`}
               >
-                변경하기
+                {updatingIsPending ? <LoadingWhite /> : "변경하기"}
               </button>
             </div>
             {updatingError && (

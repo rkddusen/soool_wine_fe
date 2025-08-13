@@ -1,23 +1,16 @@
 // PasswordLevel.tsx
 // 사용자의 비밀번호를 등록하기 위한 레벨
 // 비밀번호 검증에 성공하면 EmailLevel로 이동
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SignUp } from "@/models/User";
-import {
-  LockClosedIcon,
-  EyeSlashIcon,
-  EyeIcon,
-} from "@heroicons/react/24/outline";
 import { useValidForm } from "@/hooks/useValidForm";
-import NextBtn from "@/components/NextBtn";
-import PrevBtn from "@/components/PrevBtn";
+import { PasswordInput, NextBtn, PrevBtn } from "@/components";
 
 interface PasswordLevelProps {
   value: string;
   onChange: (
-    event: React.ChangeEvent<HTMLInputElement>,
     name: keyof SignUp
-  ) => void;
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   onPrevLevel: () => void;
   onNextLevel: () => void;
 }
@@ -28,17 +21,18 @@ const PasswordLevel = ({
   onPrevLevel,
   onNextLevel,
 }: PasswordLevelProps) => {
-  const [seePassword, setSeePassword] = useState<boolean>(false);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // 초기 렌더링 시 포커스
+  useEffect(() => {
+    passwordInputRef.current?.focus();
+  }, []);
 
   // error상태일 때 폼 변경 시 초기화
   useEffect(() => {
     if (error) setError(null);
   }, [value]);
-
-  const handleSeePassword = (): void => {
-    setSeePassword((prev) => !prev);
-  };
 
   const { validPassword } = useValidForm();
   const handleNextClick = () => {
@@ -50,6 +44,14 @@ const PasswordLevel = ({
     }
   };
 
+  // 각 입력 폼에서 "Enter"키를 눌렀을 때 넘어가기
+  const handleKeyDownEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const _key = event.key;
+    if (_key === "Enter") {
+      handleNextClick();
+    }
+  };
+
   return (
     <>
       <div className="w-full mb-15">
@@ -58,27 +60,13 @@ const PasswordLevel = ({
           <p className="mb-10 text-14 text-(--gray-78)">
             8~16자의 영문, 숫자, 특수문자를 조합하여 사용 가능합니다.
           </p>
-          <div className="flex flex-row-reverse items-center w-full px-15 h-50 rounded-5 border-(--gray-78) border focus-within:border-black focus-within:border-[1.5px]">
-            {seePassword ? (
-              <EyeIcon
-                onClick={handleSeePassword}
-                className="w-20 h-20 hover:cursor-pointer"
-              />
-            ) : (
-              <EyeSlashIcon
-                onClick={handleSeePassword}
-                className="w-20 h-20 hover:cursor-pointer stroke-(--gray-bb)"
-              />
-            )}
-            <input
-              type={seePassword ? "text" : "password"}
-              value={value}
-              onChange={(e) => onChange(e, "password")}
-              placeholder="비밀번호"
-              className="w-full h-full ml-10 border-none outline-hidden peer"
-            />
-            <LockClosedIcon className="w-20 h-20 shrink-0 peer-focus:stroke-black stroke-(--gray-bb)" />
-          </div>
+          <PasswordInput
+            ref={passwordInputRef}
+            value={value}
+            onChange={onChange("password")}
+            onKeyDown={handleKeyDownEnter}
+            placeholder="비밀번호"
+          />
           {error && <p className="mt-10 text-red-500 text-14">{error}</p>}
         </div>
       </div>

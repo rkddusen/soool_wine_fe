@@ -1,4 +1,4 @@
-// MobileNav.tsx
+// Nav.tsx
 // 마이페이지의 메뉴를 보여주는 컴포넌트
 import { MYPAGE_MENU } from "@/constants/Menu";
 

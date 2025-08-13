@@ -6,8 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { SignUp } from "@/models/User";
 import { useSignUp } from "../../hooks/useSignUp";
 import { AxiosError } from "axios";
-import NextBtn from "@/components/NextBtn";
-import PrevBtn from "@/components/PrevBtn";
+import { NextBtn, PrevBtn } from "@/components";
 import { ApiErrorResponse } from "@/models/ApiError";
 
 interface FinalLevelProps {
