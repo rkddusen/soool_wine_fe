@@ -1,2 +1,2 @@
 // features/login/components/index.ts
-export { default as LoginHelp } from "./LoginHelp.tsx";
+export { default as LoginHelpBar } from "./LoginHelpBar.tsx";

@@ -1,7 +1,7 @@
-// LoginHelp.tsx
+// LoginHelpBar.tsx
 import { Link } from "react-router-dom";
 
-const LoginHelp = () => {
+const LoginHelpBar = () => {
   return (
     <ul className="mt-10 text-14">
       <li className="inline-block mt-5 pr-15 hover:underline break-keep">
@@ -17,4 +17,4 @@ const LoginHelp = () => {
   );
 };
 
-export default LoginHelp;
+export default LoginHelpBar;

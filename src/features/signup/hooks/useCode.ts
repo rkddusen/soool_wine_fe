@@ -11,7 +11,7 @@ import { ApiErrorResponse } from "@/models/ApiError";
 interface VerifyRequestData {
   token: string;
   email: string;
-  code: number;
+  code: string;
 }
 
 export const useCode = ({

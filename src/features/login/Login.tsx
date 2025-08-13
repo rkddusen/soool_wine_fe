@@ -2,10 +2,10 @@
 // 로그인 페이지
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { LoginHelp } from "./components";
 import { LoginFooter, NextBtn, IdInput, PasswordInput } from "@/components";
+import { LoginHelpBar } from "./components";
+import { useIdInput, usePasswordInput } from "@/hooks/useInputs";
 import { useLogin } from "./hooks/useLogin";
-import { useLoginform } from "./hooks/useLoginForm";
 import { AxiosError } from "axios";
 import { ApiErrorResponse } from "@/models/ApiError";
 import SooolLogo from "/src/assets/SooolLogo.svg?react";
@@ -15,14 +15,14 @@ import { CheckCircleIcon as CheckCircleIconFill } from "@heroicons/react/24/soli
 const Login = () => {
   const idInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
+  const { id, handleIdChange } = useIdInput();
+  const { password, handlePasswordChange } = usePasswordInput();
   const [checkAutoLogin, setCheckAutoLogin] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const redirectPath = searchParams.get("url") || "/";
   const { isLoading, loginMutation } = useLogin();
-  const { idInput, handleIdChange, passwordInput, handlePasswordChange } =
-    useLoginform();
 
   // 초기 렌더링 시 포커스
   useEffect(() => {
@@ -32,23 +32,23 @@ const Login = () => {
   // error상태일 때 폼 변경 시 초기화
   useEffect(() => {
     if (error) setError(null);
-  }, [idInput, passwordInput]);
+  }, [id, password]);
 
   const handleLogin = () => {
     setError(null);
 
     // 아이디 비밀번호 빈 값 검증
-    if (idInput === "") {
+    if (id === "") {
       setError("아이디를 입력해주세요.");
       return;
     }
-    if (passwordInput === "") {
+    if (password === "") {
       setError("비밀번호를 입력해주세요.");
       return;
     }
 
     loginMutation(
-      { id: idInput, password: passwordInput },
+      { id, password },
       {
         onSuccess: () => {
           // 로그인
@@ -87,7 +87,7 @@ const Login = () => {
         }
         // id input일 때와 password input일 때 분리
         if (field === "id") {
-          if (idInput === "") return;
+          if (id === "") return;
           passwordInputRef.current?.focus();
         } else {
           handleLogin();
@@ -110,14 +110,14 @@ const Login = () => {
             <div className="mt-10">
               <IdInput
                 ref={idInputRef}
-                value={idInput}
+                value={id}
                 onChange={handleIdChange}
                 onKeyDown={handleKeyDownEnter("id")}
                 placeholder="아이디"
               />
               <PasswordInput
                 ref={passwordInputRef}
-                value={passwordInput}
+                value={password}
                 onChange={handlePasswordChange}
                 onKeyDown={handleKeyDownEnter("password")}
                 placeholder="비밀번호"
@@ -144,13 +144,13 @@ const Login = () => {
               <NextBtn
                 isLoading={isLoading}
                 onClick={handleLogin}
-                isActive={idInput !== "" && passwordInput !== ""}
+                isActive={id !== "" && password !== ""}
                 text="로그인"
               />
             </div>
           </div>
           {/* 아이디 찾기, 비밀번호 찾기, 회원가입 메뉴 */}
-          <LoginHelp />
+          <LoginHelpBar />
           <LoginFooter />
         </div>
       </section>

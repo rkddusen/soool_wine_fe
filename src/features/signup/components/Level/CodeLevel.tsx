@@ -3,7 +3,6 @@
 // 코드는 3분안에 입력해야 하며, 코드 검증에 성공하면 FinalLevel로 이동
 import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { SignUp } from "@/models/User";
 import { useCode } from "../../hooks/useCode";
 import { AxiosError } from "axios";
 import { CodeInput, NextBtn, PrevBtn } from "@/components";
@@ -12,10 +11,8 @@ import { useEmailVerification } from "@/hooks/useEmailVerification";
 import { ApiErrorResponse } from "@/models/ApiError";
 
 interface CodeLevelProps {
-  value: number | "";
-  onChange: (
-    name: keyof SignUp
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onPrevLevel: () => void;
   onNextLevel: () => void;
 }
@@ -118,7 +115,7 @@ const CodeLevel = ({
           <CodeInput
             ref={codeInputRef}
             value={value}
-            onChange={onChange("code")}
+            onChange={onChange}
             handleKeyDownEnter={handleKeyDownEnter}
             placeholder="인증 코드 6자리"
             seconds={seconds}

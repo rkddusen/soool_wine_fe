@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import useMeasure from "react-use-measure";
 import { useToggle } from "@/hooks/useToggle";
@@ -20,8 +20,11 @@ const PasswordChange = () => {
     oldPassword,
     newPassword,
     newPasswordCheck,
-    handlePasswordChange,
+    handleOldPasswordChange,
+    handleNewPasswordChange,
+    handleNewPasswordCheckChange,
   } = usePasswordInputs();
+
   const [oldPasswordError, setOldPasswordError] = useState<string | null>(null);
   const [newPasswordError, setNewPasswordError] = useState<string | null>(null);
   const [newPasswordCheckError, setNewPasswordCheckError] = useState<
@@ -105,6 +108,7 @@ const PasswordChange = () => {
       mutate({ oldPassword, newPassword });
     }
   };
+
   const handleKeyDownEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (e.currentTarget.name === "oldPassword") {
@@ -119,6 +123,7 @@ const PasswordChange = () => {
       }
     }
   };
+
   return (
     <div className="border border-(--gray-e0) rounded-15 mt-20">
       <div
@@ -151,7 +156,7 @@ const PasswordChange = () => {
             <PasswordInput
               ref={oldPasswordInputRef}
               value={oldPassword}
-              onChange={handlePasswordChange}
+              onChange={handleOldPasswordChange}
               name="oldPassword"
               onKeyDown={handleKeyDownEnter}
               placeholder="기존 비밀번호"
@@ -167,7 +172,7 @@ const PasswordChange = () => {
               <PasswordInput
                 ref={newPasswordInputRef}
                 value={newPassword}
-                onChange={handlePasswordChange}
+                onChange={handleNewPasswordChange}
                 name="newPassword"
                 onKeyDown={handleKeyDownEnter}
                 onBlur={handleBlurPassword}
@@ -181,7 +186,7 @@ const PasswordChange = () => {
               <PasswordInput
                 ref={newPasswordCheckInputRef}
                 value={newPasswordCheck}
-                onChange={handlePasswordChange}
+                onChange={handleNewPasswordCheckChange}
                 name="newPasswordCheck"
                 onKeyDown={handleKeyDownEnter}
                 onBlur={handleBlurPassword}

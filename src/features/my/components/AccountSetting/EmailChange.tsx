@@ -1,34 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import useMeasure from "react-use-measure";
 import { useAuthStore } from "@/stores/authStore";
+import { useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { CodeInput, EmailInput } from "@/components";
+import { usePatchEmail } from "../../hooks/usePatchEmail";
+import { useEmailCodeInputs } from "@/hooks/useInputs";
+import { useEmailVerification } from "@/hooks/useEmailVerification";
 import { useToggle } from "@/hooks/useToggle";
 import { useCodeTimer } from "@/hooks/useCodeTimer";
 import { useValidForm } from "@/hooks/useValidForm";
-import { useEmailVerification } from "@/hooks/useEmailVerification";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEmailInputs } from "../../hooks/useEmailInputs";
-import { usePatchEmail } from "../../hooks/usePatchEmail";
 import LoadingWhite from "/src/assets/LoadingWhite.svg?react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
-import { AxiosError } from "axios";
-import { CodeInput, EmailInput } from "@/components";
 
 const EmailChange = () => {
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const codeInputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
   const { user } = useAuthStore();
   const { isOpen, toggle } = useToggle();
   const [ref, { height }] = useMeasure();
   const { seconds, reset } = useCodeTimer(false);
   const {
-    emailInputRef,
-    codeInputRef,
     email,
     code,
     handleEmailChange,
     handleEmailSelect,
     handleCodeChange,
-  } = useEmailInputs();
+  } = useEmailCodeInputs();
   const [emailError, setEmailError] = useState<string | null>(null);
   const [updatingError, setUpdatingError] = useState<string | null>(null);
 

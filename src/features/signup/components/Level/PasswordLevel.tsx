@@ -2,15 +2,12 @@
 // 사용자의 비밀번호를 등록하기 위한 레벨
 // 비밀번호 검증에 성공하면 EmailLevel로 이동
 import { useEffect, useRef, useState } from "react";
-import { SignUp } from "@/models/User";
 import { useValidForm } from "@/hooks/useValidForm";
 import { PasswordInput, NextBtn, PrevBtn } from "@/components";
 
 interface PasswordLevelProps {
   value: string;
-  onChange: (
-    name: keyof SignUp
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onPrevLevel: () => void;
   onNextLevel: () => void;
 }
@@ -63,7 +60,7 @@ const PasswordLevel = ({
           <PasswordInput
             ref={passwordInputRef}
             value={value}
-            onChange={onChange("password")}
+            onChange={onChange}
             onKeyDown={handleKeyDownEnter}
             placeholder="비밀번호"
           />

@@ -17,7 +17,7 @@ export const useTab = (key: string, size: number) => {
     } else {
       setSearchParams({ [key]: "1" }, { replace: true });
     }
-  }, [size]);
+  }, [size, searchParams, key]);
 
   // 탭 변경 함수
   const handleClickMenu = (num: number) => {

@@ -7,7 +7,7 @@ export const getIdExists = async (id: string): Promise<boolean> => {
 };
 
 export const postCode = async (
-  code: number,
+  code: string,
   token: string,
   email: string
 ): Promise<void> => {

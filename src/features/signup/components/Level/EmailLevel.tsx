@@ -7,14 +7,11 @@ import { AxiosError } from "axios";
 import { EmailInput, NextBtn, PrevBtn } from "@/components";
 import { useEmailVerification } from "@/hooks/useEmailVerification";
 import { useValidForm } from "@/hooks/useValidForm";
-import { SignUp } from "@/models/User";
 import { ApiErrorResponse } from "@/models/ApiError";
 
 interface EmailLevelProps {
   value: string;
-  onChange: (
-    name: keyof SignUp
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectEmail: (email: string) => void;
   onPrevLevel: () => void;
   onNextLevel: () => void;
@@ -89,7 +86,7 @@ const EmailLevel = ({
           <EmailInput
             ref={emailInputRef}
             value={value}
-            onChange={onChange("email")}
+            onChange={onChange}
             onSelectEmail={onSelectEmail}
             placeholder="이메일"
           />

@@ -6,14 +6,17 @@
  */
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { SignUp } from "@/models/User";
 import { useNavigate } from "react-router-dom";
 import { useValidForm } from "@/hooks/useValidForm";
+import { SignUp } from "@/models/User";
 
 export const useSignUpLevel = (
   inputValues: SignUp,
-  setInputValues: React.Dispatch<React.SetStateAction<SignUp>>
+  handlePasswordReset: () => void,
+  handleEmailReset: () => void,
+  handleCodeReset: () => void
 ) => {
+  const { id, password, email } = inputValues;
   const [level, setLevel] = useState<number>(1);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -24,15 +27,15 @@ export const useSignUpLevel = (
     if (level < 1 || level > 6) {
       setLevel(1);
     }
-    if (level > 1 && validId(inputValues["id"])) {
+    if (level > 1 && validId(id)) {
       setLevel(1);
     }
-    if (level > 2 && validPassword(inputValues["password"])) {
+    if (level > 2 && validPassword(password)) {
       setLevel(2);
     }
     if (
       level > 3 &&
-      (validEmail(inputValues["email"]) ||
+      (validEmail(email) ||
         !queryClient.getQueryData<boolean>(["emailToken"]) ||
         !queryClient.getQueryData<boolean>(["email"]))
     ) {
@@ -44,31 +47,31 @@ export const useSignUpLevel = (
     if (level > 5 && !queryClient.getQueryData<boolean>(["isSignUpSuccess"])) {
       setLevel(5);
     }
-  }, [level, inputValues]);
+  }, [level, id, password, email, queryClient]);
 
   const handlePrevLevel = () => {
     if (level < 1 || level > 5) return;
-    // 아이디 폼에서 뒤로가기
+    // 아이디 폼에서 뒤로가기 -> 로그인 페이지로 이동
     if (level === 1) {
       navigate(-1);
       return;
     }
-    // 비밀번호 폼에서 뒤로가기
+    // 비밀번호 폼에서 뒤로가기 -> 아이디 폼으로 돌아감
     if (level === 2) {
-      setInputValues((prev) => ({ ...prev, password: "" }));
+      handlePasswordReset();
       setLevel(1);
       return;
     }
-    // 이메일 폼에서 뒤로가기
+    // 이메일 폼에서 뒤로가기 -> 비밀번호 폼으로 돌아감
     if (level === 3) {
-      setInputValues((prev) => ({ ...prev, email: "" }));
-      setInputValues((prev) => ({ ...prev, password: "" }));
+      handlePasswordReset();
+      handleEmailReset();
       setLevel(2);
       return;
     }
-    // 코드 폼 및 회원가입 폼에서 뒤로가기
+    // 코드 폼 및 회원가입 폼에서 뒤로가기 -> 이메일 폼으로 돌아감
     if (level === 4 || level === 5) {
-      setInputValues((prev) => ({ ...prev, code: "" }));
+      handleCodeReset();
       setLevel(3);
       return;
     }
@@ -76,31 +79,7 @@ export const useSignUpLevel = (
 
   const handleNextLevel = () => {
     if (level < 1 || level > 5) return;
-    // 아이디 폼에서 다음으로
-    if (level === 1) {
-      setLevel(2);
-      return;
-    }
-    // 비밀번호 폼에서 다음으로
-    if (level === 2) {
-      setLevel(3);
-      return;
-    }
-    // 이메일 폼에서 다음으로
-    if (level === 3) {
-      setLevel(4);
-      return;
-    }
-    // 코드 폼에서 다음으로
-    if (level === 4) {
-      setLevel(5);
-      return;
-    }
-    // 회원가입 폼에서 다음으로
-    if (level === 5) {
-      setLevel(6);
-      return;
-    }
+    setLevel((prev) => prev + 1);
   };
 
   return { level, handlePrevLevel, handleNextLevel };

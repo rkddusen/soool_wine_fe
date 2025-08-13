@@ -11,17 +11,34 @@ import {
   LevelBar,
 } from "./components";
 import { LoginFooter } from "@/components";
-import { useSignUpInput } from "./hooks/useSignUpInput";
 import { useSignUpLevel } from "./hooks/useSignUpLevel";
 import SooolLogo from "/src/assets/SooolLogo.svg?react";
+import {
+  useEmailCodeInputs,
+  useIdInput,
+  usePasswordInput,
+} from "@/hooks/useInputs";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { inputValues, setInputValues, handleInputChange, handleEmailSelect } =
-    useSignUpInput();
+  const { id, handleIdChange } = useIdInput();
+  const { password, handlePasswordChange, handlePasswordReset } =
+    usePasswordInput();
+  const {
+    email,
+    code,
+    handleEmailChange,
+    handleEmailSelect,
+    handleCodeChange,
+    handleEmailReset,
+    handleCodeReset,
+  } = useEmailCodeInputs();
+
   const { level, handlePrevLevel, handleNextLevel } = useSignUpLevel(
-    inputValues,
-    setInputValues
+    { id, password, email, code },
+    handlePasswordReset,
+    handleEmailReset,
+    handleCodeReset
   );
 
   return (
@@ -40,24 +57,24 @@ const SignUp = () => {
           <div className="text-start mt-30">
             {level === 1 && (
               <IdLevel
-                value={inputValues["id"]}
-                onChange={handleInputChange}
+                value={id}
+                onChange={handleIdChange}
                 onPrevLevel={handlePrevLevel}
                 onNextLevel={handleNextLevel}
               />
             )}
             {level === 2 && (
               <PasswordLevel
-                value={inputValues["password"]}
-                onChange={handleInputChange}
+                value={password}
+                onChange={handlePasswordChange}
                 onPrevLevel={handlePrevLevel}
                 onNextLevel={handleNextLevel}
               />
             )}
             {level === 3 && (
               <EmailLevel
-                value={inputValues["email"]}
-                onChange={handleInputChange}
+                value={email}
+                onChange={handleEmailChange}
                 onSelectEmail={handleEmailSelect}
                 onPrevLevel={handlePrevLevel}
                 onNextLevel={handleNextLevel}
@@ -65,15 +82,15 @@ const SignUp = () => {
             )}
             {level === 4 && (
               <CodeLevel
-                value={inputValues["code"]}
-                onChange={handleInputChange}
+                value={code}
+                onChange={handleCodeChange}
                 onPrevLevel={handlePrevLevel}
                 onNextLevel={handleNextLevel}
               />
             )}
             {level === 5 && (
               <FinalLevel
-                user={inputValues}
+                user={{ id, password, email, code }}
                 onPrevLevel={handlePrevLevel}
                 onNextLevel={handleNextLevel}
               />
