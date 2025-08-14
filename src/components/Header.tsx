@@ -8,7 +8,7 @@ import {
   XMarkIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
-import { useLogout } from "@/hooks/useLogout";
+import { useLogout } from "@/hooks/auth/useLogout";
 import toast from "react-hot-toast";
 import { set } from "lodash";
 
