@@ -1,31 +1,29 @@
 // CodeLevel.tsx
 // 사용자의 이메일로 보낸 코드를 확인하기 위한 레벨
-// 코드는 3분안에 입력해야 하며, 코드 검증에 성공하면 FinalLevel로 이동
+// 코드는 3분안에 입력해야 하며, 코드 검증에 성공하면 비밀번호를 재설정할 수 있는 창으로 이동
 import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCode } from "../../hooks/useCode";
 import { AxiosError } from "axios";
 import { CodeInput, NextBtn, PrevBtn } from "@/components";
+import { useFindPasswordEmailVerification } from "../../hooks/useFindPasswordEmailVerification";
+import { useFindPasswordVerify } from "../../hooks/useFindPasswordVerify";
 import { useCodeTimer } from "@/hooks/auth/useCodeTimer";
-import { useEmailVerification } from "@/hooks/auth/useEmailVerification";
 import { ApiErrorResponse } from "@/models/ApiError";
+import { useEmailCodeInputs } from "@/hooks/auth/useInputs";
+import { useShowError } from "@/hooks/useShowError";
+import { AUTH_ERROR_CODES } from "@/constants/ErrorCode/AuthErrorCode";
 
 interface CodeLevelProps {
-  value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onPrevLevel: () => void;
   onNextLevel: () => void;
 }
 
-const CodeLevel = ({
-  value,
-  onChange,
-  onPrevLevel,
-  onNextLevel,
-}: CodeLevelProps) => {
+const CodeLevel = ({ onPrevLevel, onNextLevel }: CodeLevelProps) => {
   const codeInputRef = useRef<HTMLInputElement>(null);
+  const { code, handleCodeChange } = useEmailCodeInputs();
   const [error, setError] = useState<string | null>(null);
   const queryClient = useQueryClient();
+  const id: string | undefined = queryClient.getQueryData(["id"]);
   const email: string | undefined = queryClient.getQueryData(["email"]);
 
   // 초기 렌더링 시 포커스
@@ -36,7 +34,7 @@ const CodeLevel = ({
   // error상태일 때 폼 변경 시 초기화
   useEffect(() => {
     if (error) setError(null);
-  }, [value]);
+  }, [code]);
 
   const { seconds, reset } = useCodeTimer(true);
 
@@ -46,54 +44,48 @@ const CodeLevel = ({
     }
   }, [seconds]);
 
-  const { mutate, isPending } = useCode({
+  const { mutate, isPending } = useFindPasswordVerify({
     onSuccess: () => {
-      queryClient.setQueryData(["isVerifySuccess"], true);
       onNextLevel();
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      // 인증 코드가 잘못된 경우
-      if (error.response?.data.status === 400) {
-        setError("올바른 인증 코드가 아닙니다.");
-        return;
-      }
-      console.log("Error post code:", error);
-      setError("문제가 발생했습니다. 다시 시도해주세요.");
+      const { message } = useShowError(error, AUTH_ERROR_CODES);
+      setError(message);
     },
   });
 
   const handleNextClick = () => {
     const token = queryClient.getQueryData<string>(["emailToken"]);
 
-    if (!token || !email) {
+    if (!token || !email || !id) {
       setError("문제가 발생했습니다. 다시 시도해주세요.");
       return;
     }
-    if (seconds > 0 && value && !isNaN(Number(value))) {
-      mutate({ code: value, token, email });
+    if (seconds > 0 && code && !isNaN(Number(code))) {
+      mutate({ token, id, email, code });
     }
   };
 
   // 인증 코드 재전송
   const { mutate: emailMutation, isPending: emailIsPending } =
-    useEmailVerification({
+    useFindPasswordEmailVerification({
       onSuccess: (data: string) => {
         console.log("Email code sent successfully");
         queryClient.setQueryData(["emailToken"], data);
         setError(null);
         reset();
       },
-      onError: (error: AxiosError) => {
-        console.log("Error post email:", error);
-        setError("문제가 발생했습니다. 다시 시도해주세요.");
+      onError: (error: AxiosError<ApiErrorResponse>) => {
+        const { message } = useShowError(error, AUTH_ERROR_CODES);
+        setError(message);
       },
     });
   const handleReSend = () => {
-    if (email === undefined) {
+    if (email === undefined || id === undefined) {
       setError("문제가 발생했습니다. 다시 시도해주세요.");
       return;
     }
-    emailMutation(email);
+    emailMutation({ id, email });
   };
 
   // 각 입력 폼에서 "Enter"키를 눌렀을 때 넘어가기
@@ -114,8 +106,8 @@ const CodeLevel = ({
           </p>
           <CodeInput
             ref={codeInputRef}
-            value={value}
-            onChange={onChange}
+            value={code}
+            onChange={handleCodeChange}
             handleKeyDownEnter={handleKeyDownEnter}
             placeholder="인증 코드 6자리"
             seconds={seconds}
@@ -128,7 +120,7 @@ const CodeLevel = ({
         <NextBtn
           isLoading={isPending || emailIsPending}
           onClick={handleNextClick}
-          isActive={seconds > 0 && value !== ""}
+          isActive={seconds > 0 && code !== ""}
           text="인증하기"
         />
       </div>

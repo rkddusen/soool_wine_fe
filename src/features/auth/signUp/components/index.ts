@@ -6,5 +6,5 @@ export {
   EmailLevel,
   CodeLevel,
   FinalLevel,
-} from "./Level";
+} from "./Levels";
 export { default as Complete } from "./Complete";

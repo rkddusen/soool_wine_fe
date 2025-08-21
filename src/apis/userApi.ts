@@ -14,6 +14,18 @@ export const postEmailVerification = async (email: string): Promise<string> => {
   return data.token;
 };
 
+export const postCode = async (
+  code: string,
+  token: string,
+  email: string
+): Promise<void> => {
+  await userInstance.post<void>(`/email-verification/verify`, {
+    token,
+    email,
+    code,
+  });
+};
+
 // 사용자 로그아웃
 export const postLogout = async (): Promise<void> => {
   await authInstance.post(`/logout`, {}, { withCredentials: true });

@@ -6,18 +6,6 @@ export const getIdExists = async (id: string): Promise<boolean> => {
   return data;
 };
 
-export const postCode = async (
-  code: string,
-  token: string,
-  email: string
-): Promise<void> => {
-  await userInstance.post<void>(`/email-verification/verify`, {
-    token,
-    email,
-    code,
-  });
-};
-
 export const postUsers = async (user: SignUp): Promise<void> => {
   await userInstance.post<void>(`/`, {
     id: user.id,

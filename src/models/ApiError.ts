@@ -2,4 +2,5 @@ export interface ApiErrorResponse {
   message: string;
   status: number;
   error: string;
+  code: string;
 }
