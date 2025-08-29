@@ -1,3 +1,4 @@
+import { Wine } from "@/models/Wine";
 import { privateUserInstance } from "@/utils/api";
 
 export const patchEmail = async (
@@ -17,4 +18,15 @@ export const patchPassword = async (
     oldPassword,
     newPassword,
   });
+};
+
+export interface WinesResponse {
+  content: Wine[];
+  totalElements: number;
+}
+export const getMyWishlist = async (): Promise<WinesResponse> => {
+  const { data } = await privateUserInstance.get<WinesResponse>(
+    `me/wines/wishlist`
+  );
+  return data;
 };

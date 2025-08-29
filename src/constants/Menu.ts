@@ -1,8 +1,3 @@
 export const LOGINHELP_MENU = ["아이디 찾기", "비밀번호 찾기"];
 
-export const MYPAGE_MENU = [
-  "계정 설정",
-  "최근 본 와인",
-  "위시리스트",
-  "와인 메모",
-];
+export const MYPAGE_MENU = ["계정 설정", "위시리스트", "와인 메모"];

@@ -9,16 +9,16 @@ interface WishlistProps {
 }
 
 const Wishlist = ({ wineId }: WishlistProps) => {
-  const { wishlist, toggleWishlist } = useDebounceWishlist(wineId);
+  const { isWishlist, toggleWishlist } = useDebounceWishlist(wineId);
 
   return (
     <button
       className={`flex items-center justify-center w-full gap-10 px-10 rounded-15 hover:cursor-pointer ${
-        wishlist ? "bg-(--light-main) text-black" : "bg-white"
+        isWishlist ? "bg-(--light-main) text-black" : "bg-white"
       }`}
       onClick={toggleWishlist}
     >
-      {wishlist ? (
+      {isWishlist ? (
         <HeartIconFill className="w-20 h-20 shrink-0 stroke-(--heart-fill) fill-(--heart-fill)" />
       ) : (
         <HeartIconEmpty className="w-20 h-20 shrink-0" />
