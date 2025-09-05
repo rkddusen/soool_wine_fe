@@ -2,41 +2,46 @@
 // 와인 메모를 나타내는 컴포넌트
 // 메모를 등록하고 표시
 import { useState } from "react";
-import useMeasure from "react-use-measure";
 import { motion } from "framer-motion";
+import useMeasure from "react-use-measure";
+import { useAuthStore } from "@/stores/authStore";
+import { useMemos } from "../../hooks/useMemos";
+import { MemoItem } from "./item";
+import MemoInput from "./MemoInput";
+import GoToLoginBtn from "@/components/GoToLoginBtn";
 import LoadingBlack from "@/assets/LoadingBlack.svg?react";
 import {
+  ArrowPathIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  ArrowPathIcon,
-  TrashIcon,
 } from "@heroicons/react/24/outline";
-import { useWineMemo } from "../../hooks/useWineMemo";
 
 interface MemoProps {
   // 와인 아이디
   wineId: number;
 }
 const Memo = ({ wineId }: MemoProps) => {
+  const user = useAuthStore((state) => state.user);
+  const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
   const [isMemoOpen, setIsMemoOpen] = useState<boolean>(false);
   const [ref, { height }] = useMeasure();
-  const [input, setInput] = useState<string>("");
 
   const {
-    data: memo,
+    data: memos,
     isLoading,
     isError,
     refetch,
-    WineMemoMutation,
-  } = useWineMemo(wineId);
+    MemoMutation,
+    PatchMutation,
+    DeleteMutation,
+  } = useMemos(wineId);
 
-  // 메모 등록
-  const onSummitWineMemo = () => {
-    if (!input.trim()) {
+  // 메모 저장
+  const handleSave = (memo: string, clientId: string) => {
+    if (!memo.trim()) {
       return;
     }
-    WineMemoMutation(input);
-    setInput("");
+    MemoMutation.mutate({ memo, clientId });
   };
 
   return (
@@ -47,9 +52,9 @@ const Memo = ({ wineId }: MemoProps) => {
       >
         <span>와인 메모</span>
         {isMemoOpen ? (
-          <ChevronUpIcon className="w-20 h-20" />
+          <ChevronUpIcon className="w-18 h-18" />
         ) : (
-          <ChevronDownIcon className="w-20 h-20" />
+          <ChevronDownIcon className="w-18 h-18" />
         )}
       </button>
       <motion.div
@@ -60,73 +65,62 @@ const Memo = ({ wineId }: MemoProps) => {
       >
         <div ref={ref} className="py-10">
           <div className="px-20 py-20 bg-white rounded-15">
-            <div className="flex items-center justify-center">
-              {isLoading ? (
-                <div className="py-50">
-                  <LoadingBlack stroke="black"></LoadingBlack>
-                </div>
-              ) : (
-                <>
-                  {memo ? (
-                    <ul className="w-full">
-                      {memo.map((v, i) => (
-                        <li key={i}>
-                          {i !== 0 && (
-                            <div className="h-1 bg-(--gray-e0)"></div>
-                          )}
-                          <div className="flex items-center justify-start">
-                            <p className="w-full px-10 py-20 leading-20">{v}</p>
-                            <div className="h-full px-10">
-                              <div className="flex items-center justify-center rounded-full cursor-pointer w-36 h-36 hover:bg-red-100">
-                                <TrashIcon className="w-20 h-20 stroke-red-600" />
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <>
-                      {isError ? (
-                        <div className="py-50">
-                          <button
-                            onClick={() => refetch()}
-                            className="flex items-center justify-center w-36 h-36 mx-auto rounded-full bg-(--gray-e0) cursor-pointer"
-                          >
-                            <ArrowPathIcon className="w-18 h-18" />
-                          </button>
-                          <p className="text-14 mt-15">
-                            오류가 발생했습니다. 잠시 후 다시 시도해 주세요.
-                          </p>
-                        </div>
-                      ) : (
-                        <p className="py-50 text-14">
-                          "해당 와인에 작성된 메모가 없습니다!"
-                        </p>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-            <div className="mt-10 px-8 py-8 border border-(--gray-bb) rounded-5">
-              <textarea
-                rows={3}
-                className="w-full resize-none outline-0"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="메모를 작성해주세요:)"
-              ></textarea>
-              <div className="flex justify-end mt-10">
-                <button
-                  onClick={onSummitWineMemo}
-                  disabled={!input.trim()}
-                  className="bg-(--memo) px-20 py-10 rounded-5 select-none hover:cursor-pointer text-14"
-                >
-                  저장
-                </button>
+            {isAuthLoading || !user ? (
+              <div className="text-center py-50">
+                <p className="pb-10">로그인이 필요합니다!</p>
+                <GoToLoginBtn width={80} height={32} />
               </div>
-            </div>
+            ) : (
+              <div>
+                {isLoading ? (
+                  <LoadingBlack stroke="black" className="mx-auto my-50" />
+                ) : (
+                  <>
+                    {isError ? (
+                      <div className="my-20 text-center">
+                        <button
+                          onClick={() => refetch()}
+                          className="flex items-center justify-center w-36 h-36 mx-auto rounded-full bg-(--gray-e0) cursor-pointer"
+                        >
+                          <ArrowPathIcon className="w-18 h-18" />
+                        </button>
+                        <p className="text-14 mt-15">
+                          오류가 발생했습니다. 잠시 후 다시 시도해 주세요.
+                        </p>
+                      </div>
+                    ) : (
+                      <>
+                        {memos?.length ? (
+                          <ul>
+                            {memos.map((memoData, idx) => (
+                              <li key={memoData.clientId}>
+                                {idx !== 0 && (
+                                  <div className="h-1 bg-(--gray-e0)"></div>
+                                )}
+                                <MemoItem
+                                  patchMutation={PatchMutation}
+                                  deleteMutation={DeleteMutation}
+                                  memoData={memoData}
+                                  onSave={handleSave}
+                                />
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="py-50 text-14 text-center">
+                            해당 와인에 작성된 메모가 없습니다!
+                          </p>
+                        )}
+                        <MemoInput onSave={handleSave} isDisabled={isError} />
+                        <p className="mt-10 text-12 text-(--gray-49)">
+                          * 메모는 와인 당 최대 100개까지 가능합니다.
+                        </p>
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </motion.div>
