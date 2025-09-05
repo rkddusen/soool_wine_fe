@@ -5,9 +5,6 @@ export const updateWishlist = async (
   nextState: boolean
 ): Promise<void> => {
   if (nextState)
-    await privateUserInstance.post<void>(`me/wines/wishlist?wineId=${wineId}`);
-  else
-    await privateUserInstance.delete<void>(
-      `me/wines/wishlist?wineId=${wineId}`
-    );
+    await privateUserInstance.post<void>(`me/wines/${wineId}/wishlist`);
+  else await privateUserInstance.delete<void>(`me/wines/${wineId}/wishlist`);
 };

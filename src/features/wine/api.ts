@@ -18,7 +18,7 @@ export const getWishlist = async (
   wineId: number
 ): Promise<WishlistResponse> => {
   const { data } = await privateUserInstance.get<WishlistResponse>(
-    `me/wines/wishlist?wineId=${wineId}`
+    `me/wines/${wineId}/wishlist`
   );
   return data;
 };
