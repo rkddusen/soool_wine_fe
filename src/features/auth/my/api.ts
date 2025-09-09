@@ -20,12 +20,12 @@ export const patchPassword = async (
   });
 };
 
-export interface WinesResponse {
+export interface MyWishlistResponse {
   content: Wine[];
   totalElements: number;
 }
-export const getMyWishlist = async (): Promise<WinesResponse> => {
-  const { data } = await privateUserInstance.get<WinesResponse>(
+export const getMyWishlist = async (): Promise<MyWishlistResponse> => {
+  const { data } = await privateUserInstance.get<MyWishlistResponse>(
     `me/wines/wishlist`
   );
   return data;

@@ -1,3 +1,3 @@
-export interface WishlistResponse {
+export interface Wishlist {
   isWishlist: boolean;
 }

@@ -8,7 +8,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getWishlist } from "../api";
 import { updateWishlist } from "@/apis/wishlistApi";
-import { WishlistResponse } from "@/models/Wishlist";
+import { Wishlist } from "@/models/Wishlist";
 import { useAuthStore } from "@/stores/authStore";
 
 export const useWishlist = (id: number) => {
@@ -19,7 +19,7 @@ export const useWishlist = (id: number) => {
 
   // GET 와인 위시리스트
   // 로그인된 상태가 아니라면 GET 요청 X
-  const query = useQuery<WishlistResponse>({
+  const query = useQuery<Wishlist>({
     queryKey,
     queryFn: () => getWishlist(id),
     enabled: !isNaN(id) && !!user && !isAuthLoading,
@@ -30,16 +30,14 @@ export const useWishlist = (id: number) => {
     void,
     Error,
     boolean,
-    { previousData?: WishlistResponse }
+    { previousData?: Wishlist }
   >({
     mutationFn: (nextState) => updateWishlist(id, nextState),
-    onMutate: async (
-      nextState
-    ): Promise<{ previousData?: WishlistResponse }> => {
+    onMutate: async (nextState): Promise<{ previousData?: Wishlist }> => {
       await queryClient.cancelQueries({ queryKey });
-      const previousData = queryClient.getQueryData<WishlistResponse>(queryKey);
+      const previousData = queryClient.getQueryData<Wishlist>(queryKey);
 
-      queryClient.setQueryData<WishlistResponse>(queryKey, {
+      queryClient.setQueryData<Wishlist>(queryKey, {
         isWishlist: nextState,
       });
 
