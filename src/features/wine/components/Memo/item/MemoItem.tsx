@@ -14,6 +14,7 @@ import {
   TrashIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
+import { formatDate } from "@/utils/formatDate";
 
 interface MemoItemProps {
   // 메모 수정 요청
@@ -33,19 +34,6 @@ const MemoItem = ({
 }: MemoItemProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editedMemo, setEditedMemo] = useState<string>("");
-  // 날짜 변환 함수
-  const getParsedDate = (raw: string) => {
-    const date = new Date(raw);
-    if (isNaN(date.getTime())) return "-";
-
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const d = String(date.getDate()).padStart(2, "0");
-    const h = String(date.getHours()).padStart(2, "0");
-    const min = String(date.getMinutes()).padStart(2, "0");
-
-    return `${y}.${m}.${d}. ${h}:${min}`;
-  };
 
   const handleEdit = (memo: string) => {
     patchMutation.mutate({
@@ -81,7 +69,7 @@ const MemoItem = ({
         {memoData.memoId < 0 ? (
           <ExclamationTriangleIcon className="w-18 h-18 stroke-red-500" />
         ) : (
-          <p className="text-12">{getParsedDate(memoData.date)}</p>
+          <p className="text-12">{formatDate(memoData.date)}</p>
         )}
         {memoData.memoId >= 0 &&
           (memoData.memoId > 0 ? (
