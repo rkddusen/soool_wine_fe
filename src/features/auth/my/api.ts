@@ -1,3 +1,4 @@
+import { MyMemo } from "@/models/Memo";
 import { Wine } from "@/models/Wine";
 import { privateUserInstance } from "@/utils/api";
 
@@ -28,5 +29,20 @@ export const getMyWishlist = async (): Promise<MyWishlistResponse> => {
   const { data } = await privateUserInstance.get<MyWishlistResponse>(
     `me/wines/wishlist`
   );
+  return data;
+};
+
+export interface MyMemosResponse {
+  totalElements: number;
+  totalPages: number;
+  content: MyMemo[];
+}
+export const getMyMemos = async (
+  pageIndex: number
+): Promise<MyMemosResponse> => {
+  const { data } = await privateUserInstance.get<MyMemosResponse>(
+    `me/wines/memos?page=${pageIndex}`
+  );
+  console.log(data);
   return data;
 };

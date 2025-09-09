@@ -15,7 +15,7 @@ const Nav = ({ mode, onClickMenu }: NavProps) => {
           <li
             key={v}
             onClick={() => onClickMenu(i + 1)}
-            className={`shrink-0 h-60 w-90 flex justify-center items-center text-center hover:cursor-pointer select-none ${
+            className={`shrink-0 h-60 px-10 flex justify-center items-center text-center hover:cursor-pointer select-none ${
               mode === i + 1 && "font-medium border-b-2"
             }`}
           >

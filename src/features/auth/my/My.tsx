@@ -1,7 +1,7 @@
 // features/mypage/MyPage.tsx
 // 마이 페이지
 import { Footer, Header } from "@/components";
-import { AccountSetting, MyWishlist, Nav } from "./components";
+import { AccountSetting, MyWishlist, MyMemo, Nav } from "./components";
 import { useAuthStore } from "@/stores/authStore";
 import { useRequireLogin } from "./hooks/useRequireLogin";
 import { useTab } from "@/hooks/useTab";
@@ -24,6 +24,7 @@ const MyPage = () => {
           <div className="pt-60">
             {tab === 1 && <AccountSetting />}
             {tab === 2 && <MyWishlist />}
+            {tab === 3 && <MyMemo />}
           </div>
         </div>
       </div>

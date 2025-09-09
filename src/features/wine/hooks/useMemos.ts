@@ -12,19 +12,10 @@ import toast from "react-hot-toast";
 import { Memo } from "@/models/Memo";
 import { useAuthStore } from "@/stores/authStore";
 import { getMemo, postMemo } from "../api";
-import { patchMemo, deleteMemo } from "@/apis/memoApi";
 
 interface postMemoRequestData {
   memo: string;
   clientId: string;
-}
-export interface patchMemoRequestData {
-  memoId: number;
-  memo: string;
-  clientId: string;
-}
-export interface deleteMemoRequestData {
-  memoId: number;
 }
 
 export const useMemos = (wineId: number) => {
@@ -102,68 +93,11 @@ export const useMemos = (wineId: number) => {
     },
   });
 
-  // PATCH 와인 메모
-  const patchMutation = useMutation<Memo, Error, patchMemoRequestData>({
-    mutationFn: ({ memoId, memo }) => patchMemo(wineId, memoId, memo),
-    onMutate: async (newData): Promise<{ previousData?: Memo[] }> => {
-      await queryClient.cancelQueries({ queryKey });
-      const previousData = queryClient.getQueryData<Memo[]>(queryKey);
-      queryClient.setQueryData<Memo[]>(queryKey, (old) => {
-        if (!old) return previousData;
-        return old.map((item) =>
-          item.clientId === newData.clientId
-            ? { ...item, memo: newData.memo!, memoId: 0 }
-            : item
-        );
-      });
-      return { previousData };
-    },
-    onSuccess: (savedData: Memo) => {
-      queryClient.setQueryData<Memo[]>(
-        queryKey,
-        (old) =>
-          old?.map((memo) =>
-            memo.clientId === savedData.clientId ? savedData : memo
-          ) || []
-      );
-    },
-    onError: (error, variables) => {
-      toast.error("서버와 문제가 생겼어요. 잠시 후 다시 시도해주세요.");
-      console.log("Error patchMemo:", error);
-
-      queryClient.setQueryData<Memo[]>(queryKey, (old) => {
-        if (!old) return old;
-        return old.map((memo) =>
-          memo.clientId === variables.clientId
-            ? { ...memo, memoId: -2 } // 실패 표시
-            : memo
-        );
-      });
-    },
-  });
-
-  // DELETE 와인 메모
-  const deleteMutation = useMutation<void, Error, deleteMemoRequestData>({
-    mutationFn: ({ memoId }) => deleteMemo(wineId, memoId),
-    onSuccess: () => {
-      toast.success("메모가 삭제되었습니다.");
-    },
-    onError: (error) => {
-      toast.error("서버와 문제가 생겼어요. 잠시 후 다시 시도해주세요.");
-      console.log("Error deleteMemo:", error);
-    },
-    onSettled: () => {
-      refetch();
-    },
-  });
-
   return {
     data,
     isLoading,
     isError,
     refetch,
-    MemoMutation: mutation,
-    PatchMutation: patchMutation,
-    DeleteMutation: deleteMutation,
+    memoMutation: mutation,
   };
 };

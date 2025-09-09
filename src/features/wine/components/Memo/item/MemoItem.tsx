@@ -2,21 +2,20 @@
 // 와인 메모 리스트의 항목을 나타내는 컴포넌트
 import { useState } from "react";
 import { UseMutationResult } from "@tanstack/react-query";
-import {
-  patchMemoRequestData,
-  deleteMemoRequestData,
-} from "@/features/wine/hooks/useMemos";
 import { Memo } from "@/models/Memo";
 import EditableMemoInput from "./EditableMemoInput";
+import { formatDate } from "@/utils/formatDate";
+import { patchMemoRequestData } from "../../../hooks/usePatchMemo";
+import { deleteMemoRequestData } from "@/hooks/memo/useDeleteMemo";
 import LoadingBlack from "@/assets/LoadingBlack.svg?react";
 import {
   PencilSquareIcon,
   TrashIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
-import { formatDate } from "@/utils/formatDate";
 
 interface MemoItemProps {
+  wineId: number;
   // 메모 수정 요청
   patchMutation: UseMutationResult<Memo, Error, patchMemoRequestData>;
   // 메모 삭제 요청
@@ -27,6 +26,7 @@ interface MemoItemProps {
   onSave: (memo: string, clientId: string) => void;
 }
 const MemoItem = ({
+  wineId,
   patchMutation,
   deleteMutation,
   memoData,
@@ -37,6 +37,7 @@ const MemoItem = ({
 
   const handleEdit = (memo: string) => {
     patchMutation.mutate({
+      wineId,
       memoId: memoData.memoId,
       memo,
       clientId: memoData.clientId,
@@ -46,7 +47,7 @@ const MemoItem = ({
   };
   const handleDelete = () => {
     if (window.confirm("메모를 삭제하시겠습니까?")) {
-      deleteMutation.mutate({ memoId: memoData.memoId });
+      deleteMutation.mutate({ wineId, memoId: memoData.memoId });
     }
   };
 
@@ -65,7 +66,6 @@ const MemoItem = ({
     <div className="w-full px-10 py-20">
       <div className="flex items-center justify-between">
         {/* 날짜 or 오류 시 경고 아이콘 */}
-
         {memoData.memoId < 0 ? (
           <ExclamationTriangleIcon className="w-18 h-18 stroke-red-500" />
         ) : (

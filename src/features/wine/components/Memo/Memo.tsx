@@ -5,10 +5,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import useMeasure from "react-use-measure";
 import { useAuthStore } from "@/stores/authStore";
-import { useMemos } from "../../hooks/useMemos";
 import { MemoItem } from "./item";
 import MemoInput from "./MemoInput";
 import GoToLoginBtn from "@/components/GoToLoginBtn";
+import { useMemos } from "../../hooks/useMemos";
+import { usePatchMemo } from "../../hooks/usePatchMemo";
+import { useDeleteMemo } from "@/hooks/memo/useDeleteMemo";
 import LoadingBlack from "@/assets/LoadingBlack.svg?react";
 import {
   ArrowPathIcon,
@@ -25,23 +27,24 @@ const Memo = ({ wineId }: MemoProps) => {
   const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
   const [isMemoOpen, setIsMemoOpen] = useState<boolean>(false);
   const [ref, { height }] = useMeasure();
+  const queryKey = ["wine-memos", wineId];
 
   const {
     data: memos,
     isLoading,
     isError,
     refetch,
-    MemoMutation,
-    PatchMutation,
-    DeleteMutation,
+    memoMutation,
   } = useMemos(wineId);
+  const patchMutation = usePatchMemo(queryKey);
+  const deleteMutation = useDeleteMemo(queryKey);
 
   // 메모 저장
   const handleSave = (memo: string, clientId: string) => {
     if (!memo.trim()) {
       return;
     }
-    MemoMutation.mutate({ memo, clientId });
+    memoMutation.mutate({ memo, clientId });
   };
 
   return (
@@ -98,8 +101,9 @@ const Memo = ({ wineId }: MemoProps) => {
                                   <div className="h-1 bg-(--gray-e0)"></div>
                                 )}
                                 <MemoItem
-                                  patchMutation={PatchMutation}
-                                  deleteMutation={DeleteMutation}
+                                  wineId={wineId}
+                                  patchMutation={patchMutation}
+                                  deleteMutation={deleteMutation}
                                   memoData={memoData}
                                   onSave={handleSave}
                                 />
