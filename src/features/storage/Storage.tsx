@@ -1,18 +1,30 @@
 // features/storage/Storage.tsx
 // 와인창고 페이지
 import NoResultsFound from "@/assets/NoResultsFound.svg?react";
-import LoadingWineFind from "@/assets/LoadingWineFind.svg?react";
+import LoadingFind from "@/assets/LoadingFind.svg?react";
 import LoadingCircle from "@/assets/LoadingCircle.svg?react";
 import { SearchArea, FilterSearch, WineListBox } from "./components";
 import { useSearchQuery } from "./hooks/useSearchQuery";
 import { useFilterQuery } from "./hooks/useFilterQuery";
-import { useWines } from "./hooks/useWines";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { getWines } from "./api";
 
 const Storage = () => {
   const { search } = useSearchQuery();
   const { filter } = useFilterQuery();
-  const { fetchNextPage, hasNextPage, isLoading, isFetching, isError, data } =
-    useWines(search, filter);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isError,
+    isLoading,
+  } = useInfiniteScroll(
+    ["wines"],
+    ({ pageParam, queryParams }) =>
+      getWines(pageParam, queryParams.search, queryParams.filter),
+    { search, filter }
+  );
   const wines = data?.pages.flatMap((page) => page.content) ?? [];
   const totalElements = data?.pages[0].totalElements ?? 0;
 
@@ -47,7 +59,7 @@ const Storage = () => {
               </div>
               {hasNextPage && (
                 <div className="text-center mt-50">
-                  {!isFetching ? (
+                  {!isFetchingNextPage ? (
                     <button
                       onClick={() => fetchNextPage()}
                       disabled={isLoading}
@@ -65,7 +77,7 @@ const Storage = () => {
             </>
           ) : (
             <div className="flex flex-col items-center gap-10 mx-auto py-100">
-              <LoadingWineFind />
+              <LoadingFind />
               <p className="text-(--gray-78) text-18">와인 가져오는 중...</p>
             </div>
           )}

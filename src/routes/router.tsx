@@ -3,11 +3,13 @@ import { createBrowserRouter } from "react-router-dom";
 import {
   LayoutPage,
   LoginPage,
+  LoginHelpPage,
   SignUpPage,
   MainPage,
   StoragePage,
   MapPage,
   WinePage,
+  MyPage,
 } from "@/pages";
 
 const router = createBrowserRouter([
@@ -16,16 +18,29 @@ const router = createBrowserRouter([
     element: <LayoutPage />,
     children: [
       {
-        path: "/",
+        path: "",
         element: <MainPage />,
       },
       {
-        path: "/storage",
+        path: "storage",
         element: <StoragePage />,
       },
       {
-        path: `/wine/:id`,
+        path: `wine/:id`,
         element: <WinePage />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    children: [
+      {
+        path: "",
+        element: <LoginPage />,
+      },
+      {
+        path: "help",
+        element: <LoginHelpPage />,
       },
     ],
   },
@@ -34,12 +49,12 @@ const router = createBrowserRouter([
     element: <MapPage />,
   },
   {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
     path: "/signup",
     element: <SignUpPage />,
+  },
+  {
+    path: `/mypage`,
+    element: <MyPage />,
   },
 ]);
 

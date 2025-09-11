@@ -1,57 +1,64 @@
 // stores/authStore.ts
 // 로그인, 토큰 저장, 사용자 정보 조회 등을 담당
 import { create } from "zustand";
-import { getMe, postLogin } from "@/features/login/api";
+import { getMe, postLogin } from "@/features/auth/login/api";
 import { User } from "@/models/User";
+import { postLogout } from "@/apis/userApi";
 
 interface AuthState {
-  accessToken: string | null;
   user: User | null;
   login: (id: string, password: string) => Promise<void>;
-  // logout: () => Promise<void>;
-  setAccessToken: (token: string | null) => void;
-  fetchUser: () => Promise<void>;
-  _fetchUser: () => Promise<void>;
+  logout: () => Promise<void>;
+  isAuthLoading: boolean;
+  initializeAuth: () => Promise<void>;
 }
 
 // zustand 스토어 생성
 export const useAuthStore = create<AuthState>((set) => ({
-  accessToken: null,
   user: null,
+  isAuthLoading: true,
 
   login: async (id, password) => {
-    const { accessToken } = await postLogin(id, password);
-    // sessionStorage에 저장
-    sessionStorage.setItem("accessToken", accessToken);
+    try {
+      set({ isAuthLoading: true });
 
-    // user 가져오기
-    // const user = await getMe();
-    // set({ user });
-    // 임시 유저. 서버 개발 이후 삭제
-    const user = { id: "test", email: "test@t.est" };
-    set({ user });
-    set({ accessToken });
+      const { accessToken } = await postLogin(id, password);
+      // sessionStorage에 저장
+      sessionStorage.setItem("accessToken", accessToken);
+
+      // user 가져오기
+      const user = await getMe();
+      set({ user });
+    } catch (err) {
+      throw err;
+    } finally {
+      set({ isAuthLoading: false });
+    }
   },
 
-  // logout: async () => {
-  //   await postLogout();
-  //   set({ accessToken: null, user: null });
-  // },
-
-  setAccessToken: (token) => {
-    if (token) sessionStorage.setItem("accessToken", token);
-    else sessionStorage.removeItem("accessToken");
-
-    set({ accessToken: token });
+  logout: async () => {
+    try {
+      await postLogout();
+    } finally {
+      set({ user: null });
+      sessionStorage.removeItem("accessToken");
+    }
   },
 
-  fetchUser: async () => {
-    const user = await getMe();
-    set({ user });
-  },
-  // 임시 유저. 서버 개발 이후 삭제
-  _fetchUser: async () => {
-    const user = { id: "test", email: "test@t.est" };
-    set({ user });
+  // 첫 렌더링 시 로그인 확인(새로고침 포함)
+  initializeAuth: async () => {
+    try {
+      set({ isAuthLoading: true });
+      const token = sessionStorage.getItem("accessToken");
+
+      if (!token) {
+        set({ isAuthLoading: false, user: null });
+        return;
+      }
+      const user = await getMe();
+      set({ user });
+    } finally {
+      set({ isAuthLoading: false });
+    }
   },
 }));

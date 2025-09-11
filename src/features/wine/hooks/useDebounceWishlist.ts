@@ -4,56 +4,67 @@
  * 클라이언트에 먼저 반영한 후, 서버에 요청을 보내는 구조
  * - wishlist와 toggleWishlist 반환
  */
-import { useEffect, useRef, useState } from "react";
-import { useWineWishlist } from "./useWineWishlist.ts";
+import { useEffect, useRef } from "react";
+import { useWishlist } from "./useWishlist.ts";
 import { debounce } from "lodash";
 import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
+import { useAuthStore } from "@/stores/authStore.ts";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export const useDebounceWishlist = (wineId: number) => {
-  // GET 위시리스트
-  const { data: wishlistData, WineWishlistMutation } = useWineWishlist(wineId);
-  const [wishlist, setWishlist] = useState<boolean>(wishlistData ?? false);
-  const [rollback, setRollback] = useState<boolean>(wishlist);
+export const useDebounceWishlist = (id: number) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const user = useAuthStore((state) => state.user);
+  const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
 
-  // GET 요청에 성공하면 업데이트
-  useEffect(() => {
-    if (wishlistData !== undefined) {
-      setWishlist(wishlistData);
-      setRollback(wishlistData);
-    }
-  }, [wishlistData]);
+  const queryClient = useQueryClient();
+  const { isWishlist, mutation } = useWishlist(id);
 
-  // 언마운트 시 debounce 해제
+  // 디바운싱
+  const debounceMutateRef = useRef(
+    debounce((nextState: boolean) => {
+      mutation.mutate(nextState, {
+        onSuccess: () => {
+          toast.success(
+            nextState
+              ? "위시리스트에 추가되었어요."
+              : "위시리스트에서 삭제되었어요."
+          );
+        },
+        onError: () => {
+          toast.error("서버와 문제가 생겼어요. 잠시 후 다시 시도해주세요.");
+        },
+      });
+    }, 200)
+  );
+
   useEffect(() => {
     return () => {
       debounceMutateRef.current.cancel();
     };
   }, []);
 
-  // debounce 설정. 500ms동안 변화 없으면 POST 요청
-  const debounceMutateRef = useRef(
-    debounce((nextState: boolean) => {
-      WineWishlistMutation(nextState, {
-        // 성공하면 rollback 데이터 업데이트
-        onSuccess: () => {
-          setRollback(nextState);
-        },
-        // 실패하면 rollback 데이터로 롤백
-        onError: (error) => {
-          toast.error("서버와 문제가 생겼어요. 잠시 후 다시 시도해주세요.");
-          console.log("Error postWineWishlist:", error);
-          setWishlist(rollback);
-        },
-      });
-    }, 500)
-  );
-
-  // 위시리스트 UI 선 반영 후 서버 저장
+  // 로그인 페이지로 리다이렉트
+  const handleLoginRedirect = () => {
+    const currentPath = location.pathname + location.search;
+    navigate(`/login?url=${encodeURIComponent(currentPath)}`);
+  };
+  // 위시리스트 토글 함수
   const toggleWishlist = () => {
-    const nextState = !wishlist;
-    setWishlist(nextState);
+    // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
+    if (!user || isAuthLoading) {
+      handleLoginRedirect();
+      return;
+    }
+
+    const nextState = !isWishlist;
+    queryClient.setQueryData(["wine-wishlist", id], { isWishlist: nextState });
     debounceMutateRef.current(nextState);
   };
 
-  return { wishlist, toggleWishlist };
+  return {
+    isWishlist,
+    toggleWishlist,
+  };
 };

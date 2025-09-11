@@ -1,5 +1,7 @@
+import { Memo } from "@/models/Memo";
 import { TypeKey, WineWithWinery } from "@/models/Wine";
-import { userInstance, wineInstance } from "@/utils/api";
+import { Wishlist } from "@/models/Wishlist";
+import { privateUserInstance, wineInstance } from "@/utils/api";
 
 interface WineResponse {
   content: WineWithWinery;
@@ -12,30 +14,34 @@ export const getWine = async (id: number): Promise<WineWithWinery> => {
   const { data } = await wineInstance.get<WineResponse>(`/${id}`);
   return data.content;
 };
-
-export const getWineWishlist = async (wineId: number): Promise<boolean> => {
-  const { data } = await userInstance.get<boolean>(`/wishlists/${wineId}`);
-  return data;
-};
-export const postWineWishlist = async (
-  wineId: number,
-  state: boolean
-): Promise<void> => {
-  await userInstance.post<void>(`/wishlists/${wineId}`, { state });
-};
-
-export const getWineMemo = async (wineId: number): Promise<string[]> => {
-  const { data } = await userInstance.get<string[]>(`/memos/${wineId}`);
+export const getWishlist = async (wineId: number): Promise<Wishlist> => {
+  const { data } = await privateUserInstance.get<Wishlist>(
+    `me/wines/${wineId}/wishlist`
+  );
   return data;
 };
 
-export const postWineMemo = async (
+export const getMemo = async (wineId: number): Promise<Memo[]> => {
+  const { data } = await privateUserInstance.get<Memo[]>(
+    `/me/wines/${wineId}/memos`
+  );
+  return data;
+};
+
+export const postMemo = async (
   wineId: number,
-  memo: string
-): Promise<void> => {
-  await userInstance.post<void>(`/memos/${wineId}`, {
-    memo,
-  });
+  memo: string,
+  clientId: string
+): Promise<Memo> => {
+  const { data } = await privateUserInstance.post<Memo>(
+    `/me/wines/${wineId}/memos`,
+    {
+      memo,
+      clientId,
+    }
+  );
+
+  return data;
 };
 
 export const getWineRelationByType = async (
