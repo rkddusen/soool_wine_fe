@@ -5,24 +5,23 @@ import qs from "qs";
 
 export interface WinesResponse {
   content: WineWithWinery[];
-  totalElements: number;
-  totalPages: number;
+  hasNext: boolean;
+  nextCursorId: string | null;
 }
 
 export const getWines = async (
-  pageIndex: number,
+  cursorId: string | null,
   search: string | null,
   filter: Filter
 ): Promise<WinesResponse> => {
   const params: Record<string, any> = {
-    page: pageIndex - 1,
+    ...(cursorId !== null ? { cursorId } : {}),
     ...(search ? { search } : {}),
     ...Object.fromEntries(
       Object.entries(filter).filter(([_, v]) => v && v.length)
     ),
   };
-
-  const { data } = await wineInstance.get<WinesResponse>("/", {
+  const { data } = await wineInstance.get<WinesResponse>("", {
     params,
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: "repeat" }),

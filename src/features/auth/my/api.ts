@@ -23,26 +23,36 @@ export const patchPassword = async (
 
 export interface MyWishlistResponse {
   content: Wine[];
-  totalElements: number;
+  hasNext: boolean;
+  nextCursorId: number | null;
+  nextCursorDate: number | null;
 }
-export const getMyWishlist = async (): Promise<MyWishlistResponse> => {
+export const getMyWishlist = async (
+  cursorId: number | null,
+  cursorDate: number | null
+): Promise<MyWishlistResponse> => {
   const { data } = await privateUserInstance.get<MyWishlistResponse>(
-    `me/wines/wishlist`
+    cursorId
+      ? `me/wines/wishlist?cursorId=${cursorId}&cursorDate=${cursorDate}`
+      : `/me/wines/wishlist`
   );
   return data;
 };
 
 export interface MyMemosResponse {
-  totalElements: number;
-  totalPages: number;
   content: MyMemo[];
+  hasNext: boolean;
+  nextCursorId: number | null;
+  nextCursorDate: number | null;
 }
 export const getMyMemos = async (
-  pageIndex: number
+  cursorId: number | null,
+  cursorDate: number | null
 ): Promise<MyMemosResponse> => {
   const { data } = await privateUserInstance.get<MyMemosResponse>(
-    `me/wines/memos?page=${pageIndex}`
+    cursorId
+      ? `me/wines/memos?cursorId=${cursorId}&cursorDate=${cursorDate}`
+      : `/me/wines/memos`
   );
-  console.log(data);
   return data;
 };
