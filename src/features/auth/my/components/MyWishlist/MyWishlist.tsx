@@ -1,43 +1,46 @@
-// MyMemo/MyMemo.tsx
-// 내 메모들을 보여주는 컴포넌트
-import MyMemoItem from "./MyMemoItem";
+// MyWishlist/MyWishlist.tsx
+// 내 위시리스트를 보여주는 컴포넌트
+import MyWishlistItem from "./MyWishlistItem";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
-import { useDeleteMemo } from "@/hooks/memo/useDeleteMemo";
-import { getMyMemos } from "../../api";
+import { getMyWishlist } from "../../api";
+import { useUpdateWishlist } from "../../hooks/useUpdateWishlist";
 import LoadingFind from "@/assets/LoadingFind.svg?react";
 import LoadingCircle from "@/assets/LoadingCircle.svg?react";
 
-const MyMemo = () => {
-  const queryKey = ["my-memos"];
+// MyWishlist.tsx
+const MyWishlist = () => {
+  const queryKey = ["my-wishlist"];
   const {
-    items: allMemo,
+    items: wishlist,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isError,
     isLoading,
   } = useInfiniteScroll(queryKey, ({ cursorId, cursorDate }) =>
-    getMyMemos(cursorId, cursorDate ?? null)
+    getMyWishlist(cursorId, cursorDate ?? null)
   );
-  const deleteMutation = useDeleteMemo(queryKey);
+  const { removedId, toggleWishlist } = useUpdateWishlist();
 
   return (
     <div className="mt-50 px-20 mx-auto md:px-40 max-w-1280">
       <p className="text-16 md:text-20 flex items-center gap-10">
-        <span className="text-24 md:text-32 font-medium">내 메모</span>
+        <span className="text-24 md:text-32 font-medium">위시리스트</span>
+        {/* {data?.totalElements}개 */}
       </p>
       <div>
         {!isError ? (
           <>
             {!isLoading ? (
               <>
-                {allMemo.length ? (
+                {wishlist.length ? (
                   <ul className="mt-20">
-                    {allMemo?.map((memoData) => (
-                      <MyMemoItem
-                        key={memoData.clientId}
-                        memoData={memoData}
-                        deleteMutation={deleteMutation}
+                    {wishlist?.map((v) => (
+                      <MyWishlistItem
+                        key={v.id}
+                        wine={v}
+                        removedId={removedId}
+                        toggleWishlist={toggleWishlist}
                       />
                     ))}
                   </ul>
@@ -77,4 +80,4 @@ const MyMemo = () => {
   );
 };
 
-export default MyMemo;
+export default MyWishlist;

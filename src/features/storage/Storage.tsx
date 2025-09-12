@@ -8,25 +8,25 @@ import { useSearchQuery } from "./hooks/useSearchQuery";
 import { useFilterQuery } from "./hooks/useFilterQuery";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { getWines } from "./api";
+import { WineWithWinery } from "@/models/Wine";
 
 const Storage = () => {
   const { search } = useSearchQuery();
   const { filter } = useFilterQuery();
+  const queryKey = ["wines"];
   const {
-    data,
+    items: wines,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useInfiniteScroll(
-    ["wines"],
-    ({ pageParam, queryParams }) =>
-      getWines(pageParam, queryParams.search, queryParams.filter),
+  } = useInfiniteScroll<WineWithWinery, string>(
+    queryKey,
+    ({ cursorId, queryParams }) =>
+      getWines(cursorId, queryParams.search, queryParams.filter),
     { search, filter }
   );
-  const wines = data?.pages.flatMap((page) => page.content) ?? [];
-  const totalElements = data?.pages[0].totalElements ?? 0;
 
   return (
     <section>
@@ -40,7 +40,7 @@ const Storage = () => {
             <>
               <div className="flex items-center px-10 h-60">
                 <p className="text-14 text-(--gray-78) font-medium">
-                  {totalElements} Wines
+                  {/* {totalElements} Wines */}
                 </p>
               </div>
               <div className="flex flex-wrap justify-center gap-40">
