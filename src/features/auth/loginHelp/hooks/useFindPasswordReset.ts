@@ -11,6 +11,7 @@ import { patchFindPasswordReset } from "../api";
 interface VerifyRequestData {
   id: string;
   newPassword: string;
+  token: string;
 }
 
 export const useFindPasswordReset = ({
@@ -21,8 +22,8 @@ export const useFindPasswordReset = ({
   onError: (err: AxiosError<ApiErrorResponse>) => void;
 }) => {
   return useMutation<void, AxiosError<ApiErrorResponse>, VerifyRequestData>({
-    mutationFn: ({ id, newPassword }) =>
-      patchFindPasswordReset(id, newPassword),
+    mutationFn: ({ id, newPassword, token }) =>
+      patchFindPasswordReset(id, newPassword, token),
     onSuccess,
     onError,
   });

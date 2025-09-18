@@ -45,7 +45,9 @@ const CodeLevel = ({ onPrevLevel, onNextLevel }: CodeLevelProps) => {
   }, [seconds]);
 
   const { mutate, isPending } = useFindPasswordVerify({
-    onSuccess: () => {
+    onSuccess: (data: string) => {
+      console.log("Email code sent successfully");
+      queryClient.setQueryData(["codeToken"], data);
       onNextLevel();
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
