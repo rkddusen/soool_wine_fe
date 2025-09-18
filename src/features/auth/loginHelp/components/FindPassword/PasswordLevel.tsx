@@ -68,7 +68,8 @@ const PasswordLevel = ({ onPrevLevel, onNextLevel }: PasswordLevelProps) => {
   });
 
   const queryClient = useQueryClient();
-  const id: string | undefined = queryClient.getQueryData(["id"]);
+  const id = queryClient.getQueryData<string>(["id"]);
+  const token = queryClient.getQueryData<string>(["codeToken"]);
   // 변경하기 버튼 클릭
   const handleChangeClick = () => {
     const error = validPassword(newPassword);
@@ -81,8 +82,8 @@ const PasswordLevel = ({ onPrevLevel, onNextLevel }: PasswordLevelProps) => {
       return;
     }
 
-    if (id && newPassword && newPasswordCheck) {
-      mutate({ id, newPassword });
+    if (id && newPassword && newPasswordCheck && token) {
+      mutate({ id, newPassword, token });
     }
   };
 
@@ -102,9 +103,7 @@ const PasswordLevel = ({ onPrevLevel, onNextLevel }: PasswordLevelProps) => {
     <>
       <div className="w-full mb-15">
         <div className="mb-15">
-          <p className="font-bold text-20">
-            등록하신 아이디와 이메일을 입력해주세요!
-          </p>
+          <p className="font-bold text-20">새 비밀번호를 입력해주세요!</p>
           <PasswordInput
             ref={newPasswordInputRef}
             value={newPassword}
@@ -133,7 +132,7 @@ const PasswordLevel = ({ onPrevLevel, onNextLevel }: PasswordLevelProps) => {
         <PrevBtn onClick={onPrevLevel} />
         <NextBtn
           isLoading={isPending}
-          onClick={onNextLevel}
+          onClick={handleChangeClick}
           isActive={newPassword !== "" && newPasswordCheck !== ""}
           text="다음"
         />

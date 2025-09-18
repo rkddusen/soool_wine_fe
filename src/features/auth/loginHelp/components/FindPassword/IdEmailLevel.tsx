@@ -43,6 +43,12 @@ const IdEmailLevel = ({ onPrevLevel, onNextLevel }: IdEmailLevelProps) => {
     enabled: false,
     gcTime: Infinity,
   });
+  useQuery({
+    queryKey: ["codeToken"],
+    queryFn: () => Promise.resolve(null),
+    enabled: false,
+    gcTime: Infinity,
+  });
 
   // 초기 렌더링 시 포커스
   useEffect(() => {
