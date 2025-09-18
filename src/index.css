@@ -73,6 +73,7 @@
   --white-wine: #b3b3b3;
   --rose-wine: #ffaca7;
   --sparkling-wine: #f9da37;
+  --etc-wine: #000000;
   --very-light-degree: #ffd7d7;
   --light-degree: #ffafaf;
   --medium-degree: #ff8787;
@@ -93,12 +94,6 @@
   .x-center-absolute {
     left: 50%;
     transform: translateX(-50%);
-  }
-  .type-box {
-    display: inline-block;
-    color: white;
-    padding: 6px 8px;
-    border-radius: 5px;
   }
 }
 

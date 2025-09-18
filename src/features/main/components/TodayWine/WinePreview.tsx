@@ -1,20 +1,21 @@
-// TodayWine/WineBox.tsx
+// TodayWine/WinePreview.tsx
 // 오늘의 와인에서 와인 정보를 담은 박스 컴포넌트
 // 각 와인을 클릭 시 해당 와인 페이지(/wine/...)로 이동
 import { Link } from "react-router-dom";
+import { TypeBadge } from "@/components";
+import Structure from "./Structure";
 import { TypeKey, WineWithWinery } from "@/models/Wine";
 import { COUNTRY_LOOKUP } from "@/constants/Country";
-import Structure from "./Structure";
 import { TYPE_LOOKUP } from "@/constants/Wine";
 
-interface WineBoxProps {
+interface WinePreviewProps {
   // 와인 타입 (ex. red)
   type: TypeKey;
   // 와인 객체
   wine?: WineWithWinery;
 }
 
-const WineBox = ({ type, wine }: WineBoxProps) => {
+const WinePreview = ({ type, wine }: WinePreviewProps) => {
   // COUNTRY_LOOKUP에서 국가 코드에 해당하는 데이터 조회
   // 없으면 'etc'(기타)
   const countryInfo =
@@ -24,14 +25,11 @@ const WineBox = ({ type, wine }: WineBoxProps) => {
     <Link to={wine ? `/wine/${wine.id}` : ""}>
       <div className="flex flex-col w-full p-10 overflow-hidden bg-white rounded-15 h-320 group">
         {/* 와인 타입 영역 */}
-        <div
-          className={`shrink-0 w-[45%] max-w-200 h-50 flex flex-row justify-center items-center rounded-15 text-white`}
-          style={{ backgroundColor: `var(--${type}-wine)` }}
-        >
-          <span className="text-center text-14 sm:text-16 font-light">
-            {TYPE_LOOKUP[type].label}
-          </span>
-        </div>
+        <TypeBadge
+          type={type}
+          label={TYPE_LOOKUP[type].label}
+          variant="medium"
+        />
         {/* 와인 정보 영역 */}
         <div className="relative flex items-center justify-start w-full h-full p-10">
           {wine ? (
@@ -84,4 +82,4 @@ const WineBox = ({ type, wine }: WineBoxProps) => {
   );
 };
 
-export default WineBox;
+export default WinePreview;

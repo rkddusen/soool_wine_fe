@@ -35,7 +35,7 @@ const RelationList = ({ title, standard, items }: RelationListProps) => {
           {standard.map((s) => (
             <span
               key={s}
-              className="type-box text-16 shrink-0"
+              className="text-16 rounded-5 text-white px-8 py-6 shrink-0"
               style={{ backgroundColor: `var(--${s}-wine)` }}
             >
               {TYPE_LOOKUP[s as TypeKey].shortName}

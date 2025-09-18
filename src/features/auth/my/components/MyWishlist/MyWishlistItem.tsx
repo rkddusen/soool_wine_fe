@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { TYPE_LOOKUP } from "@/constants/Wine";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { Wine } from "@/models/Wine";
+import { TypeBadge } from "@/components";
 
 interface MyWishlistItemProps {
   wine: Wine;
@@ -16,6 +17,7 @@ const MyWishlistItem = ({
   removedId,
   toggleWishlist,
 }: MyWishlistItemProps) => {
+  const nowType = TYPE_LOOKUP[wine.type] ?? TYPE_LOOKUP["etc"];
   return (
     <Link to={`/wine/${wine.id}`}>
       <li>
@@ -27,16 +29,11 @@ const MyWishlistItem = ({
               className="object-cover h-full"
             />
             <div>
-              <span
-                className={`text-12 type-box`}
-                style={{
-                  backgroundColor: `var(--${
-                    TYPE_LOOKUP[wine.type].type ?? TYPE_LOOKUP["etc"].type
-                  }-wine)`,
-                }}
-              >
-                {TYPE_LOOKUP[wine.type].name ?? TYPE_LOOKUP["etc"].name}
-              </span>
+              <TypeBadge
+                type={nowType.type}
+                label={nowType.name}
+                variant="small"
+              />
               <p className="line-clamp-2 md:text-20 text-16 leading-[120%] font-light mt-5">
                 {wine.ename}
               </p>
