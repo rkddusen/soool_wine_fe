@@ -6,4 +6,5 @@ export { default as NextBtn } from "./NextBtn";
 export { default as PrevBtn } from "./PrevBtn";
 export { default as LoginFooter } from "./auth/LoginFooter";
 export { default as AuthInitializer } from "./auth/AuthInitializer";
+export { default as TypeBadge } from "./TypeBadge";
 export { IdInput, PasswordInput, EmailInput, CodeInput } from "./auth/Inputs";

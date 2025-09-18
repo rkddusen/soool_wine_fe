@@ -6,6 +6,7 @@ import { WineWithWinery } from "@/models/Wine";
 import { Filter } from "@/models/Filter";
 import { TYPE_LOOKUP } from "@/constants/Wine";
 import { COUNTRY_LOOKUP } from "@/constants/Country";
+import { TypeBadge } from "@/components";
 
 interface WineListBoxProps {
   // 보여줄 와인
@@ -33,14 +34,11 @@ const WineListBox = ({ wine, filter }: WineListBoxProps) => {
           </div>
           {/* 와인 정보 영역 */}
           <div className="w-[70%] break-keep shrink-0 px-10 flex flex-col gap-5">
-            <div>
-              <span
-                className={`text-12 type-box`}
-                style={{ backgroundColor: `var(--${nowType.type}-wine)` }}
-              >
-                {nowType.name}
-              </span>
-            </div>
+            <TypeBadge
+              type={nowType.type}
+              label={nowType.name}
+              variant="small"
+            />
             <div>
               <span className="text-14">{nowCountry.emoji}</span>
               <span className="ml-5 text-14">

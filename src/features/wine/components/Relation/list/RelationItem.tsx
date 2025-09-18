@@ -4,6 +4,7 @@ import { WineWithWinery } from "@/models/Wine";
 import { COUNTRY_LOOKUP } from "@/constants/Country";
 import { TYPE_LOOKUP } from "@/constants/Wine";
 import { Link } from "react-router-dom";
+import { TypeBadge } from "@/components";
 
 interface RelationItemProps {
   wine: WineWithWinery;
@@ -15,12 +16,7 @@ const RelationItem = ({ wine }: RelationItemProps) => {
     <Link to={`/wine/${wine.id}`}>
       <div className="relative w-full h-full p-15 rounded-10 bg-white">
         <div className="absolute top-10 left-10">
-          <span
-            className={`type-box text-12`}
-            style={{ backgroundColor: `var(--${type.type}-wine)` }}
-          >
-            {type.name}
-          </span>
+          <TypeBadge type={type.type} label={type.name} variant="small" />
         </div>
         <img src={wine.image || undefined} className="w-full" />
         <div className="mt-5 text-12 flex gap-5">
