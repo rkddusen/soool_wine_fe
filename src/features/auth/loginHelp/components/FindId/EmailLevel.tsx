@@ -1,4 +1,4 @@
-// EmailLevel.tsx
+// FindId/EmailLevel.tsx
 // 사용자의 이메일을 검증하기 위한 레벨
 // 이메일 검증에 성공하면 CodeLevel로 이동
 import { useEffect, useRef, useState } from "react";
@@ -6,9 +6,9 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { EmailInput, NextBtn, PrevBtn } from "@/components";
 import { useValidForm } from "@/hooks/auth/useValidForm";
-import { ApiErrorResponse } from "@/models/ApiError";
 import { useFindIdEmailVerification } from "../../hooks/useFindIdEmailVerification";
 import { useShowError } from "@/hooks/useShowError";
+import { ApiErrorResponse } from "@/models/ApiError";
 import { AUTH_ERROR_CODES } from "@/constants/ErrorCode/AuthErrorCode";
 
 interface EmailLevelProps {

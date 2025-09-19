@@ -1,6 +1,7 @@
+// features/Storage/api.ts
 import { Filter } from "@/models/Filter";
 import { WineWithWinery } from "@/models/Wine";
-import { wineInstance } from "@/utils/api";
+import { wineInstance } from "@/apis/instance";
 import qs from "qs";
 
 export interface WinesResponse {

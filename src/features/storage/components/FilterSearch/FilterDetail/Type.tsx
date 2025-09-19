@@ -1,9 +1,9 @@
 // FilterSearch/FilterDetail/Type.tsx
 // 타입 필터
-import { TYPE_ARRAY } from "@/constants/Wine";
-import { Filter } from "@/models/Filter";
-import WineIcon from "@/assets/WineIcon.svg?react";
 import CheckBox from "./CheckBox";
+import { Filter } from "@/models/Filter";
+import { TYPE_ARRAY } from "@/constants/Wine";
+import WineIcon from "@/assets/WineIcon.svg?react";
 
 interface TypeProps {
   // 필터 선택 여부

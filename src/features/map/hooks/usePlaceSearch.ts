@@ -1,5 +1,5 @@
 /**
- * features/map/hooks/usePlaceSearch.ts
+ * features/Map/hooks/usePlaceSearch.ts
  * 와인 검색어로 검색하는 커스텀훅
  * 검색으로 나온 장소들은 onSearchComplete에서 저장
  * - void

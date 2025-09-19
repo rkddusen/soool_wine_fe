@@ -1,4 +1,4 @@
-// MainCity/card/CardHeader.tsx
+// MainCity/Card/CardHeader.tsx
 // 도시 카드(Header)
 import { COUNTRY_LOOKUP } from "@/constants/Country";
 

@@ -1,5 +1,5 @@
 import { Memo } from "@/models/Memo";
-import { privateUserInstance } from "@/utils/api";
+import { privateUserInstance } from "@/apis/instance";
 
 export const patchMemo = async (
   wineId: number,

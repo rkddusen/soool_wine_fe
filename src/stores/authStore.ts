@@ -1,8 +1,8 @@
 // stores/authStore.ts
 // 로그인, 토큰 저장, 사용자 정보 조회 등을 담당
 import { create } from "zustand";
-import { getMe, postLogin } from "@/features/auth/login/api";
-import { User } from "@/models/User";
+import { getMe, postLogin } from "@/features/Auth/Login/api";
+import { User } from "@/models/auth/User";
 import { postLogout } from "@/apis/userApi";
 
 interface AuthState {

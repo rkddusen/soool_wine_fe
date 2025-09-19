@@ -1,5 +1,5 @@
 /**
- * features/wine/hooks/useWine.ts
+ * features/Wine/hooks/useWine.ts
  * 와인 아이디로 와인 데이터를 가져오는 커스텀 훅
  * - 캐시 키: ["wine"]
  * - 성공 시 WineWithWinery 반환

@@ -1,4 +1,5 @@
-import { userInstance } from "@/utils/api";
+// features/Auth/LoginHelp/api.ts
+import { userInstance } from "@/apis/instance";
 
 // 아이디 찾기
 // 1. 이메일 인증 요청

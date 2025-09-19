@@ -1,4 +1,4 @@
-// Info/infoBox/City.tsx
+// Info/InfoBox/City.tsx
 // 와인 생산 도시
 interface CityProps {
   region: string;

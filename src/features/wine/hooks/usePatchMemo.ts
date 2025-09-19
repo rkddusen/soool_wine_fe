@@ -1,5 +1,5 @@
 /**
- * hooks/memo/usePatchMemo.ts
+ * features/Wine/hooks/usePatchMemo.ts
  * 특정 메모를 수정하는 커스텀 훅
  * - 성공 시 mutation 반환
  */

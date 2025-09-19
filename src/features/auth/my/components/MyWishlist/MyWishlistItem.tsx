@@ -1,10 +1,10 @@
 // MyWishlist/MyWishlistItem.tsx
 // 내 위시리스트의 각 요소를 보여주는 컴포넌트
 import { Link } from "react-router-dom";
+import { TypeBadge } from "@/components";
+import { Wine } from "@/models/Wine";
 import { TYPE_LOOKUP } from "@/constants/Wine";
 import { HeartIcon } from "@heroicons/react/24/solid";
-import { Wine } from "@/models/Wine";
-import { TypeBadge } from "@/components";
 
 interface MyWishlistItemProps {
   wine: Wine;

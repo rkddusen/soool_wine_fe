@@ -1,3 +1,4 @@
+// components/Auth/AuthInitializer.tsx
 import { useEffect } from "react";
 import { useAuthStore } from "@/stores/authStore";
 

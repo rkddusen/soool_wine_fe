@@ -1,3 +1,5 @@
+// LevelBar.tsx
+// 현재 회원가입 레벨을 알려주는 바 컴포넌트
 import { CheckIcon } from "@heroicons/react/24/outline";
 
 interface LevelBarProps {

@@ -1,5 +1,5 @@
 /**
- * features/storage/hooks/useSearchQuery.ts
+ * features/Storage/hooks/useSearchQuery.ts
  * url에서 검색어를 불러오는 커스텀 훅
  * 검색어 반환
  */

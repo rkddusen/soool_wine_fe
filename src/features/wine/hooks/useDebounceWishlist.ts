@@ -1,11 +1,11 @@
 /**
- * features/wine/hooks/useDebounceWishlist.ts
+ * features/Wine/hooks/useDebounceWishlist.ts
  * 와인 아이디를 통해 위시리스트를 토글하는 커스텀 훅
  * 클라이언트에 먼저 반영한 후, 서버에 요청을 보내는 구조
  * - wishlist와 toggleWishlist 반환
  */
 import { useEffect, useRef } from "react";
-import { useWishlist } from "./useWishlist.ts";
+import { useWishlist } from "./useWishlist.ts.ts";
 import { debounce } from "lodash";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";

@@ -1,5 +1,5 @@
 /**
- * features/wine/hooks/useRelationStandard.ts
+ * features/Wine/hooks/useRelationStandard.ts
  * 관련 와인의 기준이 되는 값을 찾는 커스텀 훅
  * useLocation의 state에서 filter를 찾아서
  * - type과 country가 있으면 해당 값 반환

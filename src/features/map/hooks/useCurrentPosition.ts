@@ -1,5 +1,5 @@
 /**
- * features/map/hooks/useCurrentPosition.ts
+ * features/Map/hooks/useCurrentPosition.ts
  * 현재 위치를 가져오는 커스텀 훅
  * 현재 위치를 가져오지 못하면 '서울 시청' 위치로 fallback
  * - 위치 반환

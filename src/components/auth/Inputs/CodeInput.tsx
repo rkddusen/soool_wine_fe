@@ -1,3 +1,4 @@
+// components/Auth/Input/CodeInput.tsx
 import { forwardRef } from "react";
 
 interface CodeInputProps extends React.InputHTMLAttributes<HTMLInputElement> {

@@ -1,4 +1,4 @@
-// CodeLevel.tsx
+// FindPassword/CodeLevel.tsx
 // 사용자의 이메일로 보낸 코드를 확인하기 위한 레벨
 // 코드는 3분안에 입력해야 하며, 코드 검증에 성공하면 비밀번호를 재설정할 수 있는 창으로 이동
 import { useEffect, useRef, useState } from "react";
@@ -8,9 +8,9 @@ import { CodeInput, NextBtn, PrevBtn } from "@/components";
 import { useFindPasswordEmailVerification } from "../../hooks/useFindPasswordEmailVerification";
 import { useFindPasswordVerify } from "../../hooks/useFindPasswordVerify";
 import { useCodeTimer } from "@/hooks/auth/useCodeTimer";
-import { ApiErrorResponse } from "@/models/ApiError";
 import { useEmailCodeInputs } from "@/hooks/auth/useInputs";
 import { useShowError } from "@/hooks/useShowError";
+import { ApiErrorResponse } from "@/models/ApiError";
 import { AUTH_ERROR_CODES } from "@/constants/ErrorCode/AuthErrorCode";
 
 interface CodeLevelProps {

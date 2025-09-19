@@ -1,6 +1,6 @@
-// Info/infoBox/Wishlist.tsx
+// Info/InfoBox/Wishlist.tsx
 // 와인 위시리스트 버튼
-import { useDebounceWishlist } from "@/features/wine/hooks/useDebounceWishlist";
+import { useDebounceWishlist } from "@/features/Wine/hooks/useDebounceWishlist";
 import { HeartIcon as HeartIconEmpty } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartIconFill } from "@heroicons/react/24/solid";
 

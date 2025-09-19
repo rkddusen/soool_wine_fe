@@ -1,5 +1,5 @@
 /**
- * @/hooks/auth/useCode.ts
+ * hooks/auth/useCode.ts
  * 인증 코드를 전송하는 커스텀 훅
  * - mutation 반환
  */

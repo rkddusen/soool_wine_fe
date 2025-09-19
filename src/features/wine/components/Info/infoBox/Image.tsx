@@ -1,4 +1,4 @@
-// Info/infoBox/Image.tsx
+// Info/InfoBox/Image.tsx
 // 와인 이미지
 interface ImageProps {
   image: string | null;

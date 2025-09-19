@@ -1,5 +1,6 @@
+// features/Main/api.ts
 import { TodayWineType } from "@/models/Wine";
-import { wineInstance } from "@/utils/api";
+import { wineInstance } from "@/apis/instance";
 
 interface TodayWineResponse {
   content: TodayWineType;

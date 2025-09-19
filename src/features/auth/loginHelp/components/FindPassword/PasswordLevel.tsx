@@ -1,13 +1,15 @@
+// FindPassword/PasswordLevel
+// 비밀번호를 재설정하기 위한 레벨
 import { useEffect, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { NextBtn, PasswordInput, PrevBtn } from "@/components";
 import { usePasswordInput } from "@/hooks/auth/useInputs";
 import { useValidForm } from "@/hooks/auth/useValidForm";
-import { AxiosError } from "axios";
 import { useFindPasswordReset } from "../../hooks/useFindPasswordReset";
-import { NextBtn, PasswordInput, PrevBtn } from "@/components";
-import { useQueryClient } from "@tanstack/react-query";
+import { useShowError } from "@/hooks/useShowError";
 import { ApiErrorResponse } from "@/models/ApiError";
 import { AUTH_ERROR_CODES } from "@/constants/ErrorCode/AuthErrorCode";
-import { useShowError } from "@/hooks/useShowError";
 
 interface PasswordLevelProps {
   onPrevLevel: () => void;

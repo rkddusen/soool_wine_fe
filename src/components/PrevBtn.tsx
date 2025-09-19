@@ -1,3 +1,4 @@
+// components/PrevBtn.tsx
 interface PrevBtnProps {
   onClick: () => void;
 }

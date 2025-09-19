@@ -1,8 +1,8 @@
-// Complete.tsx
-// 아이디 찾기를 나타내는 컴포넌트
+// FindId/Complete.tsx
+// 아이디 찾기를 완료하여 아이디를 보여주는 컴포넌트
 // '로그인 하러가기' 버튼을 클릭하면 로그인 페이지(/login)로 이동
-import { NextBtn, PrevBtn } from "@/components";
 import { Link } from "react-router-dom";
+import { NextBtn, PrevBtn } from "@/components";
 
 interface CompleteProps {
   foundId: string;

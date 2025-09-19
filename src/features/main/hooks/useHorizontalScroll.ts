@@ -1,5 +1,5 @@
 /**
- * features/main/hooks/useHorizontalScroll.ts
+ * features/Main/hooks/useHorizontalScroll.ts
  * 주요 와인 생산 지역을 가로로 스크롤하는 커스텀 훅
  * 좌/우 버튼의 활성화 여부와 이동하는 함수 반환
  */

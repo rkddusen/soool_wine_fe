@@ -1,5 +1,5 @@
 /**
- * features/map/hooks/useMarkerImage.ts
+ * features/Map/hooks/useMarkerImage.ts
  * 타입에 따라서 마커 이미지 변경
  * type이 1이면 마커 호버
  * - 마커 이미지 반환

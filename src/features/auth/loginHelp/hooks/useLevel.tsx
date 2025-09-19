@@ -1,5 +1,5 @@
 /**
- * features/loginHelp/hooks/useLevel.ts
+ * features/Auth/LoginHelp/hooks/useLevel.ts
  * 아이디 및 비밀번호 찾기 단계를 관리하는 커스텀 훅
  * - 레벨과 다음 단계, 이전 단계로 넘어가는 함수 반환
  */

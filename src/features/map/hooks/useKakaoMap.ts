@@ -1,5 +1,5 @@
 /**
- * features/map/hooks/useKakaoMap.ts
+ * features/Map/hooks/useKakaoMap.ts
  * 지도를 생성하는 커스텀 훅
  * - 지도 반환
  */

@@ -1,10 +1,10 @@
 /**
- * features/my/hooks/usePasswordInputs.ts
+ * features/Auth/My/hooks/usePasswordInputs.ts
  * 비밀번호 입력 상태를 관리하는 커스텀 훅
  * - 기존 비밀번호, 새 비밀번호, 새 비밀번호 확인 입력 상태를 관리하고, 입력 변경 핸들러를 반환
  */
-import { usePasswordInput } from "@/hooks/auth/useInputs";
 import { useRef } from "react";
+import { usePasswordInput } from "@/hooks/auth/useInputs";
 
 export const usePasswordInputs = () => {
   const oldPasswordInputRef = useRef<HTMLInputElement | null>(null);

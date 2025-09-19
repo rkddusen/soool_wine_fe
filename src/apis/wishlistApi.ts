@@ -1,4 +1,4 @@
-import { privateUserInstance } from "@/utils/api";
+import { privateUserInstance } from "@/apis/instance";
 
 export const updateWishlist = async (
   wineId: number,
