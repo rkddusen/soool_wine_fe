@@ -1,11 +1,11 @@
 /**
- * features/signup/hooks/useIdExists.ts
+ * features/Signup/hooks/useIdExists.ts
  * 아이디를 사용 여부를 가져오는 커스텀 훅
  * - mutation 반환
  */
 import { useMutation } from "@tanstack/react-query";
-import { getIdExists } from "../api";
 import { AxiosError } from "axios";
+import { getIdExists } from "../api";
 
 export const useIdExists = ({
   onSuccess,

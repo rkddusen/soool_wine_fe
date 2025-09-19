@@ -1,3 +1,4 @@
+// components/SideFlipCard.tsx
 import { ReactNode } from "react";
 import { useSpring, a } from "@react-spring/web";
 

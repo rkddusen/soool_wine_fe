@@ -1,3 +1,5 @@
+// AccountSetting/EmailChange.tsx
+// 프로필 수정 > 이메일 변경 컴포넌트
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import useMeasure from "react-use-measure";

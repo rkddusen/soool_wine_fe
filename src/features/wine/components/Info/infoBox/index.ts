@@ -1,4 +1,4 @@
-// Info/infoBox/index.ts
+// Info/InfoBox/index.ts
 export { default as Image } from "./Image";
 export { default as Country } from "./Country";
 export { default as City } from "./City";

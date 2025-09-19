@@ -1,3 +1,4 @@
+// components/Footer.tsx
 import { Link } from "react-router-dom";
 import SooolLogoWine from "/src/assets/SooolLogoWine.svg?react";
 

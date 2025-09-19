@@ -1,5 +1,5 @@
 /**
- * features/map/hooks/useMapMarkers.ts
+ * features/Map/hooks/useMapMarkers.ts
  */
 import { useEffect, useRef, useState } from "react";
 import { Place } from "@/models/Map";

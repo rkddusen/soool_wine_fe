@@ -1,8 +1,8 @@
 // FilterSearch/FilterDetail/Structure.tsx
 // 구조 필터
+import CheckBox from "./CheckBox";
 import { Filter } from "@/models/Filter";
 import { FILTER_TASTEDEGREE } from "@/constants/Filter";
-import CheckBox from "./CheckBox";
 import { STRUCTURE_ARRAY } from "@/constants/Wine";
 
 interface StructureProps {

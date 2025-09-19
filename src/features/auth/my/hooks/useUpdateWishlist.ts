@@ -1,13 +1,13 @@
 /**
- * features/auth/my/hooks/useUpdateWishlist.ts
+ * features/Auth/My/hooks/useUpdateWishlist.ts
  * 위시리스트 목록에서 항목을 추가/삭제하는 커스텀 훅
  * - 위시리스트에서 제거될 항목 set과 toggleWishlist 함수 반환
  */
 import { useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { debounce } from "lodash";
-import toast from "react-hot-toast";
 import { updateWishlist } from "@/apis/wishlistApi";
+import toast from "react-hot-toast";
 
 interface WishlistRequestData {
   id: number;

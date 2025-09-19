@@ -1,5 +1,5 @@
 /**
- * features/loginHelp/hooks/auth/useFindPasswordReset.ts
+ * features/Auth/LoginHelp/hooks/useFindPasswordReset.ts
  * 새 비밀번호를 등록하는 커스텀 훅
  * - mutation 반환
  */

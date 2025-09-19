@@ -1,4 +1,4 @@
-// Info/infoBox/Share.tsx
+// Info/InfoBox/Share.tsx
 // 와인 공유 버튼
 import { ShareIcon } from "@heroicons/react/24/outline";
 

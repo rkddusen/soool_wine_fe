@@ -1,5 +1,6 @@
+// features/SignUp/api.ts
 import { SignUp } from "@/models/auth/User";
-import { userInstance } from "@/utils/api";
+import { userInstance } from "@/apis/instance";
 
 export const getIdExists = async (id: string): Promise<boolean> => {
   const { data } = await userInstance.get<boolean>(`/id-exists?id=${id}`);

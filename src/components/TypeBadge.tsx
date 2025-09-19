@@ -1,3 +1,4 @@
+// components/TypeBadge.tsx
 interface TypeBadgeProps {
   type: string;
   label: string;

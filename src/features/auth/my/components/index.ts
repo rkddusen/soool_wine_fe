@@ -1,4 +1,4 @@
-// features/my/index.ts
+// features/Auth/My/components/index.ts
 export { default as Nav } from "./Nav";
 export { default as AccountSetting } from "./AccountSetting";
 export { default as MyWishlist } from "./MyWishlist";

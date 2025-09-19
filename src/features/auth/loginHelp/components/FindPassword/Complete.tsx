@@ -1,8 +1,8 @@
-// Complete.tsx
-// 아이디 찾기를 나타내는 컴포넌트
+// FindPassword/Complete.tsx
+// 비밀번호 초기화를 완료했음을 보여주는 컴포넌트
 // '로그인 하러가기' 버튼을 클릭하면 로그인 페이지(/login)로 이동
-import { NextBtn } from "@/components";
 import { Link } from "react-router-dom";
+import { NextBtn } from "@/components";
 
 const Complete = () => {
   return (

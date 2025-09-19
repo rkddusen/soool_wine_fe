@@ -1,5 +1,5 @@
 /**
- * features/loginHelp/hooks/auth/useFindIdVerify.ts
+ * features/Auth/LoginHelp/hooks/useFindIdVerify.ts
  * 인증 코드를 전송하는 커스텀 훅
  * - mutation 반환
  */

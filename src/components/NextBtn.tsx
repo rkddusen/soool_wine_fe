@@ -1,3 +1,4 @@
+// components/NextBtn.tsx
 import LoadingWhite from "/src/assets/LoadingWhite.svg?react";
 
 interface NextBtnProps {

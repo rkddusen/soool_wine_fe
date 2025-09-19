@@ -1,14 +1,16 @@
+// AccountSetting/PasswordChange.tsx
+// 프로필 수정 > 비밀번호 변경 컴포넌트
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useMeasure from "react-use-measure";
+import { AxiosError } from "axios";
+import { PasswordInput } from "@/components";
 import { useToggle } from "@/hooks/useToggle";
-import { usePasswordInputs } from "../../hooks/usePasswordInputs";
 import { useValidForm } from "@/hooks/auth/useValidForm";
+import { usePasswordInputs } from "../../hooks/usePasswordInputs";
+import { usePatchPassword } from "../../hooks/usePatchPassword";
 import LoadingWhite from "/src/assets/LoadingWhite.svg?react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
-import { AxiosError } from "axios";
-import { usePatchPassword } from "../../hooks/usePatchPassword";
-import { PasswordInput } from "@/components";
 
 const PasswordChange = () => {
   const { isOpen, toggle } = useToggle();

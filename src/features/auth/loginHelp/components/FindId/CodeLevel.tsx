@@ -1,4 +1,4 @@
-// CodeLevel.tsx
+// FindId/CodeLevel.tsx
 // 사용자의 이메일로 보낸 코드를 확인하기 위한 레벨
 // 코드는 3분안에 입력해야 하며, 코드 검증에 성공하면 아이디를 반환
 import { useEffect, useRef, useState } from "react";
@@ -8,8 +8,8 @@ import { CodeInput, NextBtn, PrevBtn } from "@/components";
 import { useFindIdEmailVerification } from "../../hooks/useFindIdEmailVerification";
 import { useFindIdVerify } from "../../hooks/useFindIdVerify";
 import { useCodeTimer } from "@/hooks/auth/useCodeTimer";
-import { ApiErrorResponse } from "@/models/ApiError";
 import { useShowError } from "@/hooks/useShowError";
+import { ApiErrorResponse } from "@/models/ApiError";
 import { AUTH_ERROR_CODES } from "@/constants/ErrorCode/AuthErrorCode";
 
 interface CodeLevelProps {

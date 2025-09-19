@@ -1,4 +1,4 @@
-// Info/infoBox/Country.tsx
+// Info/InfoBox/Country.tsx
 // 와인 생산 국가
 import { COUNTRY_LOOKUP } from "@/constants/Country";
 

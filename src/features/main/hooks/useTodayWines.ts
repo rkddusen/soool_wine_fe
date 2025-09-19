@@ -1,5 +1,5 @@
 /**
- * features/main/hooks/useTodayWines.ts
+ * features/Main/hooks/useTodayWines.ts
  * 오늘의 와인 데이터를 가져오는 커스텀 훅
  * - 캐시 키: ["today-wine"]
  * - 성공 시 TodayWineType 반환

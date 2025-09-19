@@ -1,5 +1,5 @@
 /**
- * features/storage/hooks/useFilterQuery.ts
+ * features/Storage/hooks/useFilterQuery.ts
  * 필터를 적용하고 불러오고 삭제하는 커스텀 훅
  * 1. url에서 필터를 뽑아서 반환
  * 2. 필터를 적용하는 함수 반환(설정/해제)

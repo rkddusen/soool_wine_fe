@@ -1,12 +1,12 @@
 /**
- * features/signup/hooks/useSignUpLevel.ts
+ * features/Signup/hooks/useSignUpLevel.ts
  * 회원가입 단계를 관리하는 커스텀 훅
  * 폼 데이터가 변하거나 레벨이 변하면 유효성을 검사
  * - 레벨과 다음 단계, 이전 단계로 넘어가는 함수 반환
  */
 import { useEffect, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { useValidForm } from "@/hooks/auth/useValidForm";
 import { SignUp } from "@/models/auth/User";
 

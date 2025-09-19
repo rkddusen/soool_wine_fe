@@ -1,8 +1,8 @@
 // FilterSearch/FilterList.tsx
 // 필터의 리스트를 표시하는 컴포넌트
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { FILTER_LABELS } from "@/constants/Filter";
 import { FilterKey } from "@/models/Filter";
+import { FILTER_LABELS } from "@/constants/Filter";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 interface FilterListProps {
   // 필터 키

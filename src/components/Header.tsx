@@ -1,3 +1,4 @@
+// components/Header.tsx
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/authStore";
@@ -10,7 +11,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { useLogout } from "@/hooks/auth/useLogout";
 import toast from "react-hot-toast";
-import { set } from "lodash";
 
 interface HeaderProp {
   noBorder?: boolean;

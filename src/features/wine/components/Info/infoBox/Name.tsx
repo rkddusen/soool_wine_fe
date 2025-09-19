@@ -1,4 +1,4 @@
-// Info/infoBox/Name.tsx
+// Info/InfoBox/Name.tsx
 // 와인 이름
 interface NameProps {
   ename: string;

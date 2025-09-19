@@ -1,7 +1,8 @@
+// features/Wine/api.ts
 import { Memo } from "@/models/Memo";
 import { TypeKey, WineWithWinery } from "@/models/Wine";
 import { Wishlist } from "@/models/Wishlist";
-import { privateUserInstance, wineInstance } from "@/utils/api";
+import { privateUserInstance, wineInstance } from "@/apis/instance";
 
 interface WineResponse {
   content: WineWithWinery;

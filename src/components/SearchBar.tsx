@@ -1,3 +1,4 @@
+// components/SearchBar.tsx
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import SearchLogoIcon from "@/assets/SearchLogoIcon.svg?react";

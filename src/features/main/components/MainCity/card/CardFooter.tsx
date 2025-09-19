@@ -1,4 +1,4 @@
-// MainCity/card/CardFooter.tsx
+// MainCity/Card/CardFooter.tsx
 // 도시 카드(Footer)
 import {
   ArrowRightIcon,

@@ -1,5 +1,5 @@
 /**
- * features/wine/hooks/useWineRelation.ts
+ * features/Wine/hooks/useWineRelation.ts
  * 와인 아이디로 해당 와인과 관련된 와인을 가져오는 커스텀 훅
  * - 타입으로 관련된 와인 > 캐시 키: ["wine-relation-type"]
  * - 국가으로 관련된 와인 > 캐시 키: ["wine-relation-country"]

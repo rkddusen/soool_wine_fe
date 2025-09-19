@@ -1,6 +1,7 @@
+// features/Auth/My/api.ts
 import { MyMemo } from "@/models/Memo";
 import { Wine } from "@/models/Wine";
-import { privateUserInstance } from "@/utils/api";
+import { privateUserInstance } from "@/apis/instance";
 
 export const patchEmail = async (
   code: string,

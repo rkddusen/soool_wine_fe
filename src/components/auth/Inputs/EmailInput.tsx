@@ -1,3 +1,4 @@
+// components/Auth/Input/EmailInput.tsx
 import { useAutoEmail } from "@/hooks/auth/useAutoEmail";
 import { forwardRef } from "react";
 

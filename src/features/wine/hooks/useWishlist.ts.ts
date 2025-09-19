@@ -1,5 +1,5 @@
 /**
- * features/wine/hooks/useWishlist.ts
+ * features/Wine/hooks/useWishlist.ts
  * 와인 아이디로 해당 와인의 위시리스트를 가져오는 커스텀 훅
  * - 캐시 키: ["wine-wishlist"]
  * - get 요청 성공 시 boolean 반환

@@ -1,4 +1,4 @@
-// LoginFooter.tsx
+// components/Auth/LoginFooter.tsx
 const LoginFooter = () => {
   return (
     <div className="w-full mt-20">

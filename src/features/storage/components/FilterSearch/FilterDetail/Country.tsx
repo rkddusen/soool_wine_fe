@@ -1,8 +1,8 @@
 // FilterSearch/FilterDetail/Country.tsx
 // 나라 필터
+import CheckBox from "./CheckBox";
 import { Filter } from "@/models/Filter";
 import { COUNTRY_ARRAY } from "@/constants/Country";
-import CheckBox from "./CheckBox";
 
 interface CountryProps {
   // 필터 선택 여부

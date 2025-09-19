@@ -1,3 +1,4 @@
+// components/GoToLoginBtn.tsx
 import { useLocation, useNavigate } from "react-router-dom";
 
 const GoToLoginBtn = ({ width, height }: { width: number; height: number }) => {

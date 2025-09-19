@@ -1,4 +1,4 @@
-// features/signup/components/index.ts
+// features/Signup/components/index.ts
 export { default as LevelBar } from "./LevelBar";
 export {
   IdLevel,
@@ -6,5 +6,5 @@ export {
   EmailLevel,
   CodeLevel,
   FinalLevel,
-} from "./Levels";
+} from "./Level";
 export { default as Complete } from "./Complete";

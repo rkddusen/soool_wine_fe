@@ -1,3 +1,4 @@
+// components/Auth/Input/index.ts
 export { default as IdInput } from "./IdInput";
 export { default as PasswordInput } from "./PasswordInput";
 export { default as EmailInput } from "./EmailInput";

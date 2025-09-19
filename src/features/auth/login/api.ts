@@ -1,5 +1,6 @@
+// features/Auth/Login/api.ts
 import { User } from "@/models/auth/User";
-import { authInstance, privateAuthInstance } from "@/utils/api";
+import { authInstance, privateAuthInstance } from "@/apis/instance";
 
 interface LoginResponse {
   accessToken: string;
