@@ -81,6 +81,10 @@
   --very-full-degree: #ff3737;
 }
 
+.skeletonUI {
+  @apply rounded-5 bg-linear-to-r from-gray-300 to-gray-100;
+}
+
 @layer utilities {
   .center-absolute {
     left: 50%;
