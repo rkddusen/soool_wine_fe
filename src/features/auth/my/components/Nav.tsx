@@ -9,7 +9,7 @@ interface NavProps {
 }
 const Nav = ({ mode, onClickMenu }: NavProps) => {
   return (
-    <div className="mx-auto fixed w-full bg-white">
+    <div className="mx-auto fixed w-full bg-white z-1">
       <ul className="flex gap-20 md:px-[max(40px,_calc((100vw-1220px)/2))] px-20 overflow-x-auto scrollbar-hide border-b border-(--gray-e0)">
         {MYPAGE_MENU.map((v, i) => (
           <li
