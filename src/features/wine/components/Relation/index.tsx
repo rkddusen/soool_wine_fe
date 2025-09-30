@@ -5,6 +5,7 @@ import { TypeKey } from "@/models/Wine";
 import { useRelationStandard } from "../../hooks/useRelationStandard";
 import RelationList from "./RelationList";
 import { useWineRelation } from "../../hooks/useWineRelation";
+import RelationSkeleton from "../RelationSkeleton";
 
 interface RelationProps {
   wineId: number;
@@ -14,11 +15,15 @@ interface RelationProps {
 
 const Relation = ({ wineId, type, country }: RelationProps) => {
   const { standardType, standardCountry } = useRelationStandard(type, country);
-  const { relationByType, relationByCountry } = useWineRelation(
+  const { relationByType, relationByCountry, isLoading } = useWineRelation(
     wineId,
     standardType,
     standardCountry
   );
+
+  if (isLoading) {
+    return <RelationSkeleton />;
+  }
 
   return (
     <div>
