@@ -15,19 +15,23 @@ export const useWineRelation = (
   country: string[]
 ) => {
   // GET 타입 관련 와인
-  const { data: relationByType } = useQuery<WineWithWinery[]>({
+  const { data: relationByType, isLoading: relationByTypeIsLoading } = useQuery<
+    WineWithWinery[]
+  >({
     queryKey: ["wine-relation-type", type],
     queryFn: () => getWineRelationByType(id, type),
   });
 
   // GET 국가 관련 와인
-  const { data: relationByCountry } = useQuery<WineWithWinery[]>({
-    queryKey: ["wine-relation-country", country],
-    queryFn: () => getWineRelationByCountry(id, country),
-  });
+  const { data: relationByCountry, isLoading: relationByCountryIsLoading } =
+    useQuery<WineWithWinery[]>({
+      queryKey: ["wine-relation-country", country],
+      queryFn: () => getWineRelationByCountry(id, country),
+    });
 
   return {
     relationByType,
     relationByCountry,
+    isLoading: relationByTypeIsLoading || relationByCountryIsLoading,
   };
 };

@@ -25,8 +25,11 @@ const MyMemoItem = ({ memoData, deleteMutation }: MyMemoItemProps) => {
     <li className="rounded-15 overflow-hidden mb-20">
       {/* 와인 정보 */}
       <Link to={`/wine/${memoData.wineId}`}>
-        <div className="bg-(--gray-e0) flex items-center px-20 py-10">
-          <img src={memoData.wineImage ?? undefined} className="w-100 h-100" />
+        <div className="h-120 bg-(--gray-e0) flex items-center p-10">
+          <img
+            src={memoData.wineImage ?? undefined}
+            className="h-full aspect-square shrink-0"
+          />
           <div className="w-full">
             <p className="md:text-20 text-16 leading-[120%] font-light mb-5 line-clamp-2">
               {memoData.wineEname}

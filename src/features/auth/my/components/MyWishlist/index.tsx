@@ -4,8 +4,7 @@ import MyWishlistItem from "./MyWishlistItem";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useUpdateWishlist } from "../../hooks/useUpdateWishlist";
 import { getMyWishlist } from "../../api";
-import LoadingFind from "@/assets/LoadingFind.svg?react";
-import LoadingCircle from "@/assets/LoadingCircle.svg?react";
+import MyWishlistItemSkeleton from "./MyWishlistItemSkeleton";
 
 // MyWishlist.tsx
 const MyWishlist = () => {
@@ -28,13 +27,13 @@ const MyWishlist = () => {
         <span className="text-24 md:text-32 font-medium">위시리스트</span>
         {/* {data?.totalElements}개 */}
       </p>
-      <div>
+      <div className="mt-20">
         {!isError ? (
           <>
             {!isLoading ? (
               <>
                 {wishlist.length ? (
-                  <ul className="mt-20">
+                  <ul>
                     {wishlist?.map((v) => (
                       <MyWishlistItem
                         key={v.id}
@@ -45,31 +44,34 @@ const MyWishlist = () => {
                     ))}
                   </ul>
                 ) : (
-                  <p>작성한 메모가 없어요.</p>
+                  <p>담긴 위시리스트가 없어요.</p>
                 )}
                 {hasNextPage && (
-                  <div className="text-center mt-50">
+                  <div className="text-center">
                     {!isFetchingNextPage ? (
                       <button
                         onClick={() => fetchNextPage()}
                         disabled={isLoading}
-                        className="inline-block border rounded-full border-(--gray-78) hover:cursor-pointer"
+                        className="inline-block border rounded-full border-(--gray-78) hover:cursor-pointer mt-50"
                       >
                         <div className="py-10 px-30 text-12">더보기</div>
                       </button>
                     ) : (
-                      <div className="flex flex-col items-center mx-auto">
-                        <LoadingCircle />
-                      </div>
+                      <ul>
+                        {Array.from({ length: 10 }).map((_, i) => (
+                          <MyWishlistItemSkeleton key={i} />
+                        ))}
+                      </ul>
                     )}
                   </div>
                 )}
               </>
             ) : (
-              <div className="flex flex-col items-center gap-10 mx-auto py-100">
-                <LoadingFind />
-                <p className="text-(--gray-78) text-18">메모 가져오는 중...</p>
-              </div>
+              <ul>
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <MyWishlistItemSkeleton key={i} />
+                ))}
+              </ul>
             )}
           </>
         ) : (

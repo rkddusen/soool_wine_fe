@@ -31,10 +31,10 @@ const WinePreview = ({ type, wine }: WinePreviewProps) => {
           variant="medium"
         />
         {/* 와인 정보 영역 */}
-        <div className="relative flex items-center justify-start w-full h-full p-10">
+        <div className="relative w-full h-full py-10">
           {wine ? (
             <>
-              <div className="pr-[30%] h-full break-keep z-10">
+              <div className="pr-[calc(30%+10px)] h-full break-keep z-10">
                 <div className="line-clamp-1 leading-[120%]">
                   <span className="text-12 sm:text-14">
                     {countryInfo ? countryInfo.emoji : null}
@@ -66,6 +66,7 @@ const WinePreview = ({ type, wine }: WinePreviewProps) => {
                   />
                 </div>
               </div>
+              {/* 와인 이미지 영역 */}
               <div className="absolute w-[30%] right-0 h-[calc(100%+50px)] bottom-0">
                 <img
                   src={wine.image ? wine.image : undefined}

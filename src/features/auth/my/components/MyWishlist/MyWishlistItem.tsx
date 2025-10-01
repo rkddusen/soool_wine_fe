@@ -23,12 +23,12 @@ const MyWishlistItem = ({
       <li>
         <div className="w-full p-20 h-150 md:h-200 border-b border-(--gray-bb) flex justify-between items-center hover:cursor-pointer">
           {/* 와인 정보 */}
-          <div className="h-full flex">
+          <div className="h-full w-full flex gap-10">
             <img
               src={wine.image ? wine.image : undefined}
               className="object-cover h-full"
             />
-            <div>
+            <div className="w-full">
               <TypeBadge
                 type={nowType.type}
                 label={nowType.name}
