@@ -1,15 +1,15 @@
-// TodayWine/WinePreviewSkeletonProps.tsx
+// TodayWine/WinePreviewSkeleton.tsx
 // WinePreview의 스켈레톤 UI
 import { TypeBadge } from "@/components";
 import { TYPE_LOOKUP } from "@/constants/Wine";
 import { TypeKey } from "@/models/Wine";
 
-interface WinePreviewProps {
+interface WinePreviewSkeletonProps {
   // 와인 타입 (ex. red)
   type: TypeKey;
 }
 
-const WinePreviewSkeleton = ({ type }: WinePreviewProps) => {
+const WinePreviewSkeleton = ({ type }: WinePreviewSkeletonProps) => {
   return (
     <div className="flex flex-col w-full p-10 overflow-hidden bg-white rounded-15 h-320 group">
       {/* 와인 타입 영역 */}
