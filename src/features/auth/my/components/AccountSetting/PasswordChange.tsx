@@ -6,7 +6,7 @@ import useMeasure from "react-use-measure";
 import { AxiosError } from "axios";
 import { PasswordInput } from "@/components";
 import { useToggle } from "@/hooks/useToggle";
-import { useValidForm } from "@/hooks/auth/useValidForm";
+import { useValidForm } from "@/features/Auth/hooks/useValidForm";
 import { usePasswordInputs } from "../../hooks/usePasswordInputs";
 import { usePatchPassword } from "../../hooks/usePatchPassword";
 import LoadingWhite from "/src/assets/LoadingWhite.svg?react";

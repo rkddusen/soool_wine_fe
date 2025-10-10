@@ -5,7 +5,7 @@ import EmailLevel from "./EmailLevel";
 import CodeLevel from "./CodeLevel";
 import Complete from "./Complete";
 import { useLevel } from "../../hooks/useLevel";
-import { useEmailCodeInputs } from "@/hooks/auth/useInputs";
+import { useEmailCodeInputs } from "@/features/Auth/hooks/useInputs";
 
 const FindId = () => {
   const { level, handleNextLevel, handlePrevLevel } = useLevel(3);

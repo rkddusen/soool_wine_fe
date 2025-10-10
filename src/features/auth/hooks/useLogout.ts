@@ -1,5 +1,5 @@
 /**
- * hooks/auth/useLogout.ts
+ * features/Auth/hooks/useLogout.ts
  * 로그아웃을 처리하는 커스텀 훅
  * - postLogout 함수 호출
  */

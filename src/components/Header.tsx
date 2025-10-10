@@ -9,7 +9,7 @@ import {
   XMarkIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
-import { useLogout } from "@/hooks/auth/useLogout";
+import { useLogout } from "@/features/Auth/hooks/useLogout";
 import toast from "react-hot-toast";
 
 interface HeaderProp {

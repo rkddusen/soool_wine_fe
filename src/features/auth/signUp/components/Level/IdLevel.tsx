@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { AxiosError } from "axios";
 import { IdInput, NextBtn, PrevBtn } from "@/components";
 import { useIdExists } from "../../hooks/useIdExists";
-import { useValidForm } from "@/hooks/auth/useValidForm";
+import { useValidForm } from "@/features/Auth/hooks/useValidForm";
 
 interface IdLevelProps {
   value: string;

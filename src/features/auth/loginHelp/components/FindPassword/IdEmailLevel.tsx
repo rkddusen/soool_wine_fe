@@ -5,9 +5,12 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { EmailInput, IdInput, NextBtn, PrevBtn } from "@/components";
-import { useValidForm } from "@/hooks/auth/useValidForm";
+import { useValidForm } from "@/features/Auth/hooks/useValidForm";
 import { useFindPasswordEmailVerification } from "../../hooks/useFindPasswordEmailVerification";
-import { useEmailCodeInputs, useIdInput } from "@/hooks/auth/useInputs";
+import {
+  useEmailCodeInputs,
+  useIdInput,
+} from "@/features/Auth/hooks/useInputs";
 import { useShowError } from "@/hooks/useShowError";
 import { ApiErrorResponse } from "@/models/ApiError";
 import { AUTH_ERROR_CODES } from "@/constants/ErrorCode/AuthErrorCode";

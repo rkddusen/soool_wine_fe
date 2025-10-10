@@ -3,7 +3,7 @@
 // 비밀번호 검증에 성공하면 EmailLevel로 이동
 import { useEffect, useRef, useState } from "react";
 import { PasswordInput, NextBtn, PrevBtn } from "@/components";
-import { useValidForm } from "@/hooks/auth/useValidForm";
+import { useValidForm } from "@/features/Auth/hooks/useValidForm";
 
 interface PasswordLevelProps {
   value: string;

@@ -1,5 +1,5 @@
 /**
- * hooks/auth/useCodeTimer.ts
+ * features/Auth/hooks/useCodeTimer.ts
  * 인증 코드 입력의 타이머를 설정하는 커스텀 훅
  * 180초(3분)으로 설정
  * - 남은 시간(초)와 reset 함수 반환

@@ -7,7 +7,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useValidForm } from "@/hooks/auth/useValidForm";
+import { useValidForm } from "../../hooks/useValidForm";
 import { SignUp } from "@/models/auth/User";
 
 export const useSignUpLevel = (

@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import { getMe, postLogin } from "@/features/Auth/Login/api";
 import { User } from "@/models/auth/User";
-import { postLogout } from "@/apis/userApi";
+import { postLogout } from "@/features/Auth/api";
 
 interface AuthState {
   user: User | null;

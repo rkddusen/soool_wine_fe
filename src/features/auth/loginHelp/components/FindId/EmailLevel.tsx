@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { EmailInput, NextBtn, PrevBtn } from "@/components";
-import { useValidForm } from "@/hooks/auth/useValidForm";
+import { useValidForm } from "@/features/Auth/hooks/useValidForm";
 import { useFindIdEmailVerification } from "../../hooks/useFindIdEmailVerification";
 import { useShowError } from "@/hooks/useShowError";
 import { ApiErrorResponse } from "@/models/ApiError";

@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { CodeInput, NextBtn, PrevBtn } from "@/components";
-import { useEmailVerification } from "@/hooks/auth/useEmailVerification";
-import { useCode } from "@/hooks/auth/useCode";
-import { useCodeTimer } from "@/hooks/auth/useCodeTimer";
+import { useEmailVerification } from "@/features/Auth/hooks/useEmailVerification";
+import { useCode } from "@/features/Auth/hooks/useCode";
+import { useCodeTimer } from "@/features/Auth/hooks/useCodeTimer";
 import { ApiErrorResponse } from "@/models/ApiError";
 
 interface CodeLevelProps {

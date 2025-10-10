@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { EmailInput, NextBtn, PrevBtn } from "@/components";
-import { useEmailVerification } from "@/hooks/auth/useEmailVerification";
-import { useValidForm } from "@/hooks/auth/useValidForm";
+import { useEmailVerification } from "@/features/Auth/hooks/useEmailVerification";
+import { useValidForm } from "@/features/Auth/hooks/useValidForm";
 import { ApiErrorResponse } from "@/models/ApiError";
 
 interface EmailLevelProps {

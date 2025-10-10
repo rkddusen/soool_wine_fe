@@ -1,5 +1,5 @@
 /**
- * hooks/auth/useInputs.ts
+ * features/Auth/hooks/useInputs.ts
  * 아이디, 비밀번호, 이메일, 코드 폼을 관리하는 커스텀 훅
  */
 import { useState } from "react";

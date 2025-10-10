@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 import { CodeInput, NextBtn, PrevBtn } from "@/components";
 import { useFindIdEmailVerification } from "../../hooks/useFindIdEmailVerification";
 import { useFindIdVerify } from "../../hooks/useFindIdVerify";
-import { useCodeTimer } from "@/hooks/auth/useCodeTimer";
+import { useCodeTimer } from "@/features/Auth/hooks/useCodeTimer";
 import { useShowError } from "@/hooks/useShowError";
 import { ApiErrorResponse } from "@/models/ApiError";
 import { AUTH_ERROR_CODES } from "@/constants/ErrorCode/AuthErrorCode";

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { LoginFooter, NextBtn, IdInput, PasswordInput } from "@/components";
 import { LoginHelpBar } from "./components";
-import { useIdInput, usePasswordInput } from "@/hooks/auth/useInputs";
+import { useIdInput, usePasswordInput } from "../hooks/useInputs";
 import { useLogin } from "./hooks/useLogin";
 import { AxiosError } from "axios";
 import { ApiErrorResponse } from "@/models/ApiError";

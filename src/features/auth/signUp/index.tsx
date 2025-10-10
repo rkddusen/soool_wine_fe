@@ -17,7 +17,7 @@ import {
   useEmailCodeInputs,
   useIdInput,
   usePasswordInput,
-} from "@/hooks/auth/useInputs";
+} from "../hooks/useInputs";
 
 const SignUp = () => {
   const navigate = useNavigate();

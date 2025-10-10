@@ -1,5 +1,5 @@
-// apis/userApi.ts
-// 사용자 관련 공통 API 호출을 담당
+// features/Auth/api.ts
+// 인증 관련 공통 API 호출을 담당
 import { authInstance, userInstance } from "@/apis/instance";
 
 // 이메일 인증 요청
