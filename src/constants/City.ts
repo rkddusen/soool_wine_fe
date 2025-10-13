@@ -18,7 +18,7 @@ export const CITY: City[] = [
       "부르고뉴는 피노 누아(적포도)와 샤르도네(백포도)의 고향으로, 단일 품종으로 만들어지는 섬세하고 우아한 와인이 특징입니다. 이 지역은 ‘테루아(포도밭의 특성)’를 중시하여, 생산자나 밭의 위치에 따라 와인의 개성이 크게 달라집니다. 와인 레이블이 복잡하고, 품질 차이가 뚜렷해 와인 애호가들 사이에서 매우 인기 있는 지역입니다.",
   },
   {
-    city: "Toscana",
+    city: "Tuscany",
     kname: "토스카나",
     img: "https://vineyards.com/wine_regions_files/italy-tuscany-vineyard.jpg",
     country: "IT",
