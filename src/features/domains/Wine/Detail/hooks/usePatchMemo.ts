@@ -4,7 +4,7 @@
  * - 성공 시 mutation 반환
  */
 import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query";
-import { patchMemo } from "@/apis/memoApi";
+import { patchMemo } from "../api";
 import { Memo } from "@/models/Memo";
 import toast from "react-hot-toast";
 

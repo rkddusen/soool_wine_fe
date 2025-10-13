@@ -2,7 +2,7 @@
 // 내 메모들을 보여주는 컴포넌트
 import MyMemoItem from "./MyMemoItem";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
-import { useDeleteMemo } from "@/hooks/memo/useDeleteMemo";
+import { useDeleteMemo } from "@/features/shared/Memo/hooks/useDeleteMemo";
 import { getMyMemos } from "../../api";
 import MyMemoItemSkeleton from "./MyMemoItemSkeleton";
 

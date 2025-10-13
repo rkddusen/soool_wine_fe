@@ -1,10 +1,10 @@
 /**
- * hooks/memo/useDeleteMemo.ts
+ * features/shared/Memo/hooks/useDeleteMemo.ts
  * 특정 메모를 삭제하는 커스텀 훅
  * - 성공 시 mutation 반환
  */
 import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteMemo } from "@/apis/memoApi";
+import { deleteMemo } from "../api";
 import toast from "react-hot-toast";
 
 export interface deleteMemoRequestData {

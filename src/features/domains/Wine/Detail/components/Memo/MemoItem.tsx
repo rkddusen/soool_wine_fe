@@ -6,7 +6,7 @@ import { Memo } from "@/models/Memo";
 import EditableMemoInput from "./EditableMemoInput";
 import { formatDate } from "@/utils/formatDate";
 import { patchMemoRequestData } from "../../hooks/usePatchMemo";
-import { deleteMemoRequestData } from "@/hooks/memo/useDeleteMemo";
+import { deleteMemoRequestData } from "@/features/shared/Memo/hooks/useDeleteMemo";
 import LoadingBlack from "@/assets/LoadingBlack.svg?react";
 import {
   PencilSquareIcon,

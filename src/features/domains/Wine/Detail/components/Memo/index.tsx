@@ -10,7 +10,7 @@ import MemoInput from "./MemoInput";
 import { GoToLoginBtn } from "@/components";
 import { useMemos } from "../../hooks/useMemos";
 import { usePatchMemo } from "../../hooks/usePatchMemo";
-import { useDeleteMemo } from "@/hooks/memo/useDeleteMemo";
+import { useDeleteMemo } from "@/features/shared/Memo/hooks/useDeleteMemo";
 import LoadingBlack from "@/assets/LoadingBlack.svg?react";
 import {
   ArrowPathIcon,
