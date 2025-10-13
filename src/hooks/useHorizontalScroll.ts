@@ -32,8 +32,10 @@ export const useHorizontalScroll = (
   // 스크롤을 지정 방향으로 350px 단위로 이동
   const scrollMove = (direction: "left" | "right"): void => {
     if (!scrollRef.current) return;
-    let afterMoving =
-      scrollRef.current.scrollLeft + (direction === "right" ? unit : -unit);
+    let afterMoving = Math.max(
+      0,
+      scrollRef.current.scrollLeft + (direction === "right" ? unit : -unit)
+    );
     if (afterMoving % unit) {
       // 스크롤 위치를 카드 단위(350px)에 딱 맞춰서 이동
       afterMoving =
