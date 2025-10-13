@@ -1,10 +1,12 @@
 // pages/index.ts
 export { default as LayoutPage } from "./LayoutPage";
-export { default as MainPage } from "./MainPage";
-export { default as StoragePage } from "./StoragePage";
-export { default as WinePage } from "./WinePage";
-export { default as MapPage } from "./MapPage";
-export { default as LoginPage } from "./Auth/LoginPage";
-export { default as LoginHelpPage } from "./Auth/LoginHelpPage";
-export { default as SignUpPage } from "./Auth/SignUpPage";
-export { default as MyPage } from "./Auth/MyPage";
+export { default as LoginPage } from "./shared/Auth/LoginPage";
+export { default as LoginHelpPage } from "./shared/Auth/LoginHelpPage";
+export { default as SignUpPage } from "./shared/Auth/SignUpPage";
+export { default as MyPage } from "./shared/Auth/MyPage";
+
+// Wine
+export { default as MainPage } from "./domains/Wine/MainPage";
+export { default as StoragePage } from "./domains/Wine/StoragePage";
+export { default as DetailPage } from "./domains/Wine/DetailPage";
+export { default as MapPage } from "./domains/Wine/MapPage";

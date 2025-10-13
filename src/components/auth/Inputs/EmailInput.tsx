@@ -1,5 +1,5 @@
 // components/Auth/Input/EmailInput.tsx
-import { useAutoEmail } from "@/hooks/auth/useAutoEmail";
+import { useAutoEmail } from "@/features/shared/Auth/hooks/useAutoEmail";
 import { forwardRef } from "react";
 
 interface EmailInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
