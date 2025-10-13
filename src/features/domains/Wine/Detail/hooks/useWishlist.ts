@@ -7,7 +7,7 @@
  */
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getWishlist } from "../api";
-import { updateWishlist } from "@/apis/wishlistApi";
+import { updateWishlist } from "@/features/shared/Wishlist/api";
 import { Wishlist } from "@/models/Wishlist";
 import { useAuthStore } from "@/stores/authStore";
 

@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { debounce } from "lodash";
-import { updateWishlist } from "@/apis/wishlistApi";
+import { updateWishlist } from "@/features/shared/Wishlist/api";
 import toast from "react-hot-toast";
 
 interface WishlistRequestData {
