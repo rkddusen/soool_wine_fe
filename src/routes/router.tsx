@@ -8,7 +8,7 @@ import {
   MainPage,
   StoragePage,
   MapPage,
-  WinePage,
+  DetailPage,
   MyPage,
 } from "@/pages";
 
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: `wine/:id`,
-        element: <WinePage />,
+        element: <DetailPage />,
       },
     ],
   },
