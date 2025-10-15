@@ -42,7 +42,7 @@ const Storage = () => {
                   {totalElements} Wines
                 </p>
               </div> */}
-              <div className="flex flex-wrap justify-center gap-40">
+              <div className="flex flex-wrap justify-center gap-40 mt-40">
                 {wines.length > 0 ? (
                   wines.map((w, i) => (
                     <WineItem key={i} wine={w} filter={filter} />
