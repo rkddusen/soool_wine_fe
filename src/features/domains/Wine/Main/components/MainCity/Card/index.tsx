@@ -5,7 +5,6 @@ import CardHeader from "./CardHeader";
 import CardFooter from "./CardFooter";
 import { SideFlipCard } from "@/components";
 import { City } from "@/models/Country";
-import { Link } from "react-router-dom";
 
 interface CardProps {
   // 도시 객체
@@ -17,39 +16,43 @@ const Card = ({ city }: CardProps) => {
   const [flipped, setFlipped] = useState<boolean>(false);
   return (
     <li className="overflow-hidden bg-white w-320 shrink-0 h-500 rounded-20">
-      <Link to={`/storage?search=${city.city}`}>
-        <SideFlipCard
-          flipped={flipped}
-          front={
-            // 카드 앞면: 도시 정보
-            <div className="flex flex-col justify-between w-full h-full p-20">
-              <CardHeader country={city.country} />
-              <div>
-                <p className="tracking-wider text-center text-24 font-serif">
-                  {city.city}
-                </p>
-                <p className="mt-10 text-center">{city.kname}</p>
-                <img
-                  className="object-cover w-full my-20 h-200 rounded-20"
-                  src={city.img}
-                  alt={city.city}
-                />
-              </div>
-              <CardFooter onFlip={() => setFlipped((prev) => !prev)} />
+      <SideFlipCard
+        flipped={flipped}
+        front={
+          // 카드 앞면: 도시 정보
+          <div className="flex flex-col justify-between w-full h-full p-20">
+            <CardHeader country={city.country} />
+            <div>
+              <p className="tracking-wider text-center text-24 font-serif">
+                {city.city}
+              </p>
+              <p className="mt-10 text-center">{city.kname}</p>
+              <img
+                className="object-cover w-full my-20 h-200 rounded-20"
+                src={city.img}
+                alt={city.city}
+              />
             </div>
-          }
-          back={
-            // 카드 뒷면: 도시 설명
-            <div className="flex flex-col justify-between w-full h-full p-20">
-              <CardHeader country={city.country} />
-              <div>
-                <p className="leading-32">{city.description}</p>
-              </div>
-              <CardFooter onFlip={() => setFlipped((prev) => !prev)} />
+            <CardFooter
+              city={city.city}
+              onFlip={() => setFlipped((prev) => !prev)}
+            />
+          </div>
+        }
+        back={
+          // 카드 뒷면: 도시 설명
+          <div className="flex flex-col justify-between w-full h-full p-20">
+            <CardHeader country={city.country} />
+            <div>
+              <p className="leading-32">{city.description}</p>
             </div>
-          }
-        ></SideFlipCard>
-      </Link>
+            <CardFooter
+              city={city.city}
+              onFlip={() => setFlipped((prev) => !prev)}
+            />
+          </div>
+        }
+      ></SideFlipCard>
     </li>
   );
 };

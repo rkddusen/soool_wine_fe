@@ -4,19 +4,24 @@ import {
   ArrowRightIcon,
   ArrowsRightLeftIcon,
 } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 interface CardFooterProps {
+  city: string;
   // 카드 앞/뒤 전환 핸들러
   onFlip(): void;
 }
-const CardFooter = ({ onFlip }: CardFooterProps) => {
+const CardFooter = ({ city, onFlip }: CardFooterProps) => {
   return (
     <div className="flex h-40 gap-10">
       {/* '이 지역 와인 보기' 버튼 */}
-      <button className="w-full h-full rounded-20 flex gap-5 justify-center items-center bg-[#D3E6BC] cursor-pointer hover:bg-[#C1D4AA]">
+      <Link
+        to={`/storage?search=${city}`}
+        className="w-full h-full rounded-20 flex gap-5 justify-center items-center bg-[#D3E6BC] cursor-pointer hover:bg-[#C1D4AA]"
+      >
         <span className="text-nowrap text-14">이 지역 와인 보기</span>
         <ArrowRightIcon className="w-16 h-16" />
-      </button>
+      </Link>
       {/* 카드 앞/뒤 전환 버튼 */}
       <button
         onClick={onFlip}
