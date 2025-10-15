@@ -27,10 +27,10 @@ const FilterSearch = ({ filter }: FilterSearchProps) => {
   }, [search]);
 
   return (
-    <div className="select-none">
+    <div className="select-none text-center">
       <div
         onClick={() => setFilterOpen((prev) => !prev)}
-        className="flex items-center justify-center gap-2 mt-20 hover:cursor-pointer"
+        className="inline-flex items-center justify-center gap-2 mt-20 hover:cursor-pointer"
       >
         <span className="text-14">필터</span>
         {filterOpen ? (
@@ -39,7 +39,22 @@ const FilterSearch = ({ filter }: FilterSearchProps) => {
           <ChevronDownIcon className="w-14 h-14" />
         )}
       </div>
-      {filterOpen && <FilterDetail filter={filter} />}
+      {filterOpen && (
+        <>
+          <FilterDetail filter={filter} />
+          <div
+            onClick={() => setFilterOpen((prev) => !prev)}
+            className="inline-flex items-center justify-center gap-2 mt-20 hover:cursor-pointer"
+          >
+            <span className="text-14">필터</span>
+            {filterOpen ? (
+              <ChevronUpIcon className="w-14 h-14" />
+            ) : (
+              <ChevronDownIcon className="w-14 h-14" />
+            )}
+          </div>
+        </>
+      )}
       {/* 필터링 된 항목이 있으면 리스트 표시 */}
       {Object.entries(filter).some(([_, arr]) => arr.length > 0) && (
         <div className="w-full px-10 pt-20">
