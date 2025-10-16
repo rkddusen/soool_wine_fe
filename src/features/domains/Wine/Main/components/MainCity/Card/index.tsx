@@ -15,7 +15,7 @@ const Card = ({ city }: CardProps) => {
   // true면 뒷면(설명), false면 앞면(도시 정보)
   const [flipped, setFlipped] = useState<boolean>(false);
   return (
-    <li className="overflow-hidden bg-white w-320 shrink-0 h-500 rounded-20">
+    <li className="overflow-hidden bg-white w-320 shrink-0 h-500 rounded-15">
       <SideFlipCard
         flipped={flipped}
         front={
@@ -28,7 +28,7 @@ const Card = ({ city }: CardProps) => {
               </p>
               <p className="mt-10 text-center">{city.kname}</p>
               <img
-                className="object-cover w-full my-20 h-200 rounded-20"
+                className="object-cover w-full my-20 h-200 rounded-15"
                 src={city.img}
                 alt={city.city}
               />

@@ -17,7 +17,7 @@ const CardFooter = ({ city, onFlip }: CardFooterProps) => {
       {/* '이 지역 와인 보기' 버튼 */}
       <Link
         to={`/storage?search=${city}`}
-        className="w-full h-full rounded-20 flex gap-5 justify-center items-center bg-[#D3E6BC] cursor-pointer hover:bg-[#C1D4AA]"
+        className="w-full h-full rounded-full flex gap-5 justify-center items-center bg-[#D3E6BC] cursor-pointer hover:bg-[#C1D4AA]"
       >
         <span className="text-nowrap text-14">이 지역 와인 보기</span>
         <ArrowRightIcon className="w-16 h-16" />
@@ -25,7 +25,7 @@ const CardFooter = ({ city, onFlip }: CardFooterProps) => {
       {/* 카드 앞/뒤 전환 버튼 */}
       <button
         onClick={onFlip}
-        className="shrink-0 w-50 h-full rounded-20 bg-(--gray-f0) flex justify-center items-center cursor-pointer hover:bg-(--gray-e0)"
+        className="shrink-0 w-50 h-full rounded-full bg-(--gray-f0) flex justify-center items-center cursor-pointer hover:bg-(--gray-e0)"
       >
         <ArrowsRightLeftIcon className="w-16 h-16" />
       </button>

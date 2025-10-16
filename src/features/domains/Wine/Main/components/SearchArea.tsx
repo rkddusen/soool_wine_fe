@@ -12,7 +12,7 @@ const SearchArea = () => {
         <p className="font-serif md:text-128 sm:text-96 text-84">Wine</p>
       </div>
       <div className="flex flex-row items-center w-full h-55 max-w-500">
-        <div className="w-full h-full rounded-30 border border-(--main)">
+        <div className="w-full h-full rounded-full border border-(--main) overflow-hidden">
           <SearchBar />
         </div>
       </div>
