@@ -9,4 +9,4 @@ export { default as MyPage } from "./shared/Auth/MyPage";
 export { default as MainPage } from "./domains/Wine/MainPage";
 export { default as StoragePage } from "./domains/Wine/StoragePage";
 export { default as DetailPage } from "./domains/Wine/DetailPage";
-export { default as MapPage } from "./domains/Wine/MapPage";
+export { default as PlacePage } from "./domains/Wine/PlacePage";

@@ -84,7 +84,7 @@ const WineMap = () => {
               <p className="mb-5 text-14 text-(--gray-78) line-clamp-1">
                 {v.category_name}
               </p>
-              <a className="block" href={v.place_url} target="_blank">
+              <a className="inline-block" href={v.place_url} target="_blank">
                 <span className="text-18 hover:underline line-clamp-2 text-(--main) font-medium">
                   {v.place_name}
                 </span>

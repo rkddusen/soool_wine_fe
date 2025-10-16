@@ -1,9 +1,9 @@
-// Map/index.tsx
+// Place/index.tsx
 // 주변와인 페이지
 import { Header } from "@/components";
 import { WineMap } from "./components";
 
-const Map = () => {
+const Place = () => {
   return (
     <div className="relative w-full h-dvh">
       <Header />
@@ -16,4 +16,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default Place;
