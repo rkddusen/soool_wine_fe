@@ -7,7 +7,7 @@ import {
   SignUpPage,
   MainPage,
   StoragePage,
-  MapPage,
+  PlacePage,
   DetailPage,
   MyPage,
 } from "@/pages";
@@ -45,8 +45,8 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/map",
-    element: <MapPage />,
+    path: "/place",
+    element: <PlacePage />,
   },
   {
     path: "/signup",

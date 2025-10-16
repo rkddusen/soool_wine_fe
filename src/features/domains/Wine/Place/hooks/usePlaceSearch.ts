@@ -1,5 +1,5 @@
 /**
- * Map/hooks/usePlaceSearch.ts
+ * Place/hooks/usePlaceSearch.ts
  * 와인 검색어로 검색하는 커스텀훅
  * 검색으로 나온 장소들은 onSearchComplete에서 저장
  * - void
@@ -12,17 +12,15 @@ export const usePlaceSearch = (
   isSearch: boolean,
   onSearchComplete: (places: Place[]) => void
 ) => {
-  // 검색 로딩 예정
-
   useEffect(() => {
     if (map && isSearch) {
       const { kakao } = window;
       const ps = new kakao.maps.services.Places();
 
       const searchOption = {
-        location: map.getCenter(), // 현재 지도 중심 기준으로 검색
-        size: 10, // 최대 10개 결과 반환
-        sort: kakao.maps.services.SortBy.DISTANCE, // 거리순 정렬
+        location: map.getCenter(),
+        size: 10,
+        sort: kakao.maps.services.SortBy.DISTANCE,
       };
 
       const placesSearchCB = (data: any, status: any) => {

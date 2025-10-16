@@ -88,7 +88,7 @@ const Header = ({ noBorder }: HeaderProp) => {
         <div className="absolute top-0 hidden h-full md:block x-center-absolute">
           <ul className="flex flex-row h-full text-18">
             <HeaderNav text="와인창고" link="storage" />
-            <HeaderNav text="주변와인" link="map" />
+            <HeaderNav text="주변와인" link="place" />
           </ul>
         </div>
         {/* 768 ~ */}
@@ -172,7 +172,7 @@ const Header = ({ noBorder }: HeaderProp) => {
                       <span>와인창고</span>
                     </li>
                   </Link>
-                  <Link to={"/map"} onClick={() => setIsMenuOpen(false)}>
+                  <Link to={"/place"} onClick={() => setIsMenuOpen(false)}>
                     <li className="py-10 mt-30 hover:text-(--main)">
                       <span>주변와인</span>
                     </li>

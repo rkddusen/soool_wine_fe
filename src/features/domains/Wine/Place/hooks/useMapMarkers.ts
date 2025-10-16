@@ -1,5 +1,5 @@
 /**
- * Map/hooks/useMapMarkers.ts
+ * Place/hooks/useMapMarkers.ts
  */
 import { useEffect, useRef, useState } from "react";
 import { Place } from "@/models/Map";
@@ -179,6 +179,8 @@ export const useMapMarkers = (map: any, places: Place[]) => {
   const displayMarkers = () => {
     const { kakao } = window;
     const bounds = new kakao.maps.LatLngBounds();
+    const currentCenter = map.getCenter();
+    const currentLevel = map.getLevel();
     markers.forEach((m) => m.setMap(null));
     setMarkers([]);
     overViews.forEach((o) => o.setMap(null));
@@ -192,6 +194,11 @@ export const useMapMarkers = (map: any, places: Place[]) => {
       bounds.extend(new kakao.maps.LatLng(places[i].y, places[i].x));
     }
     map.setBounds(bounds);
+    const newLevel = map.getLevel();
+    if (newLevel < currentLevel) {
+      map.setLevel(currentLevel);
+    }
+    map.setCenter(currentCenter);
   };
 
   useEffect(() => {
