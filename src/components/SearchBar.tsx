@@ -48,7 +48,7 @@ const SearchBar = () => {
   }, [searchParams]);
 
   return (
-    <div className="flex flex-row items-center w-full h-full px-20 bg-white rounded-30">
+    <div className="flex flex-row items-center w-full h-full px-20 bg-white">
       <div className="shrink-0">
         <SearchLogoIcon className="w-25 h-25 fill-(--main)" />
       </div>

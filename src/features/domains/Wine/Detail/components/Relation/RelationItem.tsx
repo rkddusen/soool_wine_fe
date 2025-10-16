@@ -14,7 +14,7 @@ const RelationItem = ({ wine }: RelationItemProps) => {
   const type = TYPE_LOOKUP[wine.type];
   return (
     <Link to={`/wine/${wine.id}`}>
-      <div className="relative w-full h-full p-15 rounded-10 bg-white">
+      <div className="relative w-full h-full p-15 rounded-15 bg-white">
         <div className="absolute top-10 left-10">
           <TypeBadge type={type.type} label={type.name} variant="small" />
         </div>

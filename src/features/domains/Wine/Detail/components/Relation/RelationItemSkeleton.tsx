@@ -3,7 +3,7 @@
 
 const RelationItemSkeleton = () => {
   return (
-    <div className="w-full h-full p-15 rounded-10 bg-white">
+    <div className="w-full h-full p-15 rounded-15 bg-white">
       <div className="w-full pb-[100%] skeletonUI"></div>
       <div className="mt-5 h-12 w-80 skeletonUI"></div>
       <div className="mt-5 w-full h-36 skeletonUI"></div>

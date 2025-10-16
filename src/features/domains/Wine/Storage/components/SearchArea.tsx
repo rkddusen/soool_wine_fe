@@ -9,7 +9,7 @@ const SearchArea = () => {
         <p className="font-sans md:text-54 sm:text-40 text-32">와인창고</p>
       </div>
       <div className="flex flex-row items-center w-full h-55 max-w-500">
-        <div className="w-full h-full rounded-30 border border-(--main)">
+        <div className="w-full h-full rounded-full border border-(--main) overflow-hidden">
           <SearchBar />
         </div>
       </div>
